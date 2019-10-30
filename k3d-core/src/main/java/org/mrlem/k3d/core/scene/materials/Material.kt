@@ -1,13 +1,13 @@
 package org.mrlem.k3d.core.scene.materials
 
-import android.opengl.GLES30
+import android.opengl.GLES30.*
 import org.mrlem.k3d.core.scene.shaders.Shader
 
 open class Material(
-    var shineDamper: Float = 1f,
-    var reflectvity: Float = 0f,
-    val hasTransparency: Boolean = false,
-    val fakeLighting: Boolean = false
+    private var shineDamper: Float = 1f,
+    private var reflectvity: Float = 0f,
+    private val hasTransparency: Boolean = false,
+    private val fakeLighting: Boolean = false
 ) {
 
     open fun use(block: Material.() -> Unit) {
@@ -15,20 +15,19 @@ open class Material(
 
         if (hasTransparency) disableCulling() else enableCulling()
 
-        Shader.defaultShader.apply {
-            loadFakeLighting(fakeLighting)
-            loadShine(shineDamper, reflectvity)
-        }
+        Shader.defaultShader.loadFakeLighting(fakeLighting)
+        Shader.defaultShader.loadShine(shineDamper, reflectvity)
+
         this.block()
     }
 
     private fun enableCulling() {
-        GLES30.glEnable(GLES30.GL_CULL_FACE)
-        GLES30.glCullFace(GLES30.GL_BACK)
+        glEnable(GL_CULL_FACE)
+        glCullFace(GL_BACK)
     }
 
     private fun disableCulling() {
-        GLES30.glDisable(GLES30.GL_CULL_FACE)
+        glDisable(GL_CULL_FACE)
     }
 
     companion object {

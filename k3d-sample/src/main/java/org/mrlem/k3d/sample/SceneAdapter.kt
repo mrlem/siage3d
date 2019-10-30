@@ -12,6 +12,7 @@ import org.mrlem.k3d.core.view.K3DView
 import kotlin.math.sin
 
 // TODO - critical - nothing rendered :p
+// TODO - optional - kotlin dsl for scene / subgraph init
 
 class SceneAdapter(
     private val resources: Resources

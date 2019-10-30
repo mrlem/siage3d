@@ -39,8 +39,8 @@ open class Node(
 }
 
 open class ObjectNode(
-    private val shape: Shape,
-    private val material: Material,
+    val shape: Shape,
+    val material: Material,
     name: String = "Object #${counter++}"
 ) : Node(name) {
 
