@@ -7,7 +7,7 @@
     android:fitsSystemWindows="true"
     tools:context=".sample.MainActivity">
 
-    <org.mrlem.k3d.core.view.K3DView
+    <org.mrlem.k3d.core.view.SceneView
         android:id="@+id/sceneView"
         android:layout_width="0dp"
         android:layout_height="0dp"

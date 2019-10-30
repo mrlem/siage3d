@@ -4,11 +4,11 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import org.mrlem.k3d.core.view.K3DView
+import org.mrlem.k3d.core.view.SceneAdapter
 
-abstract class K3DActivity : AppCompatActivity() {
+abstract class SceneActivity : AppCompatActivity() {
 
-    abstract val sceneAdapter: K3DView.Adapter
+    abstract val sceneAdapter: SceneAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

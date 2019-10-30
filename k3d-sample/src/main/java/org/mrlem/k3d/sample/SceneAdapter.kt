@@ -8,7 +8,6 @@ import org.mrlem.k3d.core.scene.ObjectNode
 import org.mrlem.k3d.core.scene.Scene
 import org.mrlem.k3d.core.scene.materials.TextureMaterial
 import org.mrlem.k3d.core.scene.shapes.Triangle
-import org.mrlem.k3d.core.view.K3DView
 import kotlin.math.sin
 
 // TODO - critical - nothing rendered :p
@@ -16,7 +15,7 @@ import kotlin.math.sin
 
 class SceneAdapter(
     private val resources: Resources
-) : K3DView.Adapter() {
+) : org.mrlem.k3d.core.view.SceneAdapter() {
 
     override var scene = Scene()
 
