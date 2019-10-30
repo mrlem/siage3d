@@ -76,11 +76,13 @@ open class GroupNode(
         children.forEach(Node::render)
     }
 
-    fun add(child: Node) {
-        child.parent?.remove(child)
+    fun add(vararg nodes: Node) {
+        nodes.forEach { node ->
+            node.parent?.remove(node)
 
-        _children.add(child)
-        child.parent = this
+            _children.add(node)
+            node.parent = this
+        }
     }
 
     fun remove(child: Node) {
