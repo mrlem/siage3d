@@ -1,2 +1,2 @@
-include ':app'
+include ':k3d-sample', ':k3d-core'
 rootProject.name='Sample3D'
