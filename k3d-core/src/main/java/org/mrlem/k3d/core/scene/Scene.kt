@@ -8,8 +8,7 @@ import javax.microedition.khronos.opengles.GL10
 
 class Scene : GroupNode("Scene") {
 
-    val skyColor: Color =
-        Color(0f, 0f, 0f)
+    val skyColor: Color = Color(0f, 0f, 0f)
     val camera: Camera = Camera()
 
     fun render() {
