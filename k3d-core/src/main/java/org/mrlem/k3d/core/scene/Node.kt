@@ -7,7 +7,7 @@ import org.mrlem.k3d.core.scene.materials.Material
 import org.mrlem.k3d.core.scene.shaders.Shader
 import org.mrlem.k3d.core.scene.shapes.Shape
 
-open class Node(
+abstract class Node(
     val name: String
 ) {
 
@@ -27,11 +27,6 @@ open class Node(
         }
     }
 
-    @CallSuper
-    open fun render() {
-        Shader.defaultShader.loadTransformationMatrix(globalTransform)
-    }
-
     fun position(position: Vector3f) {
         localTransform.setTranslation(position)
     }
@@ -44,8 +39,8 @@ open class ObjectNode(
     name: String = "Object #${counter++}"
 ) : Node(name) {
 
-    override fun render() {
-        super.render()
+    fun render() {
+        Shader.defaultShader.loadTransformationMatrix(globalTransform)
 
         // draw shape with the material
         material.use {
@@ -69,11 +64,6 @@ open class GroupNode(
     override fun update() {
         super.update()
         children.forEach(Node::update)
-    }
-
-    override fun render() {
-        super.render()
-        children.forEach(Node::render)
     }
 
     fun add(vararg nodes: Node) {

@@ -23,38 +23,11 @@ abstract class SceneAdapter {
     internal fun update(delta: Float) {
         onUpdate(delta)
         scene.update()
-
-        // TODO - optional - have a scene renderer interface, with a standard impl & a sorted impl?
-
-        // sort object nodes by material so as to optimize texture changes & such
-        val sortedObjects = sortObjects()
-
-        // render
-        Shader.defaultShader.use {
-            sortedObjects.keys.forEach { material ->
-                sortedObjects[material]?.forEach(ObjectNode::render)
-            }
-        }
+        scene.render()
     }
 
     internal fun destroy() {
         onDestroy()
-    }
-
-    private fun sortObjects(): Map<Material, List<ObjectNode>> {
-        val map = mutableMapOf<Material, MutableList<ObjectNode>>()
-        addObjects(map, scene)
-        return map
-    }
-
-    private fun addObjects(map: MutableMap<Material, MutableList<ObjectNode>>, node: Node) {
-        // TODO - critical - test this
-        when (node) {
-            is GroupNode -> node.children.forEach { child -> addObjects(map, child) }
-            is ObjectNode -> map[node.material]?.add(node) ?: mutableListOf(node).also {
-                map[node.material] = it
-            }
-        }
     }
 
     open fun onInit() {}
