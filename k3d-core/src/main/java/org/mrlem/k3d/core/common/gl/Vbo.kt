@@ -1,6 +1,5 @@
 package org.mrlem.k3d.core.common.gl
 
-import android.opengl.GLES20
 import android.opengl.GLES30.*
 import java.nio.FloatBuffer
 import java.nio.IntBuffer
@@ -20,7 +19,7 @@ class Vbo {
     fun toIndexBuffer(buffer: ShortBuffer) {
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id)
             glBufferData(GL_ELEMENT_ARRAY_BUFFER, buffer.capacity() * BYTES_PER_SHORT, buffer, GL_STATIC_DRAW)
-        glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, 0)
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0)
     }
 
     private fun create(): Int {

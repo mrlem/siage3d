@@ -22,7 +22,7 @@ class Vao(val vertexCount: Int) {
             glEnableVertexAttribArray(0)
             glEnableVertexAttribArray(1)
             glEnableVertexAttribArray(2)
-            block.invoke(this)
+            this.block()
         glBindVertexArray(0)
         return this
     }
@@ -40,7 +40,7 @@ class Vao(val vertexCount: Int) {
     }
 
     private fun addVbo(block: Vbo.() -> Unit) = Vbo().also {
-        block.invoke(it)
+        it.block()
         vbos.add(it)
     }
 
@@ -52,7 +52,7 @@ class Vao(val vertexCount: Int) {
             textureCoords: FloatArray,
             normals: FloatArray,
             indices: ShortArray
-        ) = Vao(positions.size).declare {
+        ) = Vao(indices.size).declare {
             addVbo { toIndexBuffer(indices.toBuffer()) }
             addVbo { toAttribute(0, 3, positions.toBuffer()) }
             addVbo { toAttribute(1, 2, textureCoords.toBuffer()) }

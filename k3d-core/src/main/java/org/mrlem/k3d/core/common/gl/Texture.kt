@@ -17,7 +17,7 @@ class Texture {
 
     fun use(block: Texture.() -> Unit): Texture {
         glBindTexture(GL_TEXTURE_2D, id)
-            block.invoke(this)
+            this.block()
         glBindTexture(GL_TEXTURE_2D, 0)
         return this
     }
