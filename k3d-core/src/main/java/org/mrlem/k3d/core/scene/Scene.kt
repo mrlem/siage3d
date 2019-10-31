@@ -27,7 +27,9 @@ class Scene : GroupNode("Scene") {
         val sortedObjects = sortObjects()
         Shader.defaultShader.use {
             sortedObjects.keys.forEach { material ->
-                sortedObjects[material]?.forEach(ObjectNode::render)
+                material.use {
+                    sortedObjects[material]?.forEach(ObjectNode::render)
+                }
             }
         }
     }

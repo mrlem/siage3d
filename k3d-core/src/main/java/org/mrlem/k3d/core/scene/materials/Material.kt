@@ -11,8 +11,6 @@ open class Material(
 ) {
 
     open fun use(block: Material.() -> Unit) {
-        if (this == active) return
-
         if (hasTransparency) disableCulling() else enableCulling()
 
         Shader.defaultShader.loadFakeLighting(fakeLighting)
@@ -28,10 +26,6 @@ open class Material(
 
     private fun disableCulling() {
         glDisable(GL_CULL_FACE)
-    }
-
-    companion object {
-        var active: Material? = null
     }
 
 }

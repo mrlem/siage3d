@@ -42,10 +42,8 @@ open class ObjectNode(
     fun render() {
         Shader.defaultShader.loadTransformationMatrix(globalTransform)
 
-        // draw shape with the material
-        material.use {
-            shape.draw()
-        }
+        // draw the shape: material is handled at scene-leve
+        shape.draw()
     }
 
     companion object {
