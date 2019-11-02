@@ -12,9 +12,6 @@ open class Shader(vertexSource: String, fragmentSource: String) {
     private val vertexShaderId: Int
     private val fragmentShaderId: Int
 
-    var started = false
-        private set
-
     init {
         vertexShaderId = load(vertexSource, GL_VERTEX_SHADER)
         fragmentShaderId = load(fragmentSource, GL_FRAGMENT_SHADER)
@@ -22,30 +19,20 @@ open class Shader(vertexSource: String, fragmentSource: String) {
         programId = glCreateProgram()
         glAttachShader(programId, vertexShaderId)
         glAttachShader(programId, fragmentShaderId)
-        bindAttributes()
         glLinkProgram(programId)
         glValidateProgram(programId)
+        bindAttributes()
         getAllUniformLocations()
     }
 
     fun use(block: Shader.() -> Unit ) {
-        start()
-        block.invoke(this)
-        stop()
-    }
-
-    private fun start() {
         glUseProgram(programId)
-        started = true
-    }
-
-    private fun stop() {
-        started = false
+        block.invoke(this)
         glUseProgram(0)
     }
 
     fun clear() {
-        stop()
+        glUseProgram(0)
         glDetachShader(programId, vertexShaderId)
         glDetachShader(programId, fragmentShaderId)
         glDeleteShader(vertexShaderId)
