@@ -2,6 +2,7 @@ package org.mrlem.k3d.core.common.gl
 
 import android.opengl.GLES30.*
 import org.mrlem.k3d.core.common.io.toBuffer
+import org.mrlem.k3d.core.scene.shaders.DefaultShader
 import java.nio.IntBuffer
 
 class Vao(val vertexCount: Int) {
@@ -10,18 +11,8 @@ class Vao(val vertexCount: Int) {
 
     private val vbos: MutableList<Vbo> = mutableListOf()
 
-    private fun declare(block: Vao.() -> Unit): Vao {
-        glBindVertexArray(id)
-            block.invoke(this)
-        glBindVertexArray(0)
-        return this
-    }
-
     fun use(block: Vao.() -> Unit): Vao {
         glBindVertexArray(id)
-            glEnableVertexAttribArray(0)
-            glEnableVertexAttribArray(1)
-            glEnableVertexAttribArray(2)
             this.block()
         glBindVertexArray(0)
         return this
@@ -34,6 +25,7 @@ class Vao(val vertexCount: Int) {
 
     fun destroy() {
         vbos.forEach(Vbo::destroy)
+        vbos.clear()
 
         arrays.put(0, id)
         glDeleteVertexArrays(1, arrays)
@@ -52,11 +44,11 @@ class Vao(val vertexCount: Int) {
             textureCoords: FloatArray,
             normals: FloatArray,
             indices: ShortArray
-        ) = Vao(indices.size).declare {
+        ) = Vao(indices.size).use {
             addVbo { toIndexBuffer(indices.toBuffer()) }
-            addVbo { toAttribute(0, 3, positions.toBuffer()) }
-            addVbo { toAttribute(1, 2, textureCoords.toBuffer()) }
-            addVbo { toAttribute(2, 3, normals.toBuffer()) }
+            addVbo { toAttribute(DefaultShader.ATTR_POSITIONS, 3, positions.toBuffer()) }
+            addVbo { toAttribute(DefaultShader.ATTR_TEXCOORDS, 2, textureCoords.toBuffer()) }
+            addVbo { toAttribute(DefaultShader.ATTR_NORMALS, 3, normals.toBuffer()) }
         }
     }
 

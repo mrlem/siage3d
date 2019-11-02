@@ -11,15 +11,14 @@ class Vbo {
 
     fun toAttribute(attributeNumber: Int, components: Int, buffer: FloatBuffer) {
         glBindBuffer(GL_ARRAY_BUFFER, id)
-            glBufferData(GL_ARRAY_BUFFER, buffer.capacity() * BYTES_PER_FLOAT, buffer, GL_STATIC_DRAW)
-            glVertexAttribPointer(attributeNumber, components, GL_FLOAT, false, 0, 0)
-        glBindBuffer(GL_ARRAY_BUFFER, 0)
+        glBufferData(GL_ARRAY_BUFFER, buffer.capacity() * BYTES_PER_FLOAT, buffer, GL_STATIC_DRAW)
+        glEnableVertexAttribArray(attributeNumber)
+        glVertexAttribPointer(attributeNumber, components, GL_FLOAT, false, 0, 0)
     }
 
     fun toIndexBuffer(buffer: ShortBuffer) {
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id)
-            glBufferData(GL_ELEMENT_ARRAY_BUFFER, buffer.capacity() * BYTES_PER_SHORT, buffer, GL_STATIC_DRAW)
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0)
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, buffer.capacity() * BYTES_PER_SHORT, buffer, GL_STATIC_DRAW)
     }
 
     private fun create(): Int {
@@ -35,6 +34,7 @@ class Vbo {
     companion object {
         private const val BYTES_PER_FLOAT = 4
         private const val BYTES_PER_SHORT = 2
+
         private val arrays = IntBuffer.allocate(1)
     }
 

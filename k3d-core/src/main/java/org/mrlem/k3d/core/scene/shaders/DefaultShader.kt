@@ -20,9 +20,9 @@ class DefaultShader(
     private var locationSkyColor: Int = 0
 
     override fun bindAttributes() {
-        bindAttribute(0, "position")
-        bindAttribute(1, "textureCoords")
-        bindAttribute(2, "normal")
+        bindAttribute(ATTR_POSITIONS, "position")
+        bindAttribute(ATTR_TEXCOORDS, "textureCoords")
+        bindAttribute(ATTR_NORMALS, "normal")
     }
 
     override fun getAllUniformLocations() {
@@ -65,6 +65,12 @@ class DefaultShader(
 
     fun loadSkyColor(skyColor: Vector3f) {
         loadVector(locationSkyColor, skyColor)
+    }
+
+    companion object {
+        const val ATTR_POSITIONS = 0
+        const val ATTR_TEXCOORDS = 1
+        const val ATTR_NORMALS = 2
     }
 
 }
