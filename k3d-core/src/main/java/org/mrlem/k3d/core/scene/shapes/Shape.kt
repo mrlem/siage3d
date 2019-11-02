@@ -28,7 +28,7 @@ open class Shape(
 
     fun draw() {
         vao.use {
-            glDrawElements(GL_TRIANGLES, vertexCount, GL_UNSIGNED_SHORT, 0)
+            glDrawElements(GL_TRIANGLES, indicesCount, GL_UNSIGNED_SHORT, 0)
         }
     }
 
