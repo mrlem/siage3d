@@ -3,7 +3,7 @@ package org.mrlem.k3d.core.common.io
 import android.content.res.Resources
 import org.mrlem.k3d.core.common.gl.Texture
 
-// TODO - medium - do the same for vaos
+// TODO - cache abstract class
 // TODO - optional - cubemaps, see https://stackoverflow.com/questions/35565251/memory-violation-in-android-opengl-gles20-with-glteximage2d
 
 object TextureCache {
@@ -12,6 +12,7 @@ object TextureCache {
 
     private val textures = mutableMapOf<String, Texture>()
 
+    // TODO - resources extension method
     fun get(resources: Resources, resId: Int): Texture {
         val key = "$RESOURCE_CACHE_SCHEME:$resId"
 
@@ -26,8 +27,10 @@ object TextureCache {
         }
     }
 
-    fun clear() {
-        textures.values.forEach(Texture::destroy)
+    fun clear(destroy: Boolean = false) {
+        if (destroy) {
+            textures.values.forEach(Texture::destroy)
+        }
         textures.clear()
     }
 

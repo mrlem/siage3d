@@ -3,6 +3,7 @@ package org.mrlem.k3d.core.common.gl
 import android.opengl.GLES30.*
 import org.mrlem.k3d.core.common.io.toBuffer
 import org.mrlem.k3d.core.scene.shaders.DefaultShader
+import org.mrlem.k3d.core.scene.shapes.Mesh
 import java.nio.IntBuffer
 
 class Vao private constructor(val indicesCount: Int) {
@@ -37,18 +38,13 @@ class Vao private constructor(val indicesCount: Int) {
     companion object {
         private val arrays = IntBuffer.allocate(1)
 
-        fun load(
-            positions: FloatArray,
-            textureCoords: FloatArray,
-            normals: FloatArray,
-            indices: ShortArray
-        ): Vao {
-            return Vao(indices.size).apply {
+        fun load(mesh: Mesh): Vao {
+            return Vao(mesh.indices.size).apply {
                 use {
-                    addVbo { toAttribute(DefaultShader.ATTR_POSITIONS, 3, positions.toBuffer()) }
-                    addVbo { toAttribute(DefaultShader.ATTR_TEXCOORDS, 2, textureCoords.toBuffer()) }
-                    addVbo { toAttribute(DefaultShader.ATTR_NORMALS, 3, normals.toBuffer()) }
-                    addVbo { toIndexBuffer(indices.toBuffer()) }
+                    addVbo { toAttribute(DefaultShader.ATTR_POSITIONS, 3, mesh.positions.toBuffer()) }
+                    addVbo { toAttribute(DefaultShader.ATTR_TEXCOORDS, 2, mesh.texCoords.toBuffer()) }
+                    addVbo { toAttribute(DefaultShader.ATTR_NORMALS, 3, mesh.normals.toBuffer()) }
+                    addVbo { toIndexBuffer(mesh.indices.toBuffer()) }
                 }
                 glBindBuffer(GL_ARRAY_BUFFER, 0)
                 glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0)
