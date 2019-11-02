@@ -21,6 +21,16 @@ abstract class SceneActivity : AppCompatActivity() {
         initFullscreen()
     }
 
+    override fun onResume() {
+        super.onResume()
+        sceneView.onResume()
+    }
+
+    override fun onPause() {
+        sceneView.onPause()
+        super.onPause()
+    }
+
     private fun initFullscreen() {
         val uiVisibility = window.decorView.systemUiVisibility
         window.decorView.systemUiVisibility = uiVisibility or
