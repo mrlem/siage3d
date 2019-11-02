@@ -3,6 +3,8 @@ package org.mrlem.k3d.core.scene.shapes
 import android.opengl.GLES30.*
 import org.mrlem.k3d.core.common.gl.Vao
 
+// TODO - major - add model loader
+
 open class Shape(
     positions: FloatArray,
     texCoords: FloatArray,

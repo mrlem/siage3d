@@ -13,6 +13,8 @@ import org.mrlem.k3d.core.scene.shaders.Shader
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
+// TODO - move draw code to shader? (only he nows about its attributes and how to map them to the shape's vao)
+
 class SceneView(context: Context, attributes: AttributeSet) : GLSurfaceView(context, attributes) {
 
     var adapter: SceneAdapter? = null
