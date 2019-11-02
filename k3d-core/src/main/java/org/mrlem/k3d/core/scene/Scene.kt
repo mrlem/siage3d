@@ -11,7 +11,7 @@ class Scene : GroupNode("Scene") {
     val skyColor: Color = Color(0f, 0f, 0f)
     val camera: Camera = Camera()
 
-    fun render() {
+    internal fun render() {
         // draw sky
         skyColor.components.let { components ->
             GLES30.glClearColor(components[0], components[1], components[2], 1f)

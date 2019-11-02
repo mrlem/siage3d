@@ -6,7 +6,7 @@ import org.joml.Vector3f
 import java.nio.FloatBuffer
 import kotlin.system.exitProcess
 
-abstract class Shader(vertexSource: String, fragmentSource: String) {
+open class Shader(vertexSource: String, fragmentSource: String) {
 
     private val programId: Int
     private val vertexShaderId: Int
@@ -53,36 +53,36 @@ abstract class Shader(vertexSource: String, fragmentSource: String) {
         glDeleteProgram(programId)
     }
 
-    abstract fun getAllUniformLocations()
+    open fun getAllUniformLocations() {}
 
-    fun getUniformLocation(uniformName: String) = glGetUniformLocation(programId, uniformName)
+    protected fun getUniformLocation(uniformName: String) = glGetUniformLocation(programId, uniformName)
 
-    fun loadInt(location: Int, value: Int) {
+    protected fun loadInt(location: Int, value: Int) {
         glUniform1i(location, value)
     }
 
-    fun loadFloat(location: Int, value: Float) {
+    protected fun loadFloat(location: Int, value: Float) {
         glUniform1f(location, value)
     }
 
-    fun loadVector(location: Int, vector: Vector3f) {
+    protected fun loadVector(location: Int, vector: Vector3f) {
         glUniform3f(location, vector.x, vector.y, vector.z)
     }
 
-    fun loadBoolean(location: Int, boolean: Boolean) {
+    protected fun loadBoolean(location: Int, boolean: Boolean) {
         glUniform1f(location, if (boolean) 1f else 0f )
     }
 
-    fun loadMatrix(location: Int, matrix: Matrix4f) {
+    protected fun loadMatrix(location: Int, matrix: Matrix4f) {
         matrix.get(matrixBuffer)
         glUniformMatrix4fv(location, 1, false,
             matrixBuffer
         )
     }
 
-    abstract fun bindAttributes()
+    open fun bindAttributes() {}
 
-    fun bindAttribute(attribute: Int, variableName: String) {
+    protected fun bindAttribute(attribute: Int, variableName: String) {
         glBindAttribLocation(programId, attribute, variableName)
     }
 

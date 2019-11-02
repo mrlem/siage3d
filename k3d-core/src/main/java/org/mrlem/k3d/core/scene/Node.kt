@@ -17,7 +17,7 @@ abstract class Node(
     protected val globalTransform = Matrix4f()
 
     @CallSuper
-    open fun update() {
+    internal open fun update() {
         val parent = parent
         if (parent != null) {
             globalTransform.set(parent.globalTransform)
