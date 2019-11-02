@@ -34,6 +34,7 @@ class SceneView(context: Context, attributes: AttributeSet) : GLSurfaceView(cont
         }
 
         override fun onSurfaceChanged(gl: GL10?, width: Int, height: Int) {
+            glViewport(0, 0, width, height)
             adapter?.resize(width, height)
         }
 

@@ -42,7 +42,7 @@ open class ObjectNode(
     fun render() {
         Shader.defaultShader.loadTransformationMatrix(globalTransform)
 
-        // draw the shape: material is handled at scene-leve
+        // draw the shape: material is handled at scene-level
         shape.draw()
     }
 

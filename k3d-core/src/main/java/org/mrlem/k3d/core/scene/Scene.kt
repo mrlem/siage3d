@@ -18,13 +18,13 @@ class Scene : GroupNode("Scene") {
             GLES30.glClear(GLES30.GL_COLOR_BUFFER_BIT or GL10.GL_DEPTH_BUFFER_BIT)
         }
 
-        // apply camera
-        camera.use()
-
         // draw scene
         // .. sort object nodes by material so as to optimize texture changes & such
         val sortedObjects = sortObjects()
         Shader.defaultShader.use {
+            // apply camera
+            camera.use()
+
             sortedObjects.keys.forEach { material ->
                 material.use {
                     sortedObjects[material]?.forEach(ObjectNode::render)

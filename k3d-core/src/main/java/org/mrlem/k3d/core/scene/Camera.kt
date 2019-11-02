@@ -24,7 +24,6 @@ class Camera(
 
     fun update(width: Int, height: Int) {
         aspectRatio = width.toFloat() / height
-        GLES30.glViewport(0, 0, width, height)
 
         projectionMatrix.perspective(Math.toRadians(fov).toFloat(), aspectRatio, near, far)
         Shader.defaultShader.loadProjectionMatrix(projectionMatrix)
