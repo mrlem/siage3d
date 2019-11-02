@@ -17,10 +17,10 @@ class Square : Shape(
         )
 
         private val texCoords = floatArrayOf(
-            -0.5f,  0.5f,
-            -0.5f, -0.5f,
-            0.5f, -0.5f,
-            0.5f,  0.5f
+            0f, 1f,
+            0f, 0f,
+            1f, 0f,
+            1f, 1f
         )
 
         private val indices = shortArrayOf(0, 1, 2, 0, 2, 3)

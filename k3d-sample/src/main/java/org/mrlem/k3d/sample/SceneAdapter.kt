@@ -11,8 +11,6 @@ import org.mrlem.k3d.core.scene.shapes.Square
 import kotlin.math.sin
 
 // TODO - critical - rendering works only after rotating the screen
-// TODO - major - texture not rendered
-
 // TODO - optional - kotlin dsl for scene / subgraph init
 
 class SceneAdapter(
@@ -30,7 +28,6 @@ class SceneAdapter(
         scene.apply {
             camera
                 .position(Vector3f(0f, 0f, 0f))
-//                .pitch = 90f
             skyColor.set(.6f, .8f, 1f)
             add(
                 ObjectNode(square, material),
@@ -47,7 +44,7 @@ class SceneAdapter(
         val value = sin(time / 2) * 0.5f + .5f
 
         // animate camera
-        scene.camera.position.z = value * 3f + 1f
+        scene.camera.position.z = value * scene.camera.far + 1f
     }
 
 }

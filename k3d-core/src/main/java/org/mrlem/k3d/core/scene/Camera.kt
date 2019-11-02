@@ -12,9 +12,9 @@ class Camera(
     var roll: Float = 0f
 ) {
 
-    private val near = 0.1f
-    private val far = 100f
-    private val fov = 70.0
+    val near = 0.1f
+    val far = 300f
+    val fov = 70.0
 
     private val projectionMatrix = Matrix4f()
     private var aspectRatio = 1f

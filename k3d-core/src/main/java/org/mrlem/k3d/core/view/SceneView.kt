@@ -14,8 +14,8 @@ import org.mrlem.k3d.core.scene.shaders.Shader
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
-// TODO - one shader instance per type of objects, so you don't have to constantly load uniforms, juste useProgram
-// TODO - move draw code to shader? (only he nows about its attributes and how to map them to the shape's vao)
+// TODO - optional - move draw code to shader? (only he knows about its attributes and how to map them to the shape's vao)
+// TODO - optional - replace vectors / matrices with float[] and android matrices + ext functions?
 
 class SceneView(context: Context, attributes: AttributeSet) : GLSurfaceView(context, attributes) {
 
