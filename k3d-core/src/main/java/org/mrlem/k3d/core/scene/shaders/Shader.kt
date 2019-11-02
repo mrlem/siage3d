@@ -19,9 +19,9 @@ open class Shader(vertexSource: String, fragmentSource: String) {
         programId = glCreateProgram()
         glAttachShader(programId, vertexShaderId)
         glAttachShader(programId, fragmentShaderId)
+        bindAttributes()
         glLinkProgram(programId)
         glValidateProgram(programId)
-        bindAttributes()
         getAllUniformLocations()
     }
 

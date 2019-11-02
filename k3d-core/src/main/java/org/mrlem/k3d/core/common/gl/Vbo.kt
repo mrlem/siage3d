@@ -17,7 +17,7 @@ class Vbo {
         glBindBuffer(GL_ARRAY_BUFFER, id)
         glBufferData(GL_ARRAY_BUFFER, buffer.capacity() * BYTES_PER_FLOAT, buffer, GL_STATIC_DRAW)
         glEnableVertexAttribArray(attributeNumber)
-        glVertexAttribPointer(attributeNumber, components, GL_FLOAT, false, 0, 0)
+        glVertexAttribPointer(attributeNumber, components, GL_FLOAT, false, components * BYTES_PER_FLOAT, 0)
     }
 
     fun toIndexBuffer(buffer: ShortBuffer) {

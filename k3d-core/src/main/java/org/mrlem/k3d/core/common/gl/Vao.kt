@@ -8,7 +8,6 @@ import java.nio.IntBuffer
 class Vao private constructor(val indicesCount: Int) {
 
     private val id: Int
-
     private val vbos: MutableList<Vbo> = mutableListOf()
 
     init {
@@ -31,8 +30,8 @@ class Vao private constructor(val indicesCount: Int) {
     }
 
     private fun addVbo(block: Vbo.() -> Unit) = Vbo().also {
-        it.block()
         vbos.add(it)
+        it.block()
     }
 
     companion object {
@@ -46,11 +45,13 @@ class Vao private constructor(val indicesCount: Int) {
         ): Vao {
             return Vao(indices.size).apply {
                 use {
-                    addVbo { toIndexBuffer(indices.toBuffer()) }
                     addVbo { toAttribute(DefaultShader.ATTR_POSITIONS, 3, positions.toBuffer()) }
                     addVbo { toAttribute(DefaultShader.ATTR_TEXCOORDS, 2, textureCoords.toBuffer()) }
                     addVbo { toAttribute(DefaultShader.ATTR_NORMALS, 3, normals.toBuffer()) }
+                    addVbo { toIndexBuffer(indices.toBuffer()) }
                 }
+                glBindBuffer(GL_ARRAY_BUFFER, 0)
+                glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0)
             }
         }
     }
