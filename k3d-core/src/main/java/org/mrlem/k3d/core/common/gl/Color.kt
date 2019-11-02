@@ -17,11 +17,4 @@ class Color(
         components[2] = blue
     }
 
-    companion object {
-        val BLUE = Color(0f, 0f, 1f)
-        val GREEN = Color(0f, 1f, 0f)
-        val RED = Color(1f, 0f, 0f)
-        val WHITE = Color(1f, 1f, 1f)
-    }
-
 }
