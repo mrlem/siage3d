@@ -1,18 +1,20 @@
 package org.mrlem.k3d.core.common.io
 
+import java.nio.ByteBuffer
+import java.nio.ByteOrder
 import java.nio.FloatBuffer
 import java.nio.ShortBuffer
 
 fun FloatArray.toBuffer(): FloatBuffer {
-    val buffer = FloatBuffer.allocate(this.size)
-    buffer.put(this).flip()
-
-    return buffer
+    val buffer = ByteBuffer.allocateDirect(size * 4).order(ByteOrder.nativeOrder())
+    return buffer.asFloatBuffer().put(this).also {
+        it.position(0)
+    }
 }
 
 fun ShortArray.toBuffer(): ShortBuffer {
-    val buffer = ShortBuffer.allocate(this.size)
-    buffer.put(this).flip()
-
-    return buffer
+    val buffer = ByteBuffer.allocateDirect(size * 2).order(ByteOrder.nativeOrder())
+    return buffer.asShortBuffer().put(this).also {
+        it.position(0)
+    }
 }
