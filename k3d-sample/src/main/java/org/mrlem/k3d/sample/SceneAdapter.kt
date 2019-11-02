@@ -10,7 +10,9 @@ import org.mrlem.k3d.core.scene.materials.TextureMaterial
 import org.mrlem.k3d.core.scene.shapes.Square
 import kotlin.math.sin
 
-// TODO - critical - nothing rendered :p
+// TODO - critical - rendering works only after rotating the screen
+// TODO - major - texture not rendered
+
 // TODO - optional - kotlin dsl for scene / subgraph init
 
 class SceneAdapter(
@@ -19,34 +21,33 @@ class SceneAdapter(
 
     override var scene = Scene()
 
-    private lateinit var square: ObjectNode
     private var time = 0f
 
     override fun onInit() {
-        square = ObjectNode(
-            Square(),
-            TextureMaterial(TextureCache.get(resources, R.drawable.white))
-        )
+        val square = Square()
+        val material = TextureMaterial(TextureCache.get(resources, R.drawable.white))
+
         scene.apply {
             camera
                 .position(Vector3f(0f, 0f, 0f))
-                .lookAt(Vector3f(0f, 0f, 0f))
-                .pitch = 90f
+//                .pitch = 90f
             skyColor.set(.6f, .8f, 1f)
-            add(square)
+            add(
+                ObjectNode(square, material),
+                ObjectNode(square, material).apply { position(Vector3f(1f, 1f, 0f)) },
+                ObjectNode(square, material).apply { position(Vector3f(1f, -1f, 0f)) },
+                ObjectNode(square, material).apply { position(Vector3f(-1f, -1f, 0f)) },
+                ObjectNode(square, material).apply { position(Vector3f(-1f, 1f, 0f)) }
+            )
         }
     }
 
     override fun onUpdate(delta: Float) {
         time += delta
+        val value = sin(time / 2) * 0.5f + .5f
 
         // animate camera
-        scene.camera.yaw += .1f
-
-        val value = sin(time) * .5f + .5f
-
-        // animate node
-        square.position(Vector3f(0f, 0f, value))
+        scene.camera.position.z = value * 3f + 1f
     }
 
 }
