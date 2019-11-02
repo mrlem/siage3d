@@ -20,8 +20,9 @@ abstract class Node(
     internal open fun update() {
         val parent = parent
         if (parent != null) {
-            globalTransform.set(parent.globalTransform)
-            globalTransform.mul(localTransform)
+            globalTransform
+                .set(parent.globalTransform)
+                .mul(localTransform)
         } else {
             globalTransform.set(localTransform)
         }
@@ -30,6 +31,8 @@ abstract class Node(
     fun position(position: Vector3f) {
         localTransform.setTranslation(position)
     }
+
+    // TODO - rotation primitive: store position & rotation separately?
 
 }
 

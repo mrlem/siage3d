@@ -1,10 +1,9 @@
 package org.mrlem.k3d.core.scene
 
-import android.opengl.GLES30
+import android.opengl.GLES30.*
 import org.mrlem.k3d.core.common.gl.Color
 import org.mrlem.k3d.core.scene.materials.Material
 import org.mrlem.k3d.core.scene.shaders.Shader
-import javax.microedition.khronos.opengles.GL10
 
 class Scene : GroupNode("Scene") {
 
@@ -14,20 +13,20 @@ class Scene : GroupNode("Scene") {
     internal fun render() {
         // draw sky
         skyColor.components.let { components ->
-            GLES30.glClearColor(components[0], components[1], components[2], 1f)
-            GLES30.glClear(GLES30.GL_COLOR_BUFFER_BIT or GL10.GL_DEPTH_BUFFER_BIT)
+            glClearColor(components[0], components[1], components[2], 1f)
+            glClear(GL_COLOR_BUFFER_BIT or GL_DEPTH_BUFFER_BIT)
         }
 
-        // draw scene
-        // .. sort object nodes by material so as to optimize texture changes & such
-        val sortedObjects = sortObjects()
         Shader.defaultShader.use {
             // apply camera
             camera.use()
 
-            sortedObjects.keys.forEach { material ->
+            // draw scene
+            // .. sort object nodes by material so as to optimize texture changes & such
+            val sortedObjects = sortObjects()
+            sortedObjects.forEach { (material, nodes) ->
                 material.use {
-                    sortedObjects[material]?.forEach(ObjectNode::render)
+                    nodes.forEach(ObjectNode::render)
                 }
             }
         }

@@ -1,6 +1,5 @@
 package org.mrlem.k3d.core.scene
 
-import android.opengl.GLES30
 import org.joml.Matrix4f
 import org.joml.Vector3f
 import org.mrlem.k3d.core.scene.shaders.Shader
@@ -14,7 +13,7 @@ class Camera(
 ) {
 
     private val near = 0.1f
-    private val far = 1000f
+    private val far = 100f
     private val fov = 70.0
 
     private val projectionMatrix = Matrix4f()
