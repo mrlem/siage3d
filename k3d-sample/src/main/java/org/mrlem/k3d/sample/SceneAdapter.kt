@@ -27,8 +27,7 @@ class SceneAdapter(
         val material = TextureMaterial(TextureCache.get(resources, R.raw.model_tree_lowpoly_texture))
 
         scene.apply {
-            camera
-                .position(Vector3f(0f, 0f, 100f))
+            camera.position(Vector3f(0f, 0f, 1f))
             skyColor.set(.6f, .8f, 1f)
             add(
                 ObjectNode(square, material),
@@ -42,18 +41,18 @@ class SceneAdapter(
 
     override fun onUpdate(delta: Float) {
         time += delta
-        val value = sin(time / 2) * 0.5f + .5f
 
         // animate camera
-        val fasterValue = sin(time * 4) * 0.5f + .5f
-        scene.camera.pitch = fasterValue * 5
-        scene.camera.position.z = value * scene.camera.far / 2 + 1f
+        val value = sin(time * 4) * 0.5f + .5f
+        scene.camera.pitch = value * 5
+        scene.camera.position.z = value * 10 + 1f
 
-        scene.rotation(Vector3f(0f, 0f, fasterValue))
-        scene.children[1].rotation(Vector3f(0f, 0f, fasterValue))
-        scene.children[2].rotation(Vector3f(0f, 0f, fasterValue))
-        scene.children[3].rotation(Vector3f(0f, 0f, fasterValue))
-        scene.children[4].rotation(Vector3f(0f, 0f, fasterValue))
+        // animate the scene
+        scene.rotation(Vector3f(0f, 0f, value))
+        scene.children[1].rotation(Vector3f(0f, 0f, value))
+        scene.children[2].rotation(Vector3f(0f, 0f, value))
+        scene.children[3].rotation(Vector3f(0f, 0f, value))
+        scene.children[4].rotation(Vector3f(0f, 0f, value))
     }
 
 }

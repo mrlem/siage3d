@@ -34,7 +34,7 @@ class Camera(
     }
 
     fun position(position: Vector3f): Camera {
-        position.set(position)
+        this.position.set(position)
         return this
     }
 
