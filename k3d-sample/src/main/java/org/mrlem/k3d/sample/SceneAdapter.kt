@@ -22,7 +22,7 @@ class SceneAdapter(
     private var time = 0f
 
     override fun onInit() {
-        // TODO - major - make it work with obj loader shape
+        // TODO - major - fails with obj loader shapes: why?
         val square = Square() //Shape(resources, R.raw.model_tree_lowpoly_mesh)
         val material = TextureMaterial(TextureCache.get(resources, R.raw.model_tree_lowpoly_texture))
 

@@ -1,23 +1,26 @@
 package org.mrlem.k3d.core.scene.shapes
 
+import android.content.res.Resources
 import android.opengl.GLES30.*
 import org.mrlem.k3d.core.common.gl.Vao
 import org.mrlem.k3d.core.common.io.VaoCache
 
-// TODO - major - add model loader
-
-open class Shape(
-    positions: FloatArray,
-    texCoords: FloatArray,
-    indices: ShortArray,
-    normals: FloatArray
-) {
+open class Shape {
 
     private val vao: Vao
 
-    init {
+    constructor(
+        positions: FloatArray,
+        texCoords: FloatArray,
+        indices: ShortArray,
+        normals: FloatArray
+    ) {
         val identifier = javaClass.simpleName
         vao = VaoCache.get(identifier, Mesh(positions, texCoords, indices, normals))
+    }
+
+    constructor(resources: Resources, resId: Int) {
+        vao = VaoCache.get(resources, resId)
     }
 
     fun draw() {
