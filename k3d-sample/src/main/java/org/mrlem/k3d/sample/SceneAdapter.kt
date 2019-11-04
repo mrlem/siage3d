@@ -22,12 +22,13 @@ class SceneAdapter(
     private var time = 0f
 
     override fun onInit() {
-        val square = Square()
-        val material = TextureMaterial(TextureCache.get(resources, R.drawable.white))
+        // TODO - major - make it work with obj loader shape
+        val square = Square() //Shape(resources, R.raw.model_tree_lowpoly_mesh)
+        val material = TextureMaterial(TextureCache.get(resources, R.raw.model_tree_lowpoly_texture))
 
         scene.apply {
             camera
-                .position(Vector3f(0f, 0f, 0f))
+                .position(Vector3f(0f, 0f, 100f))
             skyColor.set(.6f, .8f, 1f)
             add(
                 ObjectNode(square, material),
@@ -44,7 +45,15 @@ class SceneAdapter(
         val value = sin(time / 2) * 0.5f + .5f
 
         // animate camera
-        scene.camera.position.z = value * scene.camera.far + 1f
+        val fasterValue = sin(time * 4) * 0.5f + .5f
+        scene.camera.pitch = fasterValue * 5
+        scene.camera.position.z = value * scene.camera.far / 2 + 1f
+
+        scene.rotation(Vector3f(0f, 0f, fasterValue))
+        scene.children[1].rotation(Vector3f(0f, 0f, fasterValue))
+        scene.children[2].rotation(Vector3f(0f, 0f, fasterValue))
+        scene.children[3].rotation(Vector3f(0f, 0f, fasterValue))
+        scene.children[4].rotation(Vector3f(0f, 0f, fasterValue))
     }
 
 }

@@ -32,7 +32,9 @@ abstract class Node(
         localTransform.setTranslation(position)
     }
 
-    // TODO - rotation primitive: store position & rotation separately?
+    fun rotation(rotation: Vector3f) {
+        localTransform.setRotationXYZ(rotation.x, rotation.y, rotation.z)
+    }
 
 }
 
