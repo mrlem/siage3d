@@ -10,7 +10,6 @@ import org.mrlem.k3d.core.scene.materials.TextureMaterial
 import org.mrlem.k3d.core.scene.shapes.Square
 import kotlin.math.sin
 
-// TODO - critical - rendering works only after rotating the screen
 // TODO - optional - kotlin dsl for scene / subgraph init
 
 class SceneAdapter(

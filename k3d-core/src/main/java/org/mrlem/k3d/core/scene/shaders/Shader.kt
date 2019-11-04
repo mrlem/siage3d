@@ -27,7 +27,7 @@ open class Shader(vertexSource: String, fragmentSource: String) {
 
     fun use(block: Shader.() -> Unit ) {
         glUseProgram(programId)
-        block.invoke(this)
+        this.block()
         glUseProgram(0)
     }
 

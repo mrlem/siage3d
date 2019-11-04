@@ -24,7 +24,7 @@ class Camera(
     fun update(width: Int, height: Int) {
         aspectRatio = width.toFloat() / height
 
-        projectionMatrix.perspective(Math.toRadians(fov).toFloat(), aspectRatio, near, far)
+        projectionMatrix.setPerspective(Math.toRadians(fov).toFloat(), aspectRatio, near, far)
         Shader.defaultShader.loadProjectionMatrix(projectionMatrix)
     }
 
