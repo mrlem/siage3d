@@ -10,7 +10,6 @@ import org.mrlem.k3d.core.scene.materials.TextureMaterial
 import org.mrlem.k3d.core.scene.shapes.Box
 import kotlin.math.sin
 
-// TODO - major - onstop + onstart (app-list, then select app) causes dup'ed objects to appear
 // TODO - medium - camera fps controller
 // TODO - medium - skybox
 // TODO - minor - shader should be attached to material
@@ -32,6 +31,7 @@ class SceneAdapter(
         scene.apply {
             camera.position(Vector3f(0f, 0f, 1f))
             skyColor.set(.6f, .8f, 1f)
+            clear()
             add(
                 ObjectNode(cube, material),
                 ObjectNode(cube, material).apply { position(Vector3f(1f, 1f, 0f)) },

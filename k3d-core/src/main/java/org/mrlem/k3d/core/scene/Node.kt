@@ -78,6 +78,10 @@ open class GroupNode(
         }
     }
 
+    fun clear() {
+        _children.toList().forEach { remove(it) }
+    }
+
     fun remove(child: Node) {
         if (_children.remove(child)) {
             child.parent = null

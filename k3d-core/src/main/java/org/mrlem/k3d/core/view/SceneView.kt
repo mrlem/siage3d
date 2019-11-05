@@ -57,8 +57,8 @@ class SceneView(context: Context, attributes: AttributeSet) : GLSurfaceView(cont
 
     override fun surfaceDestroyed(holder: SurfaceHolder?) {
         adapter?.destroy()
-        VaoCache.clear()
-        TextureCache.clear()
+        VaoCache.clear(true)
+        TextureCache.clear(true)
         super.surfaceDestroyed(holder)
     }
 

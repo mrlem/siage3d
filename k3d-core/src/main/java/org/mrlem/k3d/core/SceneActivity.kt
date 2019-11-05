@@ -19,16 +19,12 @@ abstract class SceneActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         initFullscreen()
-    }
-
-    override fun onResume() {
-        super.onResume()
         sceneView.onResume()
     }
 
-    override fun onPause() {
+    override fun onStop() {
         sceneView.onPause()
-        super.onPause()
+        super.onStop()
     }
 
     private fun initFullscreen() {
