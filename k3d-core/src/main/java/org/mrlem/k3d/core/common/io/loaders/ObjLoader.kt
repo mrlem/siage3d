@@ -40,6 +40,14 @@ class ObjLoader {
 		val verticesArray = FloatArray(vertices.size * 3)
 		val texturesArray = FloatArray(vertices.size * 2)
 		val normalsArray = FloatArray(vertices.size * 3)
+        convertDataToArrays(
+            vertices,
+            textures,
+            normals,
+            verticesArray,
+            texturesArray,
+            normalsArray
+        )
 		val indicesArray = convertIndicesListToArray(indices)
         return Mesh(verticesArray, texturesArray, indicesArray, normalsArray)
     }
@@ -94,6 +102,30 @@ class ObjLoader {
             }
 
         }
+    }
+
+    private fun convertDataToArrays(vertices: List<Vertex>, textures: List<Vector2f>,
+                                    normals: List<Vector3f>, verticesArray: FloatArray, texturesArray: FloatArray,
+                                    normalsArray: FloatArray): Float {
+        var furthestPoint = 0f
+        vertices.forEachIndexed { index, value ->
+            if (value.length > furthestPoint) {
+                furthestPoint = value.length
+            }
+
+            val textureCoord = textures[value.textureIndex]
+            val normal = normals[value.normalIndex]
+
+            verticesArray[index * 3] = value.position.x
+            verticesArray[index * 3 + 1] = value.position.y
+            verticesArray[index * 3 + 2] = value.position.z
+            texturesArray[index * 2] = textureCoord.x
+            texturesArray[index * 2 + 1] = 1 - textureCoord.y
+            normalsArray[index * 3] = normal.x
+            normalsArray[index * 3 + 1] = normal.y
+            normalsArray[index * 3 + 2] = normal.z
+        }
+        return furthestPoint
     }
 
 	private fun removeUnusedVertices(vertices: List<Vertex>) {

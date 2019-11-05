@@ -2,7 +2,6 @@ package org.mrlem.k3d.core.scene
 
 import androidx.annotation.CallSuper
 import org.joml.Matrix4f
-import org.joml.Vector3f
 import org.mrlem.k3d.core.scene.materials.Material
 import org.mrlem.k3d.core.scene.shaders.Shader
 import org.mrlem.k3d.core.scene.shapes.Shape
@@ -13,7 +12,7 @@ abstract class Node(
 
     var parent: GroupNode? = null
 
-    protected val localTransform: Matrix4f = Matrix4f()
+    val localTransform: Matrix4f = Matrix4f()
     protected val globalTransform = Matrix4f()
 
     @CallSuper
@@ -26,14 +25,6 @@ abstract class Node(
         } else {
             globalTransform.set(localTransform)
         }
-    }
-
-    fun position(position: Vector3f) {
-        localTransform.setTranslation(position)
-    }
-
-    fun rotation(rotation: Vector3f) {
-        localTransform.setRotationXYZ(rotation.x, rotation.y, rotation.z)
     }
 
 }
