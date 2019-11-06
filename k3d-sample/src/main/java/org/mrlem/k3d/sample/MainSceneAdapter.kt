@@ -9,15 +9,16 @@ import org.mrlem.k3d.core.scene.Scene
 import org.mrlem.k3d.core.scene.materials.TextureMaterial
 import org.mrlem.k3d.core.scene.shapes.Box
 import org.mrlem.k3d.core.scene.shapes.Shape
+import org.mrlem.k3d.core.view.SceneAdapter
 import kotlin.math.sin
 
 // TODO - medium - skybox
 // TODO - minor - shader should be attached to material
 // TODO - optional - kotlin dsl for scene / subgraph init
 
-class SceneAdapter(
+class MainSceneAdapter(
     private val resources: Resources
-) : org.mrlem.k3d.core.view.SceneAdapter() {
+) : SceneAdapter() {
 
     override var scene = Scene()
     var motion = 0f

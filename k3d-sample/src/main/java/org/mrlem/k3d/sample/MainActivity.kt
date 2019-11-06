@@ -7,7 +7,7 @@ import org.mrlem.k3d.core.SceneActivity
 
 class MainActivity : SceneActivity() {
 
-    override val sceneAdapter by lazy { SceneAdapter(resources) }
+    override val sceneAdapter by lazy { MainSceneAdapter(resources) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
