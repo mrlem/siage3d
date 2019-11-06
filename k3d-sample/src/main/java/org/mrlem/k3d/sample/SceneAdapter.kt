@@ -11,7 +11,6 @@ import org.mrlem.k3d.core.scene.shapes.Box
 import org.mrlem.k3d.core.scene.shapes.Shape
 import kotlin.math.sin
 
-// TODO - medium - camera fps controller
 // TODO - medium - skybox
 // TODO - minor - shader should be attached to material
 // TODO - optional - kotlin dsl for scene / subgraph init
@@ -21,6 +20,7 @@ class SceneAdapter(
 ) : org.mrlem.k3d.core.view.SceneAdapter() {
 
     override var scene = Scene()
+    var motion = 0f
 
     private var time = 0f
 
@@ -49,9 +49,10 @@ class SceneAdapter(
         time += delta
 
         // animate camera
-        val value = sin(time * 2) * 0.5f + .5f
+        scene.camera.position.z += motion * delta
 
         // animate the scene
+        val value = sin(time) * 0.5f + .5f
         scene.children.first().localTransform.setRotationXYZ(0f, value * 6f, 0f)
     }
 
