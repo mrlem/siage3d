@@ -30,7 +30,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.core:core-ktx:1.1.0'
 
-    api "org.joml:joml:1.9.6"
+    api "org.joml:joml:1.9.16"
 
     testImplementation 'junit:junit:4.12'
 
