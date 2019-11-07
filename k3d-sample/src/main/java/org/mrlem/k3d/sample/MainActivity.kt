@@ -1,9 +1,9 @@
 package org.mrlem.k3d.sample
 
 import android.os.Bundle
-import android.view.MotionEvent
 import kotlinx.android.synthetic.main.activity_main.*
 import org.mrlem.k3d.core.SceneActivity
+import org.mrlem.k3d.core.view.DirectionPadView
 
 class MainActivity : SceneActivity() {
 
@@ -12,30 +12,17 @@ class MainActivity : SceneActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // TODO - minor - add game pad view to core
-
-        topArrow.setOnTouchListener { _, event ->
-            when (event.action) {
-                MotionEvent.ACTION_DOWN -> {
-                    sceneAdapter.motion = -40f
-                }
-                MotionEvent.ACTION_UP -> {
-                    sceneAdapter.motion = 0f
-                }
-            }
-            false
-        }
-
-        bottomArrow.setOnTouchListener { _, event ->
-            when (event.action) {
-                MotionEvent.ACTION_DOWN -> {
-                    sceneAdapter.motion = 40f
-                }
-                MotionEvent.ACTION_UP -> {
-                    sceneAdapter.motion = 0f
+        pad.onDirectionPadListener = object : DirectionPadView.OnDirectionPadListener {
+            override fun onDirectionChanged(direction: DirectionPadView.Direction?) {
+                println("direction: $direction")
+                when (direction) {
+                    DirectionPadView.Direction.UP -> sceneAdapter.motion.set(0f, 0f, -40f)
+                    DirectionPadView.Direction.DOWN -> sceneAdapter.motion.set(0f, 0f, 40f)
+                    DirectionPadView.Direction.LEFT -> sceneAdapter.motion.set(-40f, 0f, 0f)
+                    DirectionPadView.Direction.RIGHT -> sceneAdapter.motion.set(40f, 0f, 0f)
+                    else -> sceneAdapter.motion.set(0f, 0f, 0f)
                 }
             }
-            false
         }
     }
 

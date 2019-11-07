@@ -21,7 +21,7 @@ class MainSceneAdapter(
 ) : SceneAdapter() {
 
     override var scene = Scene()
-    var motion = 0f
+    var motion = Vector3f()
 
     private var time = 0f
 
@@ -50,7 +50,7 @@ class MainSceneAdapter(
         time += delta
 
         // animate camera
-        scene.camera.position.z += motion * delta
+        scene.camera.position.add(motion.x * delta, motion.y * delta, motion.z * delta)
 
         // animate the scene
         val value = sin(time) * 0.5f + .5f

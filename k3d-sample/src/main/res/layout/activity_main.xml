@@ -16,32 +16,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageButton
-        android:id="@+id/bottomArrow"
+    <org.mrlem.k3d.core.view.DirectionPadView
+        android:id="@+id/pad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:background="@drawable/bg_button"
-        android:contentDescription="@null"
-        android:padding="16dp"
-        android:rotation="90"
-        android:src="@drawable/ic_play_arrow_black_24dp"
-        android:tint="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <ImageButton
-        android:id="@+id/topArrow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:background="@drawable/bg_button"
-        android:contentDescription="@null"
-        android:padding="16dp"
-        android:rotation="270"
-        android:src="@drawable/ic_play_arrow_black_24dp"
-        android:tint="@android:color/white"
-        app:layout_constraintBottom_toTopOf="@id/bottomArrow"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
