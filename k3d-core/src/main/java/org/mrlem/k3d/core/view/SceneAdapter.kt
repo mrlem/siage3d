@@ -1,13 +1,17 @@
 package org.mrlem.k3d.core.view
 
+import org.mrlem.k3d.core.render.SceneRenderer
+import org.mrlem.k3d.core.render.SortedMaterialsSceneRenderer
 import org.mrlem.k3d.core.scene.Scene
 import org.mrlem.k3d.core.scene.shaders.Shader
 
 abstract class SceneAdapter {
 
     abstract val scene: Scene
+    private lateinit var sceneRenderer: SceneRenderer
 
     internal fun init() {
+        sceneRenderer = SortedMaterialsSceneRenderer(scene)
         onInit()
     }
 
@@ -21,7 +25,7 @@ abstract class SceneAdapter {
     internal fun update(delta: Float) {
         onUpdate(delta)
         scene.update()
-        scene.render()
+        sceneRenderer.render()
     }
 
     internal fun destroy() {

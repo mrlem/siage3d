@@ -4,6 +4,7 @@ import android.content.res.Resources
 import org.joml.Vector3f
 import org.mrlem.k3d.R
 import org.mrlem.k3d.core.common.io.TextureCache
+import org.mrlem.k3d.core.scene.GroupNode
 import org.mrlem.k3d.core.scene.ObjectNode
 import org.mrlem.k3d.core.scene.Scene
 import org.mrlem.k3d.core.scene.materials.TextureMaterial
@@ -30,19 +31,38 @@ class MainSceneAdapter(
         val treeMaterial = TextureMaterial(TextureCache.get(resources, R.raw.model_tree_lowpoly_texture))
 
         val ground = Box()
-        val groundMaterial = TextureMaterial(TextureCache.get(resources, R.drawable.white))
+        val groundMaterial = TextureMaterial(TextureCache.get(resources, R.raw.crate1_diffuse))
 
         scene.apply {
             camera.position(Vector3f(0f, 6f, 5f))
             skyColor.set(.6f, .8f, 1f)
+            localTransform.setTranslation(0f, 0f, -30f)
             clear()
             add(
-                ObjectNode(tree, treeMaterial).apply { localTransform.setTranslation(0f, 0f, -30f) },
-                ObjectNode(ground, groundMaterial).apply {
-                    localTransform.scale(30f)
-                    localTransform.setTranslation(Vector3f(0f, -15f, -30f))
+                GroupNode().apply {
+/*                    add(
+                        ObjectNode(tree, treeMaterial),
+                        ObjectNode(ground, groundMaterial).apply {
+                            localTransform.scale(30f)
+                            localTransform.setTranslation(Vector3f(0f, -15f, 0f))
+                        }
+                    )*/
                 }
             )
+        }
+
+        (scene.children.first() as GroupNode).apply {
+            (-10 .. 10).forEach { x ->
+                (-10 .. 10).forEach { y ->
+                    (-0 .. 0).forEach { z ->
+                        add(ObjectNode(tree, treeMaterial).apply {
+                            val spacing = 1.4f
+                            localTransform.setTranslation(Vector3f(x * spacing, y * spacing, z * spacing))
+                            localTransform.scale(0.05f)
+                        })
+                    }
+                }
+            }
         }
     }
 
@@ -54,7 +74,8 @@ class MainSceneAdapter(
 
         // animate the scene
         val value = sin(time) * 0.5f + .5f
-        scene.children.first().localTransform.setRotationXYZ(0f, value * 6f, 0f)
+        scene.children.first().localTransform
+            .setRotationXYZ(0f, value * 6f, 0f)
     }
 
 }
