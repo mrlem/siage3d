@@ -1,12 +1,12 @@
 package org.mrlem.k3d.core.scene.materials
 
 import android.opengl.GLES30.*
-import org.mrlem.k3d.core.common.gl.Texture
+import org.mrlem.k3d.core.common.gl.Texture2D
 import org.mrlem.k3d.core.scene.shaders.DefaultShader
 import org.mrlem.k3d.core.scene.shaders.Shader
 
 class TextureMaterial(
-    private val texture: Texture,
+    private val texture: Texture2D,
     private var shineDamper: Float = 1f,
     private var reflectvity: Float = 0f,
     private val hasTransparency: Boolean = false,
@@ -37,7 +37,7 @@ class TextureMaterial(
     }
 
     companion object {
-        private val activeTexture: Texture? = null
+        private val activeTexture: Texture2D? = null
     }
 
 }

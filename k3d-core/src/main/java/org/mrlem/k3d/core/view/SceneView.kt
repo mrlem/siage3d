@@ -6,7 +6,7 @@ import android.opengl.GLSurfaceView
 import android.util.AttributeSet
 import android.view.SurfaceHolder
 import org.mrlem.k3d.core.R
-import org.mrlem.k3d.core.common.io.TextureCache
+import org.mrlem.k3d.core.common.io.Texture2DCache
 import org.mrlem.k3d.core.common.io.VaoCache
 import org.mrlem.k3d.core.common.io.readText
 import org.mrlem.k3d.core.scene.shaders.DefaultShader
@@ -58,7 +58,7 @@ class SceneView(context: Context, attributes: AttributeSet) : GLSurfaceView(cont
     override fun surfaceDestroyed(holder: SurfaceHolder?) {
         adapter?.destroy()
         VaoCache.clear(true)
-        TextureCache.clear(true)
+        Texture2DCache.clear(true)
         super.surfaceDestroyed(holder)
     }
 

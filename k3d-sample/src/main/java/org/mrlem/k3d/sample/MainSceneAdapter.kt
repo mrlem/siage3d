@@ -3,7 +3,7 @@ package org.mrlem.k3d.sample
 import android.content.res.Resources
 import org.joml.Vector3f
 import org.mrlem.k3d.R
-import org.mrlem.k3d.core.common.io.TextureCache
+import org.mrlem.k3d.core.common.io.readTexture2D
 import org.mrlem.k3d.core.scene.GroupNode
 import org.mrlem.k3d.core.scene.ObjectNode
 import org.mrlem.k3d.core.scene.Scene
@@ -32,11 +32,11 @@ class MainSceneAdapter(
 
     override fun onInit() {
         val tree = Shape(resources, R.raw.model_tree_lowpoly_mesh)
-        val treeMaterial = TextureMaterial(TextureCache.get(resources, R.raw.model_tree_lowpoly_texture))
+        val treeMaterial = TextureMaterial(resources.readTexture2D(R.raw.model_tree_lowpoly_texture))
 
         val box = Box()
-        val crateMaterial = TextureMaterial(TextureCache.get(resources, R.raw.crate1_diffuse))
-        val whiteMaterial = TextureMaterial(TextureCache.get(resources, R.drawable.white))
+        val crateMaterial = TextureMaterial(resources.readTexture2D(R.raw.crate1_diffuse))
+        val whiteMaterial = TextureMaterial(resources.readTexture2D(R.drawable.white))
 
         // create scene
         scene.apply {

@@ -2,7 +2,7 @@ package org.mrlem.k3d.core.scene.sky
 
 import android.opengl.GLES30.*
 import org.joml.Vector3f
-import org.mrlem.k3d.core.common.gl.CubemapTexture
+import org.mrlem.k3d.core.common.gl.TextureCubemap
 
 sealed class Sky(
     val color: Vector3f
@@ -20,7 +20,7 @@ sealed class Sky(
     }
 
     class SkyBox(
-        texture: CubemapTexture,
+        texture: TextureCubemap,
         color: Vector3f
     ) : Sky(color) {
 
