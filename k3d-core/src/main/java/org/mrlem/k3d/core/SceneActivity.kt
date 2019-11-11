@@ -12,13 +12,13 @@ abstract class SceneActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        initFullscreen()
         setContentView(R.layout.activity_main)
         sceneView.adapter = sceneAdapter
     }
 
     override fun onStart() {
         super.onStart()
-        initFullscreen()
         sceneView.onResume()
     }
 

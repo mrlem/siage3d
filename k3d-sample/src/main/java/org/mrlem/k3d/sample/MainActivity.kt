@@ -16,10 +16,10 @@ class MainActivity : SceneActivity() {
             override fun onDirectionChanged(direction: DirectionPadView.Direction?) {
                 println("direction: $direction")
                 when (direction) {
-                    DirectionPadView.Direction.UP -> sceneAdapter.motion.set(0f, 0f, -40f)
-                    DirectionPadView.Direction.DOWN -> sceneAdapter.motion.set(0f, 0f, 40f)
-                    DirectionPadView.Direction.LEFT -> sceneAdapter.motion.set(-40f, 0f, 0f)
-                    DirectionPadView.Direction.RIGHT -> sceneAdapter.motion.set(40f, 0f, 0f)
+                    DirectionPadView.Direction.UP -> sceneAdapter.motion.set(0f, 0f, -2f)
+                    DirectionPadView.Direction.DOWN -> sceneAdapter.motion.set(0f, 0f, 2f)
+                    DirectionPadView.Direction.LEFT -> sceneAdapter.motion.set(-2f, 0f, 0f)
+                    DirectionPadView.Direction.RIGHT -> sceneAdapter.motion.set(2f, 0f, 0f)
                     else -> sceneAdapter.motion.set(0f, 0f, 0f)
                 }
             }
