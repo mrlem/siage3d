@@ -10,6 +10,7 @@ import org.mrlem.k3d.core.scene.Scene
 import org.mrlem.k3d.core.scene.materials.TextureMaterial
 import org.mrlem.k3d.core.scene.shapes.Box
 import org.mrlem.k3d.core.scene.shapes.Shape
+import org.mrlem.k3d.core.scene.sky.Sky
 import org.mrlem.k3d.core.view.SceneAdapter
 import kotlin.math.PI
 
@@ -40,7 +41,7 @@ class MainSceneAdapter(
         // create scene
         scene.apply {
             camera.position(Vector3f(0f, 1.75f, 5f))
-            skyColor.set(.6f, .8f, 1f)
+            sky = Sky.SkyColor(Vector3f(.6f, .8f, 1f))
             clear()
             add(GroupNode().also { rootNode = it })
         }
