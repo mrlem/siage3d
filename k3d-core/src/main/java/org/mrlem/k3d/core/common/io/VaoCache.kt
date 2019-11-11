@@ -5,41 +5,19 @@ import org.mrlem.k3d.core.common.gl.Vao
 import org.mrlem.k3d.core.common.io.loaders.ObjLoader
 import org.mrlem.k3d.core.scene.shapes.Mesh
 
-object VaoCache {
+object VaoCache : AbstractCache<Vao>() {
 
-    private const val RESOURCE_CACHE_SCHEME = "res"
-
-    private val vaos = mutableMapOf<String, Vao>()
-
-    fun get(resources: Resources, resId: Int): Vao {
-        val key = "$RESOURCE_CACHE_SCHEME:$resId"
-
-        // in cache?
-        vaos[key]?.also { cache -> return cache }
-
-        // or create it
-        return Vao.load(ObjLoader().load(resources.readText(resId))).also {
-            vaos[key] = it
-        }
+    override fun create(resources: Resources, resId: Int): Vao {
+        return Vao.load(ObjLoader().load(resources.readText(resId)))
     }
 
-    fun get(id: String, mesh: Mesh): Vao {
-        val key = "custom:$id"
-
-        // in cache?
-        vaos[key]?.also { cache -> return cache }
-
-        // or create it
-        return Vao.load(mesh).also {
-            vaos[key] = it
-        }
-    }
+    fun get(id: String, mesh: Mesh) = getOrCreate("custom:$id") { Vao.load(mesh) }
 
     fun clear(destroy: Boolean = false) {
+        super.clear()
         if (destroy) {
-            vaos.values.forEach(Vao::destroy)
+            objects.values.forEach(Vao::destroy)
         }
-        vaos.clear()
     }
 
 }
