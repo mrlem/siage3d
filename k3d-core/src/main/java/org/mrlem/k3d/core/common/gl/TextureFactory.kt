@@ -23,8 +23,8 @@ object TextureFactory {
         rightBitmap: Bitmap,
         bottomBitmap: Bitmap,
         topBitmap: Bitmap,
-        frontBitmap: Bitmap,
-        backBitmap: Bitmap
+        backBitmap: Bitmap,
+        frontBitmap: Bitmap
     ): TextureCubemap = TextureCubemap(createTexture()).apply {
         use {
             glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
@@ -37,8 +37,8 @@ object TextureFactory {
             texImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X, 0, rightBitmap, 0)
             texImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, 0, bottomBitmap, 0)
             texImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Y, 0, topBitmap, 0)
-            texImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Z, 0, frontBitmap, 0)
-            texImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Z, 0, backBitmap, 0)
+            texImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Z, 0, backBitmap, 0)
+            texImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Z, 0, frontBitmap, 0)
         }
     }
 

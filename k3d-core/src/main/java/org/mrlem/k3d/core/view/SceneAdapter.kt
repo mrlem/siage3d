@@ -16,9 +16,7 @@ abstract class SceneAdapter {
     }
 
     internal fun resize(width: Int, height: Int) {
-        Shader.defaultShader.use {
-            scene.camera.update(width, height)
-        }
+        scene.camera.update(width, height)
         onResize(width, height)
     }
 

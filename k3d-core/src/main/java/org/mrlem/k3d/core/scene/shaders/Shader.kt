@@ -25,6 +25,8 @@ open class Shader(vertexSource: String, fragmentSource: String) {
         getAllUniformLocations()
     }
 
+    // TODO - minor - keep track of which shader we are using to remove unnecessary calls
+
     fun use(block: Shader.() -> Unit ) {
         glUseProgram(programId)
         this.block()
@@ -93,6 +95,7 @@ open class Shader(vertexSource: String, fragmentSource: String) {
         private val matrixBuffer = FloatBuffer.allocate(16)
 
         lateinit var defaultShader: DefaultShader
+        lateinit var skyboxShader: SkyboxShader
     }
 
 }

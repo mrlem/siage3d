@@ -8,6 +8,10 @@ import org.mrlem.k3d.core.scene.shaders.Shader
 class BasicSceneRenderer(scene: Scene) : SceneRenderer(scene) {
 
     override fun render() {
+        // apply camera
+        scene.camera.use()
+
+        // render sky
         scene.sky.render()
 
         Shader.defaultShader.use {
@@ -16,9 +20,6 @@ class BasicSceneRenderer(scene: Scene) : SceneRenderer(scene) {
 
             // apply sky
             Shader.defaultShader.loadSkyColor(scene.sky.color)
-
-            // apply camera
-            scene.camera.use()
 
             // draw scene
             val objectNodes = scene.collectObjectNodes(mutableListOf())

@@ -12,6 +12,7 @@ import org.mrlem.k3d.core.common.io.VaoCache
 import org.mrlem.k3d.core.common.io.readText
 import org.mrlem.k3d.core.scene.shaders.DefaultShader
 import org.mrlem.k3d.core.scene.shaders.Shader
+import org.mrlem.k3d.core.scene.shaders.SkyboxShader
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
@@ -30,6 +31,11 @@ class SceneView(context: Context, attributes: AttributeSet) : GLSurfaceView(cont
                 resources.readText(R.raw.shader_default_v),
                 resources.readText(R.raw.shader_default_f)
             )
+            Shader.skyboxShader = SkyboxShader(
+                resources.readText(R.raw.shader_skybox_v),
+                resources.readText(R.raw.shader_skybox_f)
+            )
+
             glEnable(GL_DEPTH_TEST)
             adapter?.init()
         }

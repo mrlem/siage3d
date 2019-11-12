@@ -4,6 +4,8 @@ import android.content.res.Resources
 import org.joml.Vector3f
 import org.mrlem.k3d.R
 import org.mrlem.k3d.core.common.io.readTexture2D
+import org.mrlem.k3d.core.common.io.readTextureCubemap
+import org.mrlem.k3d.core.common.math.toRadians
 import org.mrlem.k3d.core.scene.GroupNode
 import org.mrlem.k3d.core.scene.ObjectNode
 import org.mrlem.k3d.core.scene.Scene
@@ -13,10 +15,10 @@ import org.mrlem.k3d.core.scene.shapes.Shape
 import org.mrlem.k3d.core.scene.sky.Sky
 import org.mrlem.k3d.core.view.SceneAdapter
 import kotlin.math.PI
+import kotlin.math.cos
+import kotlin.math.sin
 
-// TODO - medium - skybox
 // TODO - minor - shader should be attached to material
-// TODO - minor - where is the light defined?
 // TODO - optional - kotlin dsl for scene / subgraph init
 
 class MainSceneAdapter(
@@ -25,7 +27,8 @@ class MainSceneAdapter(
 
     override var scene = Scene()
 
-    var motion = Vector3f()
+    var linearVelocity = 0f
+    var angularVelocity = 0f
 
     private lateinit var rootNode: GroupNode
     private var time = 0f
@@ -36,26 +39,19 @@ class MainSceneAdapter(
 
         val box = Box()
         val crateMaterial = TextureMaterial(resources.readTexture2D(R.raw.crate1_diffuse))
-        val whiteMaterial = TextureMaterial(resources.readTexture2D(R.drawable.white))
 
         // create scene
         scene.apply {
             camera.position(Vector3f(0f, 1.75f, 5f))
-            sky = Sky.SkyColor(Vector3f(.6f, .8f, 1f))
+            sky = Sky.Skybox(resources.readTextureCubemap(R.array.skybox_daylight), Vector3f(.6f, .8f, 1f))
             clear()
             add(GroupNode().also { rootNode = it })
         }
 
         // populate scene
-        // .. ground
-        rootNode.add(ObjectNode(box, whiteMaterial).apply {
-            localTransform
-                .setTranslation(0f, -100f, 0f)
-                .scale(200f)
-        })
         // .. random objects: forest of trees & crates
         val angle360: Float = PI.toFloat() * 2
-        val spacing = 3f
+        val spacing = 4f
         rootNode.localTransform.setTranslation(0f, 0f, -10f)
         (-10 .. 10).forEach { x ->
             (-10 .. 10).forEach { z ->
@@ -105,7 +101,11 @@ class MainSceneAdapter(
         time += delta
 
         // animate camera
-        scene.camera.position.add(motion.x * delta, motion.y * delta, motion.z * delta)
+        scene.camera.apply {
+            yaw += angularVelocity * delta
+            position.x += sin(yaw.toRadians()) * linearVelocity * delta
+            position.z -= cos(yaw.toRadians()) * linearVelocity * delta
+        }
 
         // animate the scene
 //        val value = sin(time) * 0.5f + .5f

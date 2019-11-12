@@ -10,6 +10,10 @@ import org.mrlem.k3d.core.scene.shaders.Shader
 class SortedMaterialsSceneRenderer(scene: Scene) : SceneRenderer(scene) {
 
     override fun render() {
+        // apply camera
+        scene.camera.use()
+
+        // render sky
         scene.sky.render()
 
         Shader.defaultShader.use {
@@ -18,9 +22,6 @@ class SortedMaterialsSceneRenderer(scene: Scene) : SceneRenderer(scene) {
 
             // apply sky
             Shader.defaultShader.loadSkyColor(scene.sky.color)
-
-            // apply camera
-            scene.camera.use()
 
             // draw scene
             // .. sort object nodes by material so as to optimize texture changes & such
