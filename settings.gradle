@@ -1,2 +1,2 @@
-include ':k3d-sample', ':k3d-core'
-rootProject.name='Sample3D'
+include ':core', ':sample'
+rootProject.name='Siage3D'
