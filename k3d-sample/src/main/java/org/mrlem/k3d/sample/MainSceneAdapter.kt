@@ -18,6 +18,20 @@ import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
 
+// TODO - critical - rename engine & add to github
+// TODO - critical - camera controller to provide logic
+// TODO - major - postprocessing: bloom
+// TODO - major - postprocessing: anti-aliasing
+// TODO - major - postprocessing: kernel convolution matrix
+// TODO - medium - shadows
+// TODO - medium - normal maps / specular maps
+// TODO - medium - bone animation
+// TODO - medium - physics engine integration
+// TODO - medium - SceneView transparency
+// TODO - medium - improve sample app
+// TODO - medium - blender models loader
+// TODO - major - multi-texturing
+// TODO - major - instanced rendering when > 40 instances
 // TODO - minor - shader should be attached to material
 // TODO - optional - kotlin dsl for scene / subgraph init
 
