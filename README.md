@@ -51,31 +51,27 @@ class MainSceneAdapter(
 
     override var scene = Scene()
 
-    var linearVelocity = 0f
-    var angularVelocity = 0f
-
-    private lateinit var rootNode: GroupNode
-    private var time = 0f
+    private lateinit var sampleNode: ObjectNode
 
     override fun onInit() {
         val box = Box()
-        val whiteMaterial = TextureMaterial(resources.readTexture2D(R.raw.white))
+        val whiteMaterial = TextureMaterial(resources.readTexture2D(R.drawable.white))
 
         // create scene
         scene.apply {
             camera.position(Vector3f(0f, 1.75f, 5f))
             sky = Sky.Skybox(resources.readTextureCubemap(R.array.skybox_daylight), Vector3f(.6f, .8f, 1f))
             clear()
-            add(ObjectNode(box, whiteMaterial))
+            add(
+                ObjectNode(box, whiteMaterial)
+                    .also { sampleNode = it }
+            )
         }
     }
 
     override fun onUpdate(delta: Float) {
-        time += delta
-
         // animate the scene
-        val value = sin(time) * 0.5f + .5f
-        rootNode.children.first().localTransform.setRotationXYZ(0f, value, 0f)
+        sampleNode.localTransform.rotateY(delta)
     }
 
 }
