@@ -2,11 +2,11 @@ package org.mrlem.siage3d.core.common.io.loaders
 
 import org.joml.Vector2f
 import org.joml.Vector3f
-import org.mrlem.siage3d.core.scene.shapes.Mesh
+import org.mrlem.siage3d.core.scene.shapes.Shape
 
 class ObjLoader {
 
-    fun load(source: String): Mesh {
+    fun load(source: String): Shape.Data {
         val vertices = mutableListOf<Vertex>()
         val textures = mutableListOf<Vector2f>()
         val normals = mutableListOf<Vector3f>()
@@ -49,7 +49,7 @@ class ObjLoader {
             normalsArray
         )
 		val indicesArray = convertIndicesListToArray(indices)
-        return Mesh(verticesArray, texturesArray, indicesArray, normalsArray)
+        return Shape.Data(verticesArray, texturesArray, indicesArray, normalsArray)
     }
 
     private fun parseFaceVertex(vertexString: String, vertices: MutableList<Vertex>, indices: MutableList<Short>) {

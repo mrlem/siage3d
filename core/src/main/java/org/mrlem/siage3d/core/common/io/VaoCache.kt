@@ -3,7 +3,7 @@ package org.mrlem.siage3d.core.common.io
 import android.content.res.Resources
 import org.mrlem.siage3d.core.common.gl.Vao
 import org.mrlem.siage3d.core.common.io.loaders.ObjLoader
-import org.mrlem.siage3d.core.scene.shapes.Mesh
+import org.mrlem.siage3d.core.scene.shapes.Shape
 
 object VaoCache : AbstractCache<Vao>() {
 
@@ -11,7 +11,7 @@ object VaoCache : AbstractCache<Vao>() {
         return Vao.load(ObjLoader().load(resources.readText(resId)))
     }
 
-    fun get(id: String, mesh: Mesh) = getOrCreate("custom:$id") { Vao.load(mesh) }
+    fun get(id: String, data: Shape.Data) = getOrCreate("custom:$id") { Vao.load(data) }
 
     fun clear(destroy: Boolean = false) {
         super.clear()
