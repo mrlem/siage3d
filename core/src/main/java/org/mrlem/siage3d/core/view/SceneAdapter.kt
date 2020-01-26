@@ -6,12 +6,12 @@ import org.mrlem.siage3d.core.scene.Scene
 
 abstract class SceneAdapter {
 
-    abstract val scene: Scene
+    lateinit var scene: Scene
     private lateinit var sceneRenderer: SceneRenderer
 
     internal fun init() {
+        scene = onInit()
         sceneRenderer = SortedMaterialsSceneRenderer(scene)
-        onInit()
     }
 
     internal fun resize(width: Int, height: Int) {
@@ -29,7 +29,7 @@ abstract class SceneAdapter {
         onDestroy()
     }
 
-    open fun onInit() {}
+    open fun onInit(): Scene = Scene()
     open fun onResize(width: Int, height: Int) {}
     open fun onUpdate(delta: Float) {}
     open fun onDestroy() {}
