@@ -3,11 +3,12 @@ package org.mrlem.siage3d.core.common.io
 import android.content.res.Resources
 import org.mrlem.siage3d.core.common.gl.Texture2D
 import org.mrlem.siage3d.core.common.gl.TextureFactory
+import org.mrlem.siage3d.core.common.io.AssetManager.bitmap
 
 object Texture2DCache : AbstractCache<Texture2D>() {
 
     override fun create(resources: Resources, resId: Int): Texture2D {
-        val bitmap = resources.readBitmap(resId)
+        val bitmap = bitmap(resId)
         return TextureFactory.load(bitmap).also {
             bitmap.recycle()
         }

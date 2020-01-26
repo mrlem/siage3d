@@ -7,7 +7,7 @@ import org.mrlem.siage3d.core.view.DirectionPadView
 
 class MainActivity : SceneActivity() {
 
-    override val sceneAdapter by lazy { MainSceneAdapter(resources) }
+    override val sceneAdapter by lazy { MainSceneAdapter() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
