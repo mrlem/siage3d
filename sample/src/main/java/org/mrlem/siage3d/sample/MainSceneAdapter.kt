@@ -6,6 +6,7 @@ import org.mrlem.siage3d.R
 import org.mrlem.siage3d.core.common.io.readShape
 import org.mrlem.siage3d.core.common.io.readTexture2D
 import org.mrlem.siage3d.core.common.io.readTextureCubemap
+import org.mrlem.siage3d.core.common.math.randomFloat
 import org.mrlem.siage3d.core.common.math.toRadians
 import org.mrlem.siage3d.core.scene.GroupNode
 import org.mrlem.siage3d.core.scene.ObjectNode
@@ -72,9 +73,9 @@ class MainSceneAdapter(
                 (-0 .. 0).forEach { y ->
                     // randomized grid position
                     val randomizedPosition = Vector3f(
-                        x * spacing + (Math.random().toFloat() * spacing / 2 - spacing / 4),
+                        x * spacing + (randomFloat() * spacing / 2 - spacing / 4),
                         y * spacing,
-                        z * spacing + (Math.random().toFloat() * spacing / 2 - spacing / 4)
+                        z * spacing + (randomFloat() * spacing / 2 - spacing / 4)
                     )
 
                     // tree or crate? + custom transformations
@@ -86,7 +87,7 @@ class MainSceneAdapter(
                                 .setTranslation(randomizedPosition.x, randomizedPosition.y + 0.5f, randomizedPosition.z)
                                 .rotateAffineXYZ(
                                     0f,
-                                    Math.random().toFloat() * angle360,
+                                    randomFloat() * angle360,
                                     0f
                                 )
                                 .scale(1f)
@@ -96,11 +97,11 @@ class MainSceneAdapter(
                             localTransform
                                 .setTranslation(randomizedPosition.x, randomizedPosition.y, randomizedPosition.z)
                                 .rotateAffineXYZ(
-                                    Math.random().toFloat() * angle360 / 8 - angle360 / 16,
-                                    Math.random().toFloat() * angle360,
+                                    randomFloat() * angle360 / 8 - angle360 / 16,
+                                    randomFloat() * angle360,
                                     0f
                                 )
-                                .scale(0.12f + Math.random().toFloat() * 0.08f)
+                                .scale(0.12f + randomFloat() * 0.08f)
                         }
                     }
 
