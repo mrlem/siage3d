@@ -87,7 +87,7 @@ class MainSceneAdapter(
 
 ### License
 
-TODO
+GPLv3 see [LICENSE.md](LICENSE.md)
 
 ### Acknowlegments
 
