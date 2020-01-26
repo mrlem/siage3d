@@ -29,8 +29,6 @@ class MainSceneAdapter : SceneAdapter() {
     var linearVelocity = 0f
     var angularVelocity = 0f
 
-    private var time = 0f
-
     override fun onInit() = scene {
         camera {
             position(0f, 1.75f, 5f)
@@ -58,8 +56,6 @@ class MainSceneAdapter : SceneAdapter() {
     }
 
     override fun onUpdate(delta: Float) {
-        time += delta
-
         // animate camera
         scene.camera.apply {
             yaw += angularVelocity * delta
