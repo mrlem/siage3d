@@ -8,7 +8,8 @@ import org.mrlem.siage3d.core.view.SceneAdapter
 import kotlin.math.cos
 import kotlin.math.sin
 
-// TODO - critical - camera controller to provide logic
+// TODO - critical - load assets from assets (not resources, but keep this option)
+// TODO - major - camera controller to provide logic
 // TODO - major - postprocessing: bloom
 // TODO - major - postprocessing: anti-aliasing
 // TODO - major - postprocessing: kernel convolution matrix

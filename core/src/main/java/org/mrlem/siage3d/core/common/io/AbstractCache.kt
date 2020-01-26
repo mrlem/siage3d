@@ -14,7 +14,7 @@ abstract class AbstractCache<T> {
         objects.clear()
     }
 
-    protected fun getOrCreate(key: String, creator: () -> T): T {
+    private fun getOrCreate(key: String, creator: () -> T): T {
         // in cache?
         objects[key]?.also { cache -> return cache }
 
