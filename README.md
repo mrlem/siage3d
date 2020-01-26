@@ -47,9 +47,7 @@ Declare it in your manifest:
 Create the scene adapter:
 
 ```kotlin
-class MainSceneAdapter(
-    private val resources: Resources
-) : SceneAdapter() {
+class MainSceneAdapter : SceneAdapter() {
 
     private lateinit var sampleNode: ObjectNode
 
