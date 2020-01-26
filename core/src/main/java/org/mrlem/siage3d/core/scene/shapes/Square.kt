@@ -1,11 +1,6 @@
 package org.mrlem.siage3d.core.scene.shapes
 
-class Square : Shape(
-    positions,
-    texCoords,
-    indices,
-    normals
-) {
+class Square : Shape(Data(positions, texCoords, indices, normals)) {
 
     companion object {
 

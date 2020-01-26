@@ -1,32 +1,20 @@
 package org.mrlem.siage3d.core.scene.shapes
 
-import android.content.res.Resources
 import android.opengl.GLES30.*
 import org.mrlem.siage3d.core.common.gl.Vao
-import org.mrlem.siage3d.core.common.io.VaoCache
 
-open class Shape {
+open class Shape(data: Data) {
 
-    private val vao: Vao
-
-    constructor(
-        positions: FloatArray,
-        texCoords: FloatArray,
-        indices: ShortArray,
-        normals: FloatArray
-    ) {
-        val identifier = javaClass.simpleName
-        vao = VaoCache.get(identifier, Data(positions, texCoords, indices, normals))
-    }
-
-    constructor(resources: Resources, resId: Int) {
-        vao = VaoCache.get(resources, resId)
-    }
+    private val vao = Vao.load(data)
 
     fun draw() {
         vao.use {
             glDrawElements(GL_TRIANGLES, indicesCount, GL_UNSIGNED_SHORT, 0)
         }
+    }
+
+    fun destroy() {
+        vao.destroy()
     }
 
     data class Data(

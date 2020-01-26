@@ -10,3 +10,5 @@ fun Resources.readBitmap(resId: Int) = BitmapFactory.decodeResource(this, resId)
 fun Resources.readTexture2D(resId: Int) = Texture2DCache.get(this, resId)
 
 fun Resources.readTextureCubemap(resId: Int) = TextureCubemapCache.get(this, resId)
+
+fun Resources.readShape(resId: Int) = ShapeCache.get(this, resId)

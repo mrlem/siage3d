@@ -3,6 +3,7 @@ package org.mrlem.siage3d.sample
 import android.content.res.Resources
 import org.joml.Vector3f
 import org.mrlem.siage3d.R
+import org.mrlem.siage3d.core.common.io.readShape
 import org.mrlem.siage3d.core.common.io.readTexture2D
 import org.mrlem.siage3d.core.common.io.readTextureCubemap
 import org.mrlem.siage3d.core.common.math.toRadians
@@ -11,7 +12,6 @@ import org.mrlem.siage3d.core.scene.ObjectNode
 import org.mrlem.siage3d.core.scene.Scene
 import org.mrlem.siage3d.core.scene.materials.TextureMaterial
 import org.mrlem.siage3d.core.scene.shapes.Box
-import org.mrlem.siage3d.core.scene.shapes.Shape
 import org.mrlem.siage3d.core.scene.sky.Sky
 import org.mrlem.siage3d.core.view.SceneAdapter
 import kotlin.math.PI
@@ -48,7 +48,7 @@ class MainSceneAdapter(
     private var time = 0f
 
     override fun onInit() {
-        val tree = Shape(resources, R.raw.model_tree_lowpoly_mesh)
+        val tree = resources.readShape(R.raw.model_tree_lowpoly_mesh)
         val treeMaterial = TextureMaterial(resources.readTexture2D(R.raw.model_tree_lowpoly_texture))
 
         val box = Box()
