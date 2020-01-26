@@ -9,6 +9,8 @@ So it's a game engine that is:
 * Dedicated to **Android**
 * Coded in **Kotlin** using OpenGL ES
 
+_Please note that this engine is a **work in progress**. Though feedback is always welcome, it is neither feature-complete nor production ready yet (and it might never be)._
+
 ## Getting started
 
 ### Setup
@@ -74,6 +76,18 @@ class MainSceneAdapter(
 
 }
 ```
+
+## Features
+
+* Scene definition
+  - scene-graph API
+  - kotlin DSL
+* Object loading
+  - OBJ files
+* Rendering
+  - Skybox
+  - Distance fog
+  - Lighting: point light
 
 ## About
 
