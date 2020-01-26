@@ -54,18 +54,20 @@ class MainSceneAdapter(
     private lateinit var sampleNode: ObjectNode
 
     override fun onInit() {
-        val box = Box()
-        val whiteMaterial = TextureMaterial(resources.readTexture2D(R.drawable.white))
-
-        // create scene
         scene.apply {
-            camera.position(Vector3f(0f, 1.75f, 5f))
-            sky = Sky.Skybox(resources.readTextureCubemap(R.array.skybox_daylight), Vector3f(.6f, .8f, 1f))
-            clear()
-            add(
-                ObjectNode(box, whiteMaterial)
-                    .also { sampleNode = it }
+            camera {
+                position(0f, 1.75f, 5f)
+            }
+            sky(
+                color = color(.6f, .8f, 1f)
+                cubemap = textureCubemap(R.array.skybox_daylight)
+            }
+            objectNode(
+                "My Box",
+                shape = box(),
+                material = textureMaterial(R.drawable.white)
             )
+                .also { sampleNode = it }
         }
     }
 
