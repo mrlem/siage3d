@@ -21,6 +21,8 @@ In your `build.gradle`, add the following dependency:
 implementation "org.mrlem.siage3d:core:1.0.0"
 ```
 
+(once it gets published, until then: use the source :)
+
 ### Usage
 
 Create an activity for you game:
