@@ -1,6 +1,5 @@
 package org.mrlem.siage3d.core.scene.materials
 
-import android.opengl.GLES30.*
 import org.mrlem.siage3d.core.common.gl.Texture2D
 import org.mrlem.siage3d.core.scene.shaders.DefaultShader
 import org.mrlem.siage3d.core.scene.shaders.Shader
@@ -16,28 +15,17 @@ class TextureMaterial(
     override val shader: DefaultShader = Shader.defaultShader
 
     override fun use(block: Material.() -> Unit) {
-        if (texture == activeTexture) return
+        if (activeMaterial == this) return
+        activeMaterial = this
+
         if (hasTransparency) disableCulling() else enableCulling()
 
         shader.loadFakeLighting(fakeLighting)
         shader.loadShine(shineDamper, reflectvity)
 
         texture.use {
-            super.use(block)
+            block()
         }
-    }
-
-    private fun enableCulling() {
-        glEnable(GL_CULL_FACE)
-        glCullFace(GL_BACK)
-    }
-
-    private fun disableCulling() {
-        glDisable(GL_CULL_FACE)
-    }
-
-    companion object {
-        private val activeTexture: Texture2D? = null
     }
 
 }
