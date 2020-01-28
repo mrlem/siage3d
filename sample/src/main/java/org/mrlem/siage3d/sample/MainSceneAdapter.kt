@@ -8,7 +8,8 @@ import org.mrlem.siage3d.core.view.SceneAdapter
 import kotlin.math.cos
 import kotlin.math.sin
 
-// TODO - critical - load assets from assets (not resources, but keep this option)
+// TODO - critical - shader should be attached to material
+// TODO - major - load assets from assets (not resources, but keep this option)
 // TODO - major - camera controller to provide logic
 // TODO - major - postprocessing: bloom
 // TODO - major - postprocessing: anti-aliasing
@@ -22,7 +23,6 @@ import kotlin.math.sin
 // TODO - medium - blender models loader
 // TODO - major - multi-texturing
 // TODO - major - instanced rendering when > 40 instances
-// TODO - minor - shader should be attached to material
 
 class MainSceneAdapter : SceneAdapter() {
 

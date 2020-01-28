@@ -6,7 +6,12 @@ import org.joml.Vector3f
 import java.nio.FloatBuffer
 import kotlin.system.exitProcess
 
-open class Shader(vertexSource: String, fragmentSource: String) {
+abstract class Shader(
+    vertexSource: String,
+    fragmentSource: String,
+    attributes: List<AttributeDefinition>,
+    uniforms: List<UniformDefinition>
+) {
 
     private val programId: Int
     private val vertexShaderId: Int
@@ -19,13 +24,11 @@ open class Shader(vertexSource: String, fragmentSource: String) {
         programId = glCreateProgram()
         glAttachShader(programId, vertexShaderId)
         glAttachShader(programId, fragmentShaderId)
-        bindAttributes()
+        bindAttributes(attributes)
         glLinkProgram(programId)
         glValidateProgram(programId)
-        getAllUniformLocations()
+        getUniformLocations(uniforms)
     }
-
-    // TODO - minor - keep track of which shader we are using to remove unnecessary calls
 
     fun use(block: Shader.() -> Unit ) {
         glUseProgram(programId)
@@ -42,38 +45,40 @@ open class Shader(vertexSource: String, fragmentSource: String) {
         glDeleteProgram(programId)
     }
 
-    open fun getAllUniformLocations() {}
-
-    protected fun getUniformLocation(uniformName: String) = glGetUniformLocation(programId, uniformName)
-
-    protected fun loadInt(location: Int, value: Int) {
-        glUniform1i(location, value)
+    protected fun loadInt(uniform: UniformDefinition, value: Int) {
+        glUniform1i(uniform.location, value)
     }
 
-    protected fun loadFloat(location: Int, value: Float) {
-        glUniform1f(location, value)
+    protected fun loadFloat(uniform: UniformDefinition, value: Float) {
+        glUniform1f(uniform.location, value)
     }
 
-    protected fun loadVector(location: Int, vector: Vector3f) {
-        glUniform3f(location, vector.x, vector.y, vector.z)
+    protected fun loadVector(uniform: UniformDefinition, vector: Vector3f) {
+        glUniform3f(uniform.location, vector.x, vector.y, vector.z)
     }
 
-    protected fun loadBoolean(location: Int, boolean: Boolean) {
-        glUniform1f(location, if (boolean) 1f else 0f )
+    protected fun loadBoolean(uniform: UniformDefinition, boolean: Boolean) {
+        glUniform1f(uniform.location, if (boolean) 1f else 0f )
     }
 
-    protected fun loadMatrix(location: Int, matrix: Matrix4f) {
+    protected fun loadMatrix(uniform: UniformDefinition, matrix: Matrix4f) {
         matrix.get(matrixBuffer)
-        glUniformMatrix4fv(location, 1, false,
-            matrixBuffer
-        )
+        glUniformMatrix4fv(uniform.location, 1, false, matrixBuffer)
     }
 
-    open fun bindAttributes() {}
-
-    protected fun bindAttribute(attribute: Int, variableName: String) {
-        glBindAttribLocation(programId, attribute, variableName)
+    private fun bindAttributes(attributes: List<AttributeDefinition>) {
+        attributes.forEach { attribute -> bindAttribute(attribute)}
     }
+
+    private fun bindAttribute(attribute: AttributeDefinition) {
+        glBindAttribLocation(programId, attribute.index, attribute.id)
+    }
+
+    private fun getUniformLocations(uniforms: List<UniformDefinition>) {
+        uniforms.forEach { uniform -> uniform.location = getUniformLocation(uniform.id) }
+    }
+
+    private fun getUniformLocation(uniformName: String) = glGetUniformLocation(programId, uniformName)
 
     private fun load(source: String, type: Int): Int {
         val shaderId = glCreateShader(type)
@@ -89,6 +94,16 @@ open class Shader(vertexSource: String, fragmentSource: String) {
         }
 
         return shaderId
+    }
+
+    interface AttributeDefinition {
+        val id: String
+        val index: Int
+    }
+
+    interface UniformDefinition {
+        val id: String
+        var location: Int
     }
 
     companion object {

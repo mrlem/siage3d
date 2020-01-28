@@ -41,9 +41,9 @@ class Vao private constructor(val indicesCount: Int) {
         fun load(data: Shape.Data): Vao {
             return Vao(data.indices.size).apply {
                 use {
-                    addVbo { toAttribute(DefaultShader.ATTR_POSITIONS, 3, data.positions.toBuffer()) }
-                    addVbo { toAttribute(DefaultShader.ATTR_TEXCOORDS, 2, data.texCoords.toBuffer()) }
-                    addVbo { toAttribute(DefaultShader.ATTR_NORMALS, 3, data.normals.toBuffer()) }
+                    addVbo { toAttribute(DefaultShader.Attribute.POSITIONS.index, 3, data.positions.toBuffer()) }
+                    addVbo { toAttribute(DefaultShader.Attribute.TEXCOORDS.index, 2, data.texCoords.toBuffer()) }
+                    addVbo { toAttribute(DefaultShader.Attribute.NORMALS.index, 3, data.normals.toBuffer()) }
                     addVbo { toIndexBuffer(data.indices.toBuffer()) }
                 }
                 glBindBuffer(GL_ARRAY_BUFFER, 0)

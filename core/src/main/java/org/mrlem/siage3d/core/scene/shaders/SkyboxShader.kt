@@ -5,26 +5,36 @@ import org.joml.Matrix4f
 class SkyboxShader(
     vertexShaderCode: String,
     fragmentShaderCode: String
-) : Shader(vertexShaderCode, fragmentShaderCode) {
-
-    private var locationProjectionMatrix: Int = 0
-    private var locationViewMatrix: Int = 0
-
-    override fun bindAttributes() {
-        bindAttribute(DefaultShader.ATTR_POSITIONS, "position")
-    }
-
-    override fun getAllUniformLocations() {
-        locationProjectionMatrix = getUniformLocation("projectionMatrix")
-        locationViewMatrix = getUniformLocation("viewMatrix")
-    }
+) : Shader(
+    vertexShaderCode, fragmentShaderCode,
+    Attribute.values().asList(), Uniform.values().asList()
+) {
 
     fun loadProjectionMatrix(matrix: Matrix4f) {
-        loadMatrix(locationProjectionMatrix, matrix)
+        loadMatrix(Uniform.PROJECTION_MATRIX, matrix)
     }
 
     fun loadViewMatrix(matrix: Matrix4f) {
-        loadMatrix(locationViewMatrix, matrix)
+        loadMatrix(Uniform.VIEW_MATRIX, matrix)
+    }
+
+    enum class Attribute(
+        override val id: String,
+        override val index: Int
+    ) : AttributeDefinition {
+
+        POSITIONS("position", 0)
+
+    }
+
+    enum class Uniform(
+        override val id: String,
+        override var location: Int = 0
+    ) : UniformDefinition {
+
+        PROJECTION_MATRIX("projectionMatrix"),
+        VIEW_MATRIX("viewMatrix")
+
     }
 
 }

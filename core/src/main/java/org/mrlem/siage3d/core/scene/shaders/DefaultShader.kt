@@ -7,70 +7,67 @@ import org.mrlem.siage3d.core.scene.lights.PointLight
 class DefaultShader(
     vertexShaderCode: String,
     fragmentShaderCode: String
-) : Shader(vertexShaderCode, fragmentShaderCode) {
-
-    private var locationProjectionMatrix: Int = 0
-    private var locationViewMatrix: Int = 0
-    private var locationTransformationMatrix: Int = 0
-    private var locationLightPosition: Int = 0
-    private var locationLightColor: Int = 0
-    private var locationShineDamper: Int = 0
-    private var locationReflectivity: Int = 0
-    private var locationUseFakeLighting: Int = 0
-    private var locationSkyColor: Int = 0
-
-    override fun bindAttributes() {
-        bindAttribute(ATTR_POSITIONS, "position")
-        bindAttribute(ATTR_TEXCOORDS, "textureCoords")
-        bindAttribute(ATTR_NORMALS, "normal")
-    }
-
-    override fun getAllUniformLocations() {
-        locationProjectionMatrix = getUniformLocation("projectionMatrix")
-        locationViewMatrix = getUniformLocation("viewMatrix")
-        locationTransformationMatrix = getUniformLocation("transformationMatrix")
-        locationLightPosition = getUniformLocation("lightPosition")
-        locationLightColor = getUniformLocation("lightColor")
-        locationShineDamper = getUniformLocation("shineDamper")
-        locationReflectivity = getUniformLocation("reflectivity")
-        locationUseFakeLighting = getUniformLocation("useFakeLighting")
-        locationSkyColor = getUniformLocation("skyColor")
-    }
+) : Shader(
+    vertexShaderCode, fragmentShaderCode,
+    Attribute.values().asList(), Uniform.values().asList()
+) {
 
     fun loadProjectionMatrix(matrix: Matrix4f) {
-        loadMatrix(locationProjectionMatrix, matrix)
+        loadMatrix(Uniform.PROJECTION_MATRIX, matrix)
     }
 
     fun loadViewMatrix(matrix: Matrix4f) {
-        loadMatrix(locationViewMatrix, matrix)
+        loadMatrix(Uniform.VIEW_MATRIX, matrix)
     }
 
     fun loadTransformationMatrix(matrix: Matrix4f) {
-        loadMatrix(locationTransformationMatrix, matrix)
+        loadMatrix(Uniform.TRANSFORMATION_MATRIX, matrix)
     }
 
     fun loadLight(light: PointLight) {
-        loadVector(locationLightPosition, light.position)
-        loadVector(locationLightColor, light.color)
+        loadVector(Uniform.LIGHT_POSITION, light.position)
+        loadVector(Uniform.LIGHT_COLOR, light.color)
     }
 
     fun loadShine(shineDamper: Float, reflectivity: Float) {
-        loadFloat(locationShineDamper, shineDamper)
-        loadFloat(locationReflectivity, reflectivity)
+        loadFloat(Uniform.SHINE_DAMPER, shineDamper)
+        loadFloat(Uniform.REFLECTIVITY, reflectivity)
     }
 
     fun loadFakeLighting(useFakeLighting: Boolean) {
-        loadFloat(locationUseFakeLighting, if (useFakeLighting) 1f else 0f)
+        loadFloat(Uniform.USE_FAKE_LIGHTING, if (useFakeLighting) 1f else 0f)
     }
 
     fun loadSkyColor(skyColor: Vector3f) {
-        loadVector(locationSkyColor, skyColor)
+        loadVector(Uniform.SKY_COLOR, skyColor)
     }
 
-    companion object {
-        const val ATTR_POSITIONS = 0
-        const val ATTR_TEXCOORDS = 1
-        const val ATTR_NORMALS = 2
+    enum class Attribute(
+        override val id: String,
+        override val index: Int
+    ) : AttributeDefinition {
+
+        POSITIONS("position", 0),
+        TEXCOORDS("textureCoords", 1),
+        NORMALS("normal", 2)
+
+    }
+
+    enum class Uniform(
+        override val id: String,
+        override var location: Int = 0
+    ) : UniformDefinition {
+
+        PROJECTION_MATRIX("projectionMatrix"),
+        VIEW_MATRIX("viewMatrix"),
+        TRANSFORMATION_MATRIX("transformationMatrix"),
+        LIGHT_POSITION("lightPosition"),
+        LIGHT_COLOR("lightColor"),
+        SHINE_DAMPER("shineDamper"),
+        REFLECTIVITY("reflectivity"),
+        USE_FAKE_LIGHTING("useFakeLighting"),
+        SKY_COLOR("skyColor")
+
     }
 
 }
