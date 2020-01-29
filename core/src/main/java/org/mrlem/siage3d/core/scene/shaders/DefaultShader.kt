@@ -2,25 +2,24 @@ package org.mrlem.siage3d.core.scene.shaders
 
 import org.joml.Matrix4f
 import org.joml.Vector3f
+import org.mrlem.k3d.core.R
+import org.mrlem.siage3d.core.common.io.AssetManager.text
 import org.mrlem.siage3d.core.scene.lights.PointLight
 
-class DefaultShader(
-    vertexShaderCode: String,
-    fragmentShaderCode: String
-) : Shader(
-    vertexShaderCode, fragmentShaderCode,
+class DefaultShader : Shader(
+    text(R.raw.shader_default_v), text(R.raw.shader_default_f),
     Attribute.values().asList(), Uniform.values().asList()
-) {
+), Shader.ProjectionAware, Shader.ViewAware, Shader.TransformationAware {
 
-    fun loadProjectionMatrix(matrix: Matrix4f) {
+    override fun loadProjectionMatrix(matrix: Matrix4f) {
         loadMatrix(Uniform.PROJECTION_MATRIX, matrix)
     }
 
-    fun loadViewMatrix(matrix: Matrix4f) {
+    override fun loadViewMatrix(matrix: Matrix4f) {
         loadMatrix(Uniform.VIEW_MATRIX, matrix)
     }
 
-    fun loadTransformationMatrix(matrix: Matrix4f) {
+    override fun loadTransformationMatrix(matrix: Matrix4f) {
         loadMatrix(Uniform.TRANSFORMATION_MATRIX, matrix)
     }
 

@@ -36,7 +36,8 @@ open class ObjectNode(
 ) : Node(name) {
 
     fun render() {
-        Shader.defaultShader.loadTransformationMatrix(globalTransform)
+        (material.shader as? Shader.TransformationAware)
+            ?.loadTransformationMatrix(globalTransform)
 
         // draw the shape: material is handled at scene-level
         shape.draw()

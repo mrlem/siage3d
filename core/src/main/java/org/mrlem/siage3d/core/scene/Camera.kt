@@ -1,6 +1,5 @@
 package org.mrlem.siage3d.core.scene
 
-import org.joml.Matrix3f
 import org.joml.Matrix4f
 import org.joml.Vector3f
 import org.mrlem.siage3d.core.scene.shaders.Shader
@@ -21,31 +20,17 @@ class Camera(
     private var aspectRatio = 1f
 
     private val viewMatrix = Matrix4f()
-    private val rotationOnlyMatrix = Matrix4f()
-    private val rotationMatrix = Matrix3f()
 
     fun update(width: Int, height: Int) {
         aspectRatio = width.toFloat() / height
 
         projectionMatrix.setPerspective(Math.toRadians(fov).toFloat(), aspectRatio, near, far)
-        Shader.defaultShader.use {
-           Shader.defaultShader.loadProjectionMatrix(projectionMatrix)
-        }
-        Shader.skyboxShader.use {
-            Shader.skyboxShader.loadProjectionMatrix(projectionMatrix)
-        }
+        Shader.notifyProjectionMatrix(projectionMatrix)
     }
 
     fun use() {
         viewMatrix.fromCamera(this)
-        rotationMatrix.set(viewMatrix)
-        rotationOnlyMatrix.set(rotationMatrix)
-        Shader.defaultShader.use {
-            Shader.defaultShader.loadViewMatrix(viewMatrix)
-        }
-        Shader.skyboxShader.use {
-            Shader.skyboxShader.loadViewMatrix(rotationOnlyMatrix)
-        }
+        Shader.notifyViewMatrix(viewMatrix)
     }
 
     fun position(position: Vector3f): Camera {

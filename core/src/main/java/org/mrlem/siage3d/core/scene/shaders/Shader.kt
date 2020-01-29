@@ -96,6 +96,18 @@ abstract class Shader(
         return shaderId
     }
 
+    interface ProjectionAware {
+        fun loadProjectionMatrix(matrix: Matrix4f)
+    }
+
+    interface ViewAware {
+        fun loadViewMatrix(matrix: Matrix4f)
+    }
+
+    interface TransformationAware {
+        fun loadTransformationMatrix(matrix: Matrix4f)
+    }
+
     interface AttributeDefinition {
         val id: String
         val index: Int
@@ -109,8 +121,32 @@ abstract class Shader(
     companion object {
         private val matrixBuffer = FloatBuffer.allocate(16)
 
+        private val shaders = mutableListOf<Shader>()
         lateinit var defaultShader: DefaultShader
         lateinit var skyboxShader: SkyboxShader
+
+        fun init() {
+            defaultShader = DefaultShader()
+                .also { shaders.add(it) }
+            skyboxShader = SkyboxShader()
+                .also { shaders.add(it) }
+        }
+
+        fun notifyProjectionMatrix(matrix: Matrix4f) {
+            shaders.forEach {
+                if (it is ProjectionAware) {
+                    it.use { it.loadProjectionMatrix(matrix) }
+                }
+            }
+        }
+
+        fun notifyViewMatrix(matrix: Matrix4f) {
+            shaders.forEach {
+                if (it is ViewAware) {
+                    it.use { it.loadViewMatrix(matrix) }
+                }
+            }
+        }
     }
 
 }

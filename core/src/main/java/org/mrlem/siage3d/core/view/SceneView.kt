@@ -5,12 +5,8 @@ import android.opengl.GLES30.*
 import android.opengl.GLSurfaceView
 import android.util.AttributeSet
 import android.view.SurfaceHolder
-import org.mrlem.k3d.core.R
 import org.mrlem.siage3d.core.common.io.*
-import org.mrlem.siage3d.core.common.io.AssetManager.text
-import org.mrlem.siage3d.core.scene.shaders.DefaultShader
 import org.mrlem.siage3d.core.scene.shaders.Shader
-import org.mrlem.siage3d.core.scene.shaders.SkyboxShader
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
@@ -26,15 +22,7 @@ class SceneView(context: Context, attributes: AttributeSet) : GLSurfaceView(cont
 
         override fun onSurfaceCreated(gl: GL10, config: EGLConfig) {
             AssetManager.init(context)
-
-            Shader.defaultShader = DefaultShader(
-                text(R.raw.shader_default_v),
-                text(R.raw.shader_default_f)
-            )
-            Shader.skyboxShader = SkyboxShader(
-                text(R.raw.shader_skybox_v),
-                text(R.raw.shader_skybox_f)
-            )
+            Shader.init()
 
             glEnable(GL_DEPTH_TEST)
             adapter?.init()
