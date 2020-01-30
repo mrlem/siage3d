@@ -14,10 +14,7 @@ class TextureMaterial(
 
     override val shader: DefaultShader = Shader.defaultShader
 
-    override fun use() {
-        if (activeMaterial == this) return
-        activeMaterial = this
-
+    override fun setup() {
         if (hasTransparency) disableCulling() else enableCulling()
 
         shader.loadFakeLighting(fakeLighting)

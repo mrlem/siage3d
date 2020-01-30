@@ -7,7 +7,15 @@ abstract class Material : Comparable<Material> {
 
     abstract val shader: Shader
 
-    abstract fun use()
+    open fun use() {
+        if (activeMaterial == this) return
+        activeMaterial = this
+
+        shader.use()
+        setup()
+    }
+
+    abstract fun setup()
 
     override fun compareTo(other: Material) = hashCode().compareTo(other.hashCode())
 
