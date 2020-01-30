@@ -34,11 +34,10 @@ sealed class Sky(
             glDisable(GL_CULL_FACE)
 
             glDepthMask(false)
-            Shader.skyboxShader.use {
-                texture.use {
-                    box.draw()
-                }
-            }
+
+            Shader.skyboxShader.use()
+            texture.use()
+            box.draw()
 
             glDepthMask(true)
         }

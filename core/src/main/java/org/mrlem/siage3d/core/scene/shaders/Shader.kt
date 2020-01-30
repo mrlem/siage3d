@@ -11,7 +11,7 @@ abstract class Shader(
     fragmentSource: String,
     attributes: List<AttributeDefinition>,
     uniforms: List<UniformDefinition>
-) {
+) : Comparable<Shader> {
 
     private val programId: Int
     private val vertexShaderId: Int
@@ -30,20 +30,12 @@ abstract class Shader(
         getUniformLocations(uniforms)
     }
 
-    fun use(block: Shader.() -> Unit ) {
-        val previousProgramId = activeProgramId
-        val alreadyActive = (programId == previousProgramId)
+    fun use() {
+        val alreadyActive = (programId == activeProgramId)
 
         if (!alreadyActive) {
             activeProgramId = programId
             glUseProgram(programId)
-        }
-
-        this.block()
-
-        if (!alreadyActive) {
-            glUseProgram(previousProgramId)
-            activeProgramId = previousProgramId
         }
     }
 
@@ -55,6 +47,8 @@ abstract class Shader(
         glDeleteShader(fragmentShaderId)
         glDeleteProgram(programId)
     }
+
+    override fun compareTo(other: Shader) = programId.compareTo(other.programId)
 
     protected fun loadInt(uniform: UniformDefinition, value: Int) {
         glUniform1i(uniform.location, value)
@@ -148,7 +142,8 @@ abstract class Shader(
         fun notifyProjectionMatrix(matrix: Matrix4f) {
             shaders.forEach {
                 if (it is ProjectionAware) {
-                    it.use { it.loadProjectionMatrix(matrix) }
+                    it.use()
+                    it.loadProjectionMatrix(matrix)
                 }
             }
         }
@@ -156,7 +151,8 @@ abstract class Shader(
         fun notifyViewMatrix(matrix: Matrix4f) {
             shaders.forEach {
                 if (it is ViewAware) {
-                    it.use { it.loadViewMatrix(matrix) }
+                    it.use()
+                    it.loadViewMatrix(matrix)
                 }
             }
         }

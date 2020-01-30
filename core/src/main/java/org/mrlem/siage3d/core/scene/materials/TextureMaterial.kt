@@ -14,18 +14,13 @@ class TextureMaterial(
 
     override val shader: DefaultShader = Shader.defaultShader
 
-    override fun use(block: Material.() -> Unit) {
-        if (activeMaterial == this) return
-        activeMaterial = this
-
+    override fun setup() {
         if (hasTransparency) disableCulling() else enableCulling()
 
         shader.loadFakeLighting(fakeLighting)
         shader.loadShine(shineDamper, reflectvity)
 
-        texture.use {
-            block()
-        }
+        texture.use()
     }
 
 }
