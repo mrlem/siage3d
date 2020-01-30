@@ -4,7 +4,6 @@ import org.mrlem.siage3d.core.scene.GroupNode
 import org.mrlem.siage3d.core.scene.Node
 import org.mrlem.siage3d.core.scene.ObjectNode
 import org.mrlem.siage3d.core.scene.Scene
-import org.mrlem.siage3d.core.scene.materials.Material
 import org.mrlem.siage3d.core.scene.shaders.Shader
 
 class SortedSceneRenderer(scene: Scene) : SceneRenderer(scene) {
@@ -16,36 +15,29 @@ class SortedSceneRenderer(scene: Scene) : SceneRenderer(scene) {
         // render sky
         scene.sky.render()
 
-        Shader.defaultShader.use()
-
-        // apply light
-        Shader.defaultShader.loadLight(scene.light)
-
-        // apply sky
-        Shader.defaultShader.loadSkyColor(scene.sky.color)
+        // TODO - and other concerned shaders
+        Shader.defaultShader.apply {
+            use()
+            loadLight(scene.light)
+            loadSkyColor(scene.sky.color)
+        }
 
         // draw scene
-        // .. sort object nodes by material so as to optimize texture changes & such
-        val sortedObjects = sortObjects()
-        sortedObjects.forEach { (material, nodes) ->
-            material.use()
-            nodes.forEach(ObjectNode::render)
+        val objects = gatherObjects(scene, mutableListOf())
+        objects.sortWith(compareBy<ObjectNode> { it.material.shader }.thenBy { it.material })
+
+        objects.forEach {
+            it.material.use()
+            it.render()
         }
     }
 
-    private fun sortObjects(): Map<Material, List<ObjectNode>> {
-        val map = mutableMapOf<Material, MutableList<ObjectNode>>()
-        addObjects(map, scene)
-        return map
-    }
-
-    private fun addObjects(map: MutableMap<Material, MutableList<ObjectNode>>, node: Node) {
-        when (node) {
-            is GroupNode -> node.children.forEach { child -> addObjects(map, child) }
-            is ObjectNode -> map[node.material]?.add(node) ?: mutableListOf(node).also {
-                map[node.material] = it
-            }
+    private fun gatherObjects(rootNode: Node, objectNodes: MutableList<ObjectNode>): MutableList<ObjectNode> {
+        when (rootNode) {
+            is GroupNode -> rootNode.children.forEach { child -> gatherObjects(child, objectNodes) }
+            is ObjectNode -> objectNodes.add(rootNode)
         }
+        return objectNodes
     }
 
 }
