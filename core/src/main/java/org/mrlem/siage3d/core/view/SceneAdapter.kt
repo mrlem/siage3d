@@ -1,7 +1,7 @@
 package org.mrlem.siage3d.core.view
 
 import org.mrlem.siage3d.core.render.SceneRenderer
-import org.mrlem.siage3d.core.render.SortedMaterialsSceneRenderer
+import org.mrlem.siage3d.core.render.SortedSceneRenderer
 import org.mrlem.siage3d.core.scene.Scene
 
 abstract class SceneAdapter {
@@ -11,7 +11,7 @@ abstract class SceneAdapter {
 
     internal fun init() {
         scene = onInit()
-        sceneRenderer = SortedMaterialsSceneRenderer(scene)
+        sceneRenderer = SortedSceneRenderer(scene)
     }
 
     internal fun resize(width: Int, height: Int) {

@@ -7,7 +7,7 @@ import org.mrlem.siage3d.core.scene.Scene
 import org.mrlem.siage3d.core.scene.materials.Material
 import org.mrlem.siage3d.core.scene.shaders.Shader
 
-class SortedMaterialsSceneRenderer(scene: Scene) : SceneRenderer(scene) {
+class SortedSceneRenderer(scene: Scene) : SceneRenderer(scene) {
 
     override fun render() {
         // apply camera
