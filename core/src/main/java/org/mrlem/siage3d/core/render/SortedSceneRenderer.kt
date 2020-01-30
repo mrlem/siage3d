@@ -16,21 +16,20 @@ class SortedSceneRenderer(scene: Scene) : SceneRenderer(scene) {
         // render sky
         scene.sky.render()
 
-        Shader.defaultShader.use {
-            // apply light
-            Shader.defaultShader.loadLight(scene.light)
+        Shader.defaultShader.use()
 
-            // apply sky
-            Shader.defaultShader.loadSkyColor(scene.sky.color)
+        // apply light
+        Shader.defaultShader.loadLight(scene.light)
 
-            // draw scene
-            // .. sort object nodes by material so as to optimize texture changes & such
-            val sortedObjects = sortObjects()
-            sortedObjects.forEach { (material, nodes) ->
-                material.use {
-                    nodes.forEach(ObjectNode::render)
-                }
-            }
+        // apply sky
+        Shader.defaultShader.loadSkyColor(scene.sky.color)
+
+        // draw scene
+        // .. sort object nodes by material so as to optimize texture changes & such
+        val sortedObjects = sortObjects()
+        sortedObjects.forEach { (material, nodes) ->
+            material.use()
+            nodes.forEach(ObjectNode::render)
         }
     }
 

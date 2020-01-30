@@ -7,7 +7,7 @@ abstract class Material {
 
     abstract val shader: Shader
 
-    abstract fun use(block: Material.() -> Unit)
+    abstract fun use()
 
     protected fun enableCulling() {
         glEnable(GL_CULL_FACE)

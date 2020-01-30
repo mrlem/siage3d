@@ -14,7 +14,7 @@ class TextureMaterial(
 
     override val shader: DefaultShader = Shader.defaultShader
 
-    override fun use(block: Material.() -> Unit) {
+    override fun use() {
         if (activeMaterial == this) return
         activeMaterial = this
 
@@ -23,9 +23,7 @@ class TextureMaterial(
         shader.loadFakeLighting(fakeLighting)
         shader.loadShine(shineDamper, reflectvity)
 
-        texture.use {
-            block()
-        }
+        texture.use()
     }
 
 }
