@@ -31,9 +31,20 @@ abstract class Shader(
     }
 
     fun use(block: Shader.() -> Unit ) {
-        glUseProgram(programId)
+        val previousProgramId = activeProgramId
+        val alreadyActive = (programId == previousProgramId)
+
+        if (!alreadyActive) {
+            activeProgramId = programId
+            glUseProgram(programId)
+        }
+
         this.block()
-        glUseProgram(0)
+
+        if (!alreadyActive) {
+            glUseProgram(previousProgramId)
+            activeProgramId = previousProgramId
+        }
     }
 
     fun clear() {
@@ -124,6 +135,8 @@ abstract class Shader(
         private val shaders = mutableListOf<Shader>()
         lateinit var defaultShader: DefaultShader
         lateinit var skyboxShader: SkyboxShader
+
+        private var activeProgramId = 0
 
         fun init() {
             defaultShader = DefaultShader()
