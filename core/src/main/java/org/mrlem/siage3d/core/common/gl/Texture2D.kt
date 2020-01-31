@@ -4,8 +4,8 @@ import android.opengl.GLES30.*
 
 class Texture2D(id: Int) : Texture(id) {
 
-    fun use() {
-        glActiveTexture(GL_TEXTURE0)
+    fun use(texture: Int = GL_TEXTURE0) {
+        glActiveTexture(texture)
         glBindTexture(GL_TEXTURE_2D, id)
     }
 
