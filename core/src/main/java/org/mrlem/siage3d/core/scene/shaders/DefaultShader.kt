@@ -6,8 +6,11 @@ import org.mrlem.k3d.core.R
 import org.mrlem.siage3d.core.common.io.AssetManager.text
 import org.mrlem.siage3d.core.scene.lights.PointLight
 
-class DefaultShader : Shader(
-    text(R.raw.shader_default_v), text(R.raw.shader_default_f),
+open class DefaultShader(
+    vertexSource: String = text(R.raw.shader_default_v),
+    fragmentSource: String = text(R.raw.shader_default_f)
+) : Shader(
+    vertexSource, fragmentSource,
     Attribute.values().asList(), Uniform.values().asList()
 ), Shader.ProjectionAware, Shader.ViewAware, Shader.TransformationAware {
 
