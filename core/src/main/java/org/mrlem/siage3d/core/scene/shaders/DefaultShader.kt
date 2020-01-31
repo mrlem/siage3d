@@ -44,6 +44,10 @@ open class DefaultShader(
         loadVector(Uniform.SKY_COLOR, skyColor)
     }
 
+    fun loadTileSize(tileSize: Float) {
+        loadFloat(Uniform.TILE_SIZE, tileSize)
+    }
+
     enum class Attribute(
         override val id: String,
         override val index: Int
@@ -68,7 +72,8 @@ open class DefaultShader(
         SHINE_DAMPER("shineDamper"),
         REFLECTIVITY("reflectivity"),
         USE_FAKE_LIGHTING("useFakeLighting"),
-        SKY_COLOR("skyColor")
+        SKY_COLOR("skyColor"),
+        TILE_SIZE("tileSize")
 
     }
 

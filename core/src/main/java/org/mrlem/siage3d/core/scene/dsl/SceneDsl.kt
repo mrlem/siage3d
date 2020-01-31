@@ -22,7 +22,7 @@ fun scene(init: Scene.() -> Unit) = Scene().apply {
 
 fun color(r: Float, g: Float, b: Float) = Vector3f(r, g, b)
 
-fun textureMaterial(texture: Int) = TextureMaterial(texture2D(texture))
+fun textureMaterial(texture: Int, tileSize: Float = 1f) = TextureMaterial(texture2D(texture), tileSize)
 
 fun box() = Box()
 

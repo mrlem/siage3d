@@ -10,6 +10,7 @@ in float visibility;
 out vec4 outColor;
 
 uniform sampler2D textureSampler;
+uniform float tileSize;
 uniform vec3 lightColor;
 uniform float shineDamper;
 uniform float reflectivity;
@@ -38,7 +39,8 @@ void main(void) {
     }
 
     // transparency calc
-    vec4 textureColor = texture(textureSampler, _textureCoords);
+    vec2 tiledCoords = _textureCoords * tileSize;
+    vec4 textureColor = texture(textureSampler, tiledCoords);
     if (textureColor.a < 0.5) {
         discard;
     }
