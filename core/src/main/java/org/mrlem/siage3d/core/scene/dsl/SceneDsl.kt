@@ -65,6 +65,11 @@ fun <T : Node> T.scale(scale: Float) = this
         localTransform.scale(scale)
     }
 
+fun <T : Node> T.rotate(x: Float, y: Float, z: Float) = this
+    .also {
+        localTransform.setRotationXYZ(x, y, z)
+    }
+
 ///////////////////////////////////////////////////////////////////////////
 // Group node scope functions
 ///////////////////////////////////////////////////////////////////////////
