@@ -34,7 +34,7 @@ void main(void) {
         float specularFactor = dot(reflectedLightDirection, unitToCamera);
         specularFactor = max(specularFactor, 0.0);
         float dampedFactor = pow(specularFactor, shineDamper);
-        vec3 finalSpecular = dampedFactor * reflectivity * lightColor;
+        finalSpecular = dampedFactor * reflectivity * lightColor;
     }
 
     // transparency calc
