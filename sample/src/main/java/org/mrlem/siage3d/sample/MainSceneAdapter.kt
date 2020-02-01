@@ -9,21 +9,6 @@ import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
 
-// TODO - major - load assets from assets (not resources, but keep this option)
-// TODO - major - camera controller to provide logic
-// TODO - major - postprocessing: bloom
-// TODO - major - postprocessing: anti-aliasing
-// TODO - major - postprocessing: kernel convolution matrix
-// TODO - major - ambient occlusion
-// TODO - medium - shadows
-// TODO - medium - normal maps / specular maps
-// TODO - medium - bone animation
-// TODO - medium - physics engine integration
-// TODO - medium - SceneView transparency
-// TODO - medium - improve sample app
-// TODO - medium - blender models loader
-// TODO - optional - instanced rendering when > 40 instances
-
 class MainSceneAdapter : SceneAdapter() {
 
     var linearVelocity = 0f
