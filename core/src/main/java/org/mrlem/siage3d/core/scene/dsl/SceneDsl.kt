@@ -30,13 +30,15 @@ fun multiTextureMaterial(
     backgroundTexture: Int,
     redTexture: Int,
     greenTexture: Int,
-    blueTexture: Int
+    blueTexture: Int,
+    tileSize: Float = 1f
 ) = MultiTextureMaterial(
     texture2D(blendMap),
     texture2D(backgroundTexture),
     texture2D(redTexture),
     texture2D(greenTexture),
-    texture2D(blueTexture)
+    texture2D(blueTexture),
+    tileSize
 )
 
 fun box() = Box()

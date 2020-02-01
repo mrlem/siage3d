@@ -48,7 +48,7 @@ class MainSceneAdapter : SceneAdapter() {
             objectNode(
                 "crate1",
                 shape = box(),
-                material = textureMaterial(R.raw.crate1_diffuse)
+                material = textureMaterial(R.raw.crate1_diffuse, 2f)
             )
                 .position(1f, 0.5f, 0f)
                 .scale(1f)
@@ -67,7 +67,8 @@ class MainSceneAdapter : SceneAdapter() {
                     R.drawable.texture_grassy2,
                     R.drawable.texture_mud,
                     R.drawable.texture_grass_flowers,
-                    R.drawable.texture_path
+                    R.drawable.texture_path,
+                    40f
                 )
             )
                 .rotate(-PI.toFloat() / 2, 0f, 0f)

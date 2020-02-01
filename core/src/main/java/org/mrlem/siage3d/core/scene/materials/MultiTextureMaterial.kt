@@ -11,7 +11,7 @@ class MultiTextureMaterial(
     private val redTexture: Texture2D,
     private val greenTexture: Texture2D,
     private val blueTexture: Texture2D,
-    private val tileSize: Float = 40f,
+    private val tileSize: Float = 1f,
     private var shineDamper: Float = 1f,
     private var reflectvity: Float = 0f,
     private val hasTransparency: Boolean = false,
