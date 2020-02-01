@@ -12,9 +12,16 @@ object TextureFactory {
         bitmap: Bitmap
     ): Texture2D = Texture2D(createTexture()).apply {
         use()
+
+        // load texture on gpu
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
         texImage2D(GL_TEXTURE_2D, 0, bitmap, 0)
+
+        // mipmapping settings
+        glGenerateMipmap(GL_TEXTURE_2D)
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR)
+        glTexParameterf(GL_TEXTURE_2D, GL_MAX_TEXTURE_LOD_BIAS, -1f)
     }
 
     fun load(
