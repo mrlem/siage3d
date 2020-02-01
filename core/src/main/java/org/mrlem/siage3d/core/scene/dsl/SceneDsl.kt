@@ -5,6 +5,7 @@ import org.mrlem.siage3d.core.common.io.AssetManager.texture2D
 import org.mrlem.siage3d.core.common.io.AssetManager.textureCubemap
 import org.mrlem.siage3d.core.scene.*
 import org.mrlem.siage3d.core.scene.materials.Material
+import org.mrlem.siage3d.core.scene.materials.MultiTextureMaterial
 import org.mrlem.siage3d.core.scene.materials.TextureMaterial
 import org.mrlem.siage3d.core.scene.shapes.Box
 import org.mrlem.siage3d.core.scene.shapes.Shape
@@ -23,6 +24,20 @@ fun scene(init: Scene.() -> Unit) = Scene().apply {
 fun color(r: Float, g: Float, b: Float) = Vector3f(r, g, b)
 
 fun textureMaterial(texture: Int, tileSize: Float = 1f) = TextureMaterial(texture2D(texture), tileSize)
+
+fun multiTextureMaterial(
+    blendMap: Int,
+    backgroundTexture: Int,
+    redTexture: Int,
+    greenTexture: Int,
+    blueTexture: Int
+) = MultiTextureMaterial(
+    texture2D(blendMap),
+    texture2D(backgroundTexture),
+    texture2D(redTexture),
+    texture2D(greenTexture),
+    texture2D(blueTexture)
+)
 
 fun box() = Box()
 

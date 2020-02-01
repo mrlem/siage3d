@@ -6,8 +6,8 @@ import org.mrlem.k3d.core.R
 import org.mrlem.siage3d.core.common.io.AssetManager.text
 import org.mrlem.siage3d.core.scene.lights.PointLight
 
-open class DefaultShader: Shader(
-    text(R.raw.shader_default_v), text(R.raw.shader_default_f),
+class MultiTextureShader : Shader(
+    text(R.raw.shader_default_v), text(R.raw.shader_multitexture_f),
     Attribute.values().asList(), Uniform.values().asList()
 ), Shader.ProjectionAware, Shader.ViewAware, Shader.TransformationAware, Shader.LightAware {
 
@@ -45,6 +45,14 @@ open class DefaultShader: Shader(
         loadFloat(Uniform.TILE_SIZE, tileSize)
     }
 
+    fun loadSamplers() {
+        loadInt(Uniform.BLEND_MAP, 0)
+        loadInt(Uniform.TEXTURE_BACKGROUND, 1)
+        loadInt(Uniform.TEXTURE_RED, 2)
+        loadInt(Uniform.TEXTURE_GREEN, 3)
+        loadInt(Uniform.TEXTURE_BLUE, 4)
+    }
+
     enum class Uniform(
         override val id: String,
         override var location: Int = 0
@@ -59,7 +67,13 @@ open class DefaultShader: Shader(
         REFLECTIVITY("reflectivity"),
         USE_FAKE_LIGHTING("useFakeLighting"),
         SKY_COLOR("skyColor"),
-        TILE_SIZE("tileSize")
+        TILE_SIZE("tileSize"),
+
+        BLEND_MAP("blendMap"),
+        TEXTURE_BACKGROUND("backgroundTexture"),
+        TEXTURE_RED("rTexture"),
+        TEXTURE_GREEN("gTexture"),
+        TEXTURE_BLUE("bTexture")
 
     }
 

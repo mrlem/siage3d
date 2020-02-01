@@ -3,6 +3,7 @@ package org.mrlem.siage3d.core.scene.shaders
 import android.opengl.GLES30.*
 import org.joml.Matrix4f
 import org.joml.Vector3f
+import org.mrlem.siage3d.core.scene.lights.PointLight
 import java.nio.FloatBuffer
 import kotlin.system.exitProcess
 
@@ -109,6 +110,11 @@ abstract class Shader(
         fun loadViewMatrix(matrix: Matrix4f)
     }
 
+    interface LightAware {
+        fun loadLight(light: PointLight)
+        fun loadSkyColor(skyColor: Vector3f)
+    }
+
     interface TransformationAware {
         fun loadTransformationMatrix(matrix: Matrix4f)
     }
@@ -123,17 +129,32 @@ abstract class Shader(
         var location: Int
     }
 
+    enum class Attribute(
+        override val id: String,
+        override val index: Int
+    ) : AttributeDefinition {
+
+        POSITIONS("position", 0),
+        TEXCOORDS("textureCoords", 1),
+        NORMALS("normal", 2)
+
+    }
+
     companion object {
         private val matrixBuffer = FloatBuffer.allocate(16)
 
         private val shaders = mutableListOf<Shader>()
+
         lateinit var defaultShader: DefaultShader
+        lateinit var multiTextureShader: MultiTextureShader
         lateinit var skyboxShader: SkyboxShader
 
         private var activeProgramId = 0
 
         fun init() {
             defaultShader = DefaultShader()
+                .also { shaders.add(it) }
+            multiTextureShader = MultiTextureShader()
                 .also { shaders.add(it) }
             skyboxShader = SkyboxShader()
                 .also { shaders.add(it) }
@@ -153,6 +174,16 @@ abstract class Shader(
                 if (it is ViewAware) {
                     it.use()
                     it.loadViewMatrix(matrix)
+                }
+            }
+        }
+
+        fun notifyLight(light: PointLight, skyColor: Vector3f) {
+            shaders.forEach {
+                if (it is LightAware) {
+                    it.use()
+                    it.loadLight(light)
+                    it.loadSkyColor(skyColor)
                 }
             }
         }

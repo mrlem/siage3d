@@ -15,14 +15,8 @@ class SortedSceneRenderer(scene: Scene) : SceneRenderer(scene) {
         // render sky
         scene.sky.render()
 
-        // TODO - and other concerned shaders
-        Shader.defaultShader.apply {
-            use()
-            loadLight(scene.light)
-            loadSkyColor(scene.sky.color)
-        }
-
         // draw scene
+        Shader.notifyLight(scene.light, scene.sky.color)
         val objects = gatherObjects(scene, mutableListOf())
         objects.sortWith(compareBy<ObjectNode> { it.material.shader }.thenBy { it.material })
 
