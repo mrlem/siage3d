@@ -11,11 +11,6 @@ class MultiTextureShader : Shader(
     Attribute.values().asList(), Uniform.values().asList()
 ), Shader.ProjectionAware, Shader.ViewAware, Shader.TransformationAware, Shader.LightAware {
 
-    init {
-        use()
-        loadSamplers()
-    }
-
     override fun loadProjectionMatrix(matrix: Matrix4f) {
         loadMatrix(Uniform.PROJECTION_MATRIX, matrix)
     }

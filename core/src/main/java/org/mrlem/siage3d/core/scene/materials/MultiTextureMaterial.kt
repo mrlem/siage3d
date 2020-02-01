@@ -26,6 +26,7 @@ class MultiTextureMaterial(
         shader.loadFakeLighting(fakeLighting)
         shader.loadShine(shineDamper, reflectvity)
         shader.loadTileSize(tileSize)
+        shader.loadSamplers()
 
         blendMap.use(GL_TEXTURE0)
         backgroundTexture.use(GL_TEXTURE1)
