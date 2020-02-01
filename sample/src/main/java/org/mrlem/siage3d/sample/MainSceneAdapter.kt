@@ -9,7 +9,6 @@ import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
 
-// TODO - critical - mipmap for terrain textures
 // TODO - major - load assets from assets (not resources, but keep this option)
 // TODO - major - camera controller to provide logic
 // TODO - major - postprocessing: bloom
