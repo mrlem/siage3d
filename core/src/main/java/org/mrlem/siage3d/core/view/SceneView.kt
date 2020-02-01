@@ -10,9 +10,6 @@ import org.mrlem.siage3d.core.scene.shaders.Shader
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
-// TODO - optional - move draw code to shader? (only he knows about its attributes and how to map them to the shape's vao)
-// TODO - optional - replace vectors / matrices with float[] and android matrices + ext functions?
-
 class SceneView(context: Context, attributes: AttributeSet) : GLSurfaceView(context, attributes) {
 
     var adapter: SceneAdapter? = null

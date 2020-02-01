@@ -38,9 +38,4 @@ class Camera(
         return this
     }
 
-    fun lookAt(target: Vector3f): Camera {
-        // TODO - minor - set yaw / pitch / roll
-        return this
-    }
-
 }
