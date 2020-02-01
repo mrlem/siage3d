@@ -9,8 +9,13 @@ in float visibility;
 
 out vec4 outColor;
 
-uniform sampler2D textureSampler;
+uniform sampler2D blendMap;
+uniform sampler2D backgroundTexture;
+uniform sampler2D rTexture;
+uniform sampler2D gTexture;
+uniform sampler2D bTexture;
 uniform float tileSize;
+
 uniform vec3 lightColor;
 uniform float shineDamper;
 uniform float reflectivity;
@@ -38,13 +43,17 @@ void main(void) {
         finalSpecular = dampedFactor * reflectivity * lightColor;
     }
 
-    // transparency calc
-    vec2 tiledCoords = _textureCoords * tileSize;
-    vec4 textureColor = texture(textureSampler, tiledCoords);
-    if (textureColor.a < 0.5) {
-        discard;
-    }
+    // blending calc
+    vec4 blendColor = texture(blendMap, _textureCoords);
+    float backgroundAmount = 1.0 - blendColor.r - blendColor.g - blendColor.b;
 
-    outColor = (vec4(diffuse, 1.0) * textureColor + vec4(finalSpecular, 1.0));
+    vec2 tiledCoords = _textureCoords * tileSize;
+    vec4 backgroundColor = texture(backgroundTexture, tiledCoords) * backgroundAmount;
+    vec4 rColor = texture(rTexture, tiledCoords) * blendColor.r;
+    vec4 gColor = texture(gTexture, tiledCoords) * blendColor.g;
+    vec4 bColor = texture(bTexture, tiledCoords) * blendColor.b;
+    vec4 totalColor = backgroundColor + rColor + gColor + bColor;
+
+    outColor = (vec4(diffuse, 1.0) * totalColor + vec4(finalSpecular, 1.0));
     outColor = mix(vec4(skyColor, 1.0), outColor, visibility);
 }

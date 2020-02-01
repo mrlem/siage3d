@@ -2,7 +2,7 @@ package org.mrlem.siage3d.core.common.gl
 
 import android.opengl.GLES30.*
 import org.mrlem.siage3d.core.common.io.toBuffer
-import org.mrlem.siage3d.core.scene.shaders.DefaultShader
+import org.mrlem.siage3d.core.scene.shaders.Shader
 import org.mrlem.siage3d.core.scene.shapes.Shape
 import java.nio.IntBuffer
 
@@ -41,9 +41,9 @@ class Vao private constructor(val indicesCount: Int) {
         fun load(data: Shape.Data): Vao {
             return Vao(data.indices.size).apply {
                 use {
-                    addVbo { toAttribute(DefaultShader.Attribute.POSITIONS.index, 3, data.positions.toBuffer()) }
-                    addVbo { toAttribute(DefaultShader.Attribute.TEXCOORDS.index, 2, data.texCoords.toBuffer()) }
-                    addVbo { toAttribute(DefaultShader.Attribute.NORMALS.index, 3, data.normals.toBuffer()) }
+                    addVbo { toAttribute(Shader.Attribute.POSITIONS.index, 3, data.positions.toBuffer()) }
+                    addVbo { toAttribute(Shader.Attribute.TEXCOORDS.index, 2, data.texCoords.toBuffer()) }
+                    addVbo { toAttribute(Shader.Attribute.NORMALS.index, 3, data.normals.toBuffer()) }
                     addVbo { toIndexBuffer(data.indices.toBuffer()) }
                 }
                 glBindBuffer(GL_ARRAY_BUFFER, 0)
