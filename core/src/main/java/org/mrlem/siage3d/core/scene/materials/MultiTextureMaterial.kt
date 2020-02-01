@@ -23,7 +23,6 @@ class MultiTextureMaterial(
     override fun setup() {
         if (hasTransparency) disableCulling() else enableCulling()
 
-        shader.loadSamplers()
         shader.loadFakeLighting(fakeLighting)
         shader.loadShine(shineDamper, reflectvity)
         shader.loadTileSize(tileSize)
