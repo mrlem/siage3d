@@ -90,6 +90,7 @@ class MainSceneAdapter : SceneAdapter() {
   - Skybox
   - Distance fog
   - Lighting: point light
+  - Multi-texturing
 
 ## About
 
