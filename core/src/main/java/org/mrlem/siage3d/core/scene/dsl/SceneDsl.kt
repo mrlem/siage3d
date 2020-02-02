@@ -7,10 +7,7 @@ import org.mrlem.siage3d.core.scene.*
 import org.mrlem.siage3d.core.scene.materials.Material
 import org.mrlem.siage3d.core.scene.materials.MultiTextureMaterial
 import org.mrlem.siage3d.core.scene.materials.TextureMaterial
-import org.mrlem.siage3d.core.scene.shapes.Box
-import org.mrlem.siage3d.core.scene.shapes.Shape
-import org.mrlem.siage3d.core.scene.shapes.Square
-import org.mrlem.siage3d.core.scene.shapes.Triangle
+import org.mrlem.siage3d.core.scene.shapes.*
 import org.mrlem.siage3d.core.scene.sky.Sky
 
 ///////////////////////////////////////////////////////////////////////////
@@ -46,6 +43,8 @@ fun box() = Box()
 fun triangle() = Triangle()
 
 fun square() = Square()
+
+fun grid(size: Float, vertexCount: Int) = Grid(size, vertexCount)
 
 ///////////////////////////////////////////////////////////////////////////
 // Scene scope functions
