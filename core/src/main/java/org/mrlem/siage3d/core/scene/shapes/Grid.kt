@@ -4,7 +4,7 @@ class Grid(size: Float, vertexCount: Int) : Shape(generateGrid(size, vertexCount
 
     companion object {
 
-        private fun generateGrid(size: Float, vertexCount: Int): Data {
+        fun generateGrid(size: Float, vertexCount: Int): Data {
             val count: Int = vertexCount * vertexCount
 
             val vertices = FloatArray(count * 3)
