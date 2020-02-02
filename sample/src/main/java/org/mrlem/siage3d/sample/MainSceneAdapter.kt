@@ -5,7 +5,6 @@ import org.mrlem.siage3d.core.common.io.AssetManager.shape
 import org.mrlem.siage3d.core.common.math.toRadians
 import org.mrlem.siage3d.core.scene.dsl.*
 import org.mrlem.siage3d.core.view.SceneAdapter
-import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -46,18 +45,18 @@ class MainSceneAdapter : SceneAdapter() {
                 .scale(1f)
             objectNode(
                 "ground",
-                shape = square(),
+                shape = grid(1f, 20),
                 material = multiTextureMaterial(
                     R.drawable.texture_blend_map,
                     R.drawable.texture_grassy2,
                     R.drawable.texture_mud,
                     R.drawable.texture_grass_flowers,
                     R.drawable.texture_path,
-                    40f
+                    200f
                 )
             )
-                .rotate(-PI.toFloat() / 2, 0f, 0f)
-                .scale(100f)
+                .position(-250f, 0f, -250f)
+                .scale(500f)
         }
     }
 
