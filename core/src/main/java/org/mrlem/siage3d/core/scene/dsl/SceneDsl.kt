@@ -46,7 +46,9 @@ fun square() = Square()
 
 fun grid(size: Float, vertexCount: Int) = Grid(size, vertexCount)
 
-fun terrain(size: Float, heights: Array<Array<Float>>) = Terrain(size, heights)
+fun terrain(size: Float, heightMap: Terrain.HeightMap) = Terrain(size, heightMap)
+
+fun heightMap(size: Int) = Terrain.HeightMap(size)
 
 ///////////////////////////////////////////////////////////////////////////
 // Scene scope functions
