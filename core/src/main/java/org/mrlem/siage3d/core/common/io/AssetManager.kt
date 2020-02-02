@@ -17,7 +17,9 @@ object AssetManager {
         }
     }
 
-    fun bitmap(resId: Int) = BitmapFactory.decodeResource(res, resId)
+    fun bitmap(resId: Int) = BitmapFactory.decodeResource(res, resId, BitmapFactory.Options().apply {
+        inScaled = false
+    })
 
     fun shape(resId: Int) = ShapeCache.get(res, resId)
 

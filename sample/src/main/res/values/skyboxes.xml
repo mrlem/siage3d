@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <array name="skybox_daylight">
-        <item>@drawable/daylight_box_left</item>
-        <item>@drawable/daylight_box_right</item>
-        <item>@drawable/daylight_box_bottom</item>
-        <item>@drawable/daylight_box_top</item>
-        <item>@drawable/daylight_box_back</item>
-        <item>@drawable/daylight_box_front</item>
+        <item>@raw/daylight_box_left</item>
+        <item>@raw/daylight_box_right</item>
+        <item>@raw/daylight_box_bottom</item>
+        <item>@raw/daylight_box_top</item>
+        <item>@raw/daylight_box_back</item>
+        <item>@raw/daylight_box_front</item>
     </array>
 </resources>

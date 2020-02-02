@@ -1,10 +1,8 @@
 package org.mrlem.siage3d.core.scene.shapes
 
-import org.mrlem.siage3d.core.common.math.randomFloat
-
 class Terrain(
     size: Float,
-    heightMap: HeightMap = HeightMap(32) { randomFloat() }
+    heightMap: HeightMap = HeightMap(32) { 0f }
 ) : Shape(Grid.generateGrid(size, heightMap.size).applyHeights(heightMap)) {
 
     companion object {
