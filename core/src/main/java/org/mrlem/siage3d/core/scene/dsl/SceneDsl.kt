@@ -1,8 +1,10 @@
 package org.mrlem.siage3d.core.scene.dsl
 
+import androidx.annotation.RawRes
 import org.joml.Vector3f
 import org.mrlem.siage3d.core.common.io.AssetManager.texture2D
 import org.mrlem.siage3d.core.common.io.AssetManager.textureCubemap
+import org.mrlem.siage3d.core.common.io.loaders.HeightMapLoader
 import org.mrlem.siage3d.core.scene.*
 import org.mrlem.siage3d.core.scene.materials.Material
 import org.mrlem.siage3d.core.scene.materials.MultiTextureMaterial
@@ -48,7 +50,7 @@ fun grid(size: Float, vertexCount: Int) = Grid(size, vertexCount)
 
 fun terrain(size: Float, heightMap: Terrain.HeightMap) = Terrain(size, heightMap)
 
-fun heightMap(size: Int) = Terrain.HeightMap(size)
+fun heightMap(@RawRes resId: Int) = HeightMapLoader().load(resId)
 
 ///////////////////////////////////////////////////////////////////////////
 // Scene scope functions

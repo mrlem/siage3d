@@ -5,7 +5,7 @@ import org.joml.Vector3f
 internal class Vertex(val index: Short, val position: Vector3f) {
 
     companion object {
-        val NO_INDEX = -1
+        const val NO_INDEX = -1
     }
 
 	val length: Float = position.length()
