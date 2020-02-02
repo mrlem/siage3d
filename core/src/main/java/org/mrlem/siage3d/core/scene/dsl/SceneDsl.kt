@@ -46,6 +46,8 @@ fun square() = Square()
 
 fun grid(size: Float, vertexCount: Int) = Grid(size, vertexCount)
 
+fun terrain(size: Float, heights: Array<Array<Float>>) = Terrain(size, heights)
+
 ///////////////////////////////////////////////////////////////////////////
 // Scene scope functions
 ///////////////////////////////////////////////////////////////////////////
@@ -79,6 +81,11 @@ fun <T : Node> T.position(position: Vector3f) = this
 fun <T : Node> T.scale(scale: Float) = this
     .also {
         localTransform.scale(scale)
+    }
+
+fun <T : Node> T.scale(scaleX: Float, scaleY: Float, scaleZ: Float) = this
+    .also {
+        localTransform.scale(scaleX, scaleY, scaleZ)
     }
 
 fun <T : Node> T.rotate(x: Float, y: Float, z: Float) = this
