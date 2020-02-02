@@ -48,7 +48,7 @@ class ObjLoader {
             texturesArray,
             normalsArray
         )
-		val indicesArray = convertIndicesListToArray(indices)
+		val indicesArray = indices.toShortArray()
         return Shape.Data(verticesArray, texturesArray, indicesArray, normalsArray)
     }
 
@@ -133,12 +133,6 @@ class ObjLoader {
                 vertex.normalIndex = 0
             }
         }
-	}
-
-	private fun convertIndicesListToArray(indices: List<Short>): ShortArray {
-        val array = ShortArray(indices.size)
-        indices.forEachIndexed { index, value -> array[index] = value }
-        return array
 	}
 
 }
