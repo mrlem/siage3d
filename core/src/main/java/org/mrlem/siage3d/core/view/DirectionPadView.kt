@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.MotionEvent
+import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import kotlinx.android.synthetic.main.view_direction_pad.view.*
 import org.mrlem.k3d.core.R
@@ -16,17 +17,8 @@ class DirectionPadView @JvmOverloads constructor(
 
     private val onTouchListener = OnTouchListener { view, event ->
         when (event.action) {
-            MotionEvent.ACTION_DOWN -> {
-                when (view) {
-                    upArrow -> onDirectionPadListener?.onDirectionChanged(Direction.UP)
-                    downArrow -> onDirectionPadListener?.onDirectionChanged(Direction.DOWN)
-                    leftArrow -> onDirectionPadListener?.onDirectionChanged(Direction.LEFT)
-                    rightArrow -> onDirectionPadListener?.onDirectionChanged(Direction.RIGHT)
-                }
-            }
-            MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
-                onDirectionPadListener?.onDirectionChanged(null)
-            }
+            MotionEvent.ACTION_DOWN -> notifyDirectionChanged(view, true)
+            MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> notifyDirectionChanged(view, false)
         }
         false
     }
@@ -41,8 +33,17 @@ class DirectionPadView @JvmOverloads constructor(
         rightArrow.setOnTouchListener(onTouchListener)
     }
 
+    private fun notifyDirectionChanged(view: View, active: Boolean) {
+        when (view) {
+            upArrow -> onDirectionPadListener?.onDirectionChanged(Direction.UP, active)
+            downArrow -> onDirectionPadListener?.onDirectionChanged(Direction.DOWN, active)
+            leftArrow -> onDirectionPadListener?.onDirectionChanged(Direction.LEFT, active)
+            rightArrow -> onDirectionPadListener?.onDirectionChanged(Direction.RIGHT, active)
+        }
+    }
+
     interface OnDirectionPadListener {
-        fun onDirectionChanged(direction: Direction?)
+        fun onDirectionChanged(direction: Direction?, active: Boolean)
     }
 
     enum class Direction {
