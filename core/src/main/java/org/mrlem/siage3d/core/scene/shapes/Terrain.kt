@@ -5,10 +5,18 @@ import kotlin.math.max
 import kotlin.math.min
 
 class Terrain(
-    val size: Float,
-    val heightMap: HeightMap = HeightMap(32) { 0f },
-    val maxHeight: Float = 1f
+    private val size: Float,
+    private val heightMap: HeightMap = HeightMap(32) { 0f },
+    private val maxHeight: Float = 1f
 ) : Shape(Grid.generateGrid(size, heightMap.size).applyHeights(heightMap, maxHeight)) {
+
+    fun heightAt(x: Float, z: Float): Float {
+        // TODO - barycenter
+        val tileSize = size / heightMap.size
+        val zIndex = ((z + size/2) / tileSize).toInt().coerceIn(0 until heightMap.size)
+        val xIndex = ((x + size/2) / tileSize).toInt().coerceIn(0 until heightMap.size)
+        return heightMap.heights[zIndex][xIndex] * maxHeight
+    }
 
     companion object {
 
