@@ -6,6 +6,7 @@ import org.mrlem.siage3d.core.common.io.AssetManager.texture2D
 import org.mrlem.siage3d.core.common.io.AssetManager.textureCubemap
 import org.mrlem.siage3d.core.common.io.loaders.HeightMapLoader
 import org.mrlem.siage3d.core.scene.*
+import org.mrlem.siage3d.core.scene.lights.PointLight
 import org.mrlem.siage3d.core.scene.materials.Material
 import org.mrlem.siage3d.core.scene.materials.MultiTextureMaterial
 import org.mrlem.siage3d.core.scene.materials.TextureMaterial
@@ -60,6 +61,10 @@ fun Scene.camera(init: Camera.() -> Unit) = Camera()
     .apply { init() }
     .also { camera = it }
 
+fun Scene.light(init: PointLight.() -> Unit) = PointLight()
+    .apply { init() }
+    .also { light = it }
+
 fun Scene.sky(color: Vector3f, cubemap: Int? = null) = (cubemap?.let {
     Sky.Skybox(textureCubemap(cubemap), color)
 } ?: Sky.SkyColor(color))
@@ -70,6 +75,13 @@ fun Scene.sky(color: Vector3f, cubemap: Int? = null) = (cubemap?.let {
 ///////////////////////////////////////////////////////////////////////////
 
 fun Camera.position(x: Float, y: Float, z: Float) = position(Vector3f(x, y, z))
+
+///////////////////////////////////////////////////////////////////////////
+// Light scope functions
+///////////////////////////////////////////////////////////////////////////
+
+fun PointLight.position(x: Float, y: Float, z: Float) = position.set(x, y, z)
+fun PointLight.color(red: Float, green: Float, blue: Float) = color.set(red, green, blue)
 
 ///////////////////////////////////////////////////////////////////////////
 // Node scope functions

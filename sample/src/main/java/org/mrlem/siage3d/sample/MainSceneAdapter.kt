@@ -19,6 +19,10 @@ class MainSceneAdapter : SceneAdapter() {
     lateinit var heightMap: Terrain.HeightMap
 
     override fun onInit() = scene {
+        light {
+            position(0f, 15f, 0f)
+            color(1f, 1f, .8f)
+        }
         camera {
             position(0f, 1.75f, 5f)
         }
