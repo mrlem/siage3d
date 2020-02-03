@@ -2,11 +2,13 @@ package org.mrlem.siage3d.sample
 
 import org.mrlem.siage3d.R
 import org.mrlem.siage3d.core.common.io.AssetManager.shape
+import org.mrlem.siage3d.core.common.math.randomFloat
 import org.mrlem.siage3d.core.common.math.toRadians
 import org.mrlem.siage3d.core.scene.Node
 import org.mrlem.siage3d.core.scene.dsl.*
 import org.mrlem.siage3d.core.scene.shapes.Terrain
 import org.mrlem.siage3d.core.view.SceneAdapter
+import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -16,11 +18,11 @@ class MainSceneAdapter : SceneAdapter() {
     var angularVelocity = 0f
 
     lateinit var groundNode: Node
-    lateinit var heightMap: Terrain.HeightMap
+    lateinit var terrain: Terrain
 
     override fun onInit() = scene {
         light {
-            position(0f, 15f, 0f)
+            position(0f, 40f, 0f)
             color(1f, 1f, .8f)
         }
         camera {
@@ -38,7 +40,7 @@ class MainSceneAdapter : SceneAdapter() {
 
             objectNode(
                 "ground",
-                shape = terrain(300f, heightMap(R.raw.heightmap).also { heightMap = it }, 50f),
+                shape = terrain(300f, heightMap(R.raw.heightmap), 50f).also { terrain = it },
                 material = multiTextureMaterial(
                     R.drawable.texture_blend_map,
                     R.drawable.texture_grassy2,
@@ -48,27 +50,40 @@ class MainSceneAdapter : SceneAdapter() {
                     50f
                 )
             )
-                .position(0f, -30f, 0f)
                 .also { groundNode = it }
 
             ///////////////////////////////////////////////////////////////////////////
             // Objects
             ///////////////////////////////////////////////////////////////////////////
 
-            objectNode(
-                "tree1",
-                shape = shape(R.raw.model_tree_lowpoly_mesh),
-                material = textureMaterial(R.raw.model_tree_lowpoly_texture)
-            )
-                .position(-1f, 0f, 0f)
-                .scale(.1f)
-            objectNode(
-                "crate1",
-                shape = box(),
-                material = textureMaterial(R.raw.crate1_diffuse, 2f)
-            )
-                .position(1f, 0.5f, 0f)
-                .scale(1f)
+            for (i in 0 .. 100) {
+                objectNode(
+                    "tree1",
+                    shape = shape(R.raw.model_tree_lowpoly_mesh),
+                    material = textureMaterial(R.raw.model_tree_lowpoly_texture)
+                )
+                    .apply {
+                        val x = randomFloat() * 150f - 75f
+                        val z = randomFloat() * 150f - 75f
+                        position(x, terrain.heightAt(x, z), z)
+                    }
+                    .rotate(0f, (randomFloat() * 2 * PI).toFloat(), 0f)
+                    .scale(.1f)
+            }
+            for (i in 0 .. 500) {
+                objectNode(
+                    "crate1",
+                    shape = box(),
+                    material = textureMaterial(R.raw.crate1_diffuse, 2f)
+                )
+                    .apply {
+                        val x = randomFloat() * 150f - 75f
+                        val z = randomFloat() * 150f - 75f
+                        position(x, terrain.heightAt(x, z) + 0.5f, z)
+                    }
+                    .rotate(0f, (randomFloat() * 2 * PI).toFloat(), 0f)
+                    .scale(1f)
+            }
             objectNode(
                 "crate2",
                 shape = box(),
@@ -85,6 +100,7 @@ class MainSceneAdapter : SceneAdapter() {
             yaw += angularVelocity * delta
             position.x += sin(yaw.toRadians()) * linearVelocity * delta
             position.z -= cos(yaw.toRadians()) * linearVelocity * delta
+            position.y = 40f
         }
     }
 
