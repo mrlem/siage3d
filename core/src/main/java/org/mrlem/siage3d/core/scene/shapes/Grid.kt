@@ -6,6 +6,7 @@ class Grid(size: Float, vertexCount: Int) : Shape(generateGrid(size, vertexCount
 
         fun generateGrid(size: Float, vertexCount: Int): Data {
             val count: Int = vertexCount * vertexCount
+            val xzStart = -size / 2
 
             val vertices = FloatArray(count * 3)
             val normals = FloatArray(count * 3)
@@ -15,9 +16,9 @@ class Grid(size: Float, vertexCount: Int) : Shape(generateGrid(size, vertexCount
             var vertexPointer = 0
             for (i in 0 until vertexCount) {
                 for (j in 0 until vertexCount) {
-                    vertices[vertexPointer * 3] = j.toFloat() / (vertexCount.toFloat() - 1) * size
+                    vertices[vertexPointer * 3] = xzStart + j.toFloat() / (vertexCount.toFloat() - 1) * size
                     vertices[vertexPointer * 3 + 1] = 0f
-                    vertices[vertexPointer * 3 + 2] = i.toFloat() / (vertexCount.toFloat() - 1) * size
+                    vertices[vertexPointer * 3 + 2] = xzStart + i.toFloat() / (vertexCount.toFloat() - 1) * size
                     normals[vertexPointer * 3] = 0f
                     normals[vertexPointer * 3 + 1] = 1f
                     normals[vertexPointer * 3 + 2] = 0f

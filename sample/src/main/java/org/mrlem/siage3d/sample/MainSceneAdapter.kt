@@ -34,7 +34,7 @@ class MainSceneAdapter : SceneAdapter() {
 
             objectNode(
                 "ground",
-                shape = terrain(1f, heightMap(R.raw.heightmap).also { heightMap = it }),
+                shape = terrain(500f, heightMap(R.raw.heightmap).also { heightMap = it }),
                 material = multiTextureMaterial(
                     R.drawable.texture_blend_map,
                     R.drawable.texture_grassy2,
@@ -44,8 +44,8 @@ class MainSceneAdapter : SceneAdapter() {
                     200f
                 )
             )
-                .position(-250f, -10f, -250f)
-                .scale(500f, 20f, 500f)
+                .position(0f, -10f, 0f)
+                .scale(1f, 20f, 1f)
                 .also { groundNode = it }
 
             ///////////////////////////////////////////////////////////////////////////
