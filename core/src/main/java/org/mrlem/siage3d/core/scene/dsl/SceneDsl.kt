@@ -49,7 +49,7 @@ fun square() = Square()
 
 fun grid(size: Float, vertexCount: Int) = Grid(size, vertexCount)
 
-fun terrain(size: Float, heightMap: Terrain.HeightMap) = Terrain(size, heightMap)
+fun terrain(size: Float, heightMap: Terrain.HeightMap, maxHeight: Float) = Terrain(size, heightMap, maxHeight)
 
 fun heightMap(@RawRes resId: Int) = HeightMapLoader().load(resId)
 

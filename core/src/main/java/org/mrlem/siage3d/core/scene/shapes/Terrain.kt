@@ -5,20 +5,21 @@ import kotlin.math.max
 import kotlin.math.min
 
 class Terrain(
-    size: Float,
-    val heightMap: HeightMap = HeightMap(32) { 0f }
-) : Shape(Grid.generateGrid(size, heightMap.size).applyHeights(heightMap)) {
+    val size: Float,
+    val heightMap: HeightMap = HeightMap(32) { 0f },
+    val maxHeight: Float = 1f
+) : Shape(Grid.generateGrid(size, heightMap.size).applyHeights(heightMap, maxHeight)) {
 
     companion object {
 
-        fun Data.applyHeights(heightMap: HeightMap): Data {
+        fun Data.applyHeights(heightMap: HeightMap, maxHeight: Float): Data {
             for (i in 1 .. positions.size step 3) {
                 val vertexIndex = i / 3
                 val row = vertexIndex / heightMap.size
                 val col = vertexIndex % heightMap.size
 
                 // height
-                positions[i] = heightMap.heights[row][col]
+                positions[i] = heightMap.heights[row][col] * maxHeight
 
                 // normal
                 val normal = calculateNormal(row, col, heightMap.heights)
