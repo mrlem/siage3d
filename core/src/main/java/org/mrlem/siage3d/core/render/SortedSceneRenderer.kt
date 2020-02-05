@@ -16,9 +16,6 @@ class SortedSceneRenderer(scene: Scene) : SceneRenderer(scene) {
         scene.sky.render()
 
         // draw scene
-        // TODO - create fog sceneSetting
-        // TODO - implement dirty mechanism for lights & fog
-        // TODO - add sceneSettings for fog lower & upper limits
         Shader.notifyLight(scene.light)
         Shader.notifyFog(scene.sky.color, 3f, 0.007f)
 
