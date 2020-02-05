@@ -1,13 +1,14 @@
 package org.mrlem.siage3d.core.scene.shaders
 
 import org.joml.Matrix4f
+import org.joml.Vector3f
 import org.mrlem.k3d.core.R
 import org.mrlem.siage3d.core.common.io.AssetManager.text
 
 class SkyboxShader : Shader(
     text(R.raw.shader_skybox_v), text(R.raw.shader_skybox_f),
     Attribute.values().asList(), Uniform.values().asList()
-), Shader.ProjectionAware, Shader.ViewAware {
+), Shader.ProjectionAware, Shader.ViewAware, Shader.FogAware {
 
     private val rotationOnlyMatrix = Matrix4f()
 
@@ -20,6 +21,18 @@ class SkyboxShader : Shader(
             .set(matrix)
             .setTranslation(0f, 0f, 0f)
         loadMatrix(Uniform.VIEW_MATRIX, rotationOnlyMatrix)
+    }
+
+    override fun loadFogColor(color: Vector3f) {
+        loadVector(Uniform.FOG_COLOR, color)
+    }
+
+    override fun loadFogDensity(density: Float) {
+        // nothing
+    }
+
+    override fun loadFogGradient(gradient: Float) {
+        // nothing
     }
 
     enum class Attribute(
@@ -37,7 +50,8 @@ class SkyboxShader : Shader(
     ) : UniformDefinition {
 
         PROJECTION_MATRIX("projectionMatrix"),
-        VIEW_MATRIX("viewMatrix")
+        VIEW_MATRIX("viewMatrix"),
+        FOG_COLOR("fogColor")
 
     }
 
