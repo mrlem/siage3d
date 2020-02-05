@@ -84,6 +84,7 @@ class MainSceneAdapter : SceneAdapter() {
 * Scene definition
   - scene-graph API
   - kotlin DSL
+  - height-maps
 * Object loading
   - OBJ files
 * Rendering
