@@ -19,7 +19,7 @@ uniform float tileSize;
 uniform vec3 lightColor;
 uniform float shineDamper;
 uniform float reflectivity;
-uniform vec3 skyColor;
+uniform vec3 fogColor;
 
 void main(void) {
 
@@ -55,5 +55,5 @@ void main(void) {
     vec4 totalColor = backgroundColor + rColor + gColor + bColor;
 
     outColor = (vec4(diffuse, 1.0) * totalColor + vec4(finalSpecular, 1.0));
-    outColor = mix(vec4(skyColor, 1.0), outColor, visibility);
+    outColor = mix(vec4(fogColor, 1.0), outColor, visibility);
 }

@@ -40,7 +40,7 @@ class MainSceneAdapter : SceneAdapter() {
 
             objectNode(
                 "ground",
-                shape = terrain(300f, heightMap(R.raw.heightmap), 50f).also { terrain = it },
+                shape = terrain(500f, heightMap(R.raw.heightmap), 50f).also { terrain = it },
                 material = multiTextureMaterial(
                     R.drawable.texture_blend_map,
                     R.drawable.texture_grassy2,
@@ -56,7 +56,7 @@ class MainSceneAdapter : SceneAdapter() {
             // Objects
             ///////////////////////////////////////////////////////////////////////////
 
-            for (i in 0 .. 100) {
+            for (i in 0 .. 200) {
                 objectNode(
                     "tree1",
                     shape = shape(R.raw.model_tree_lowpoly_mesh),
@@ -70,7 +70,7 @@ class MainSceneAdapter : SceneAdapter() {
                     .rotate(0f, (randomFloat() * 2 * PI).toFloat(), 0f)
                     .scale(.1f)
             }
-            for (i in 0 .. 500) {
+            for (i in 0 .. 200) {
                 objectNode(
                     "crate1",
                     shape = box(),

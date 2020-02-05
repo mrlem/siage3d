@@ -16,7 +16,10 @@ class SortedSceneRenderer(scene: Scene) : SceneRenderer(scene) {
         scene.sky.render()
 
         // draw scene
-        Shader.notifyLight(scene.light, scene.sky.color)
+        // TODO - implement dirty mechanism for lights & fog?
+        Shader.notifyLight(scene.light)
+        Shader.notifyFog(scene.sky.color, 3f, 0.007f)
+
         val objects = gatherObjects(scene, mutableListOf())
         objects.sortWith(compareBy<ObjectNode> { it.material.shader }.thenBy { it.material })
 

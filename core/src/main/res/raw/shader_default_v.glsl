@@ -16,10 +16,8 @@ uniform mat4 transformationMatrix;
 uniform vec3 lightPosition;
 uniform float useFakeLighting;
 
-const float density = 0.007;
-const float gradient = 1.5;
-//const float density = 0.0035;
-//const float gradient = 5.0;
+uniform float fogDensity;
+uniform float fogGradient;
 
 void main(void) {
 
@@ -39,6 +37,6 @@ void main(void) {
     toCamera = (inverse(viewMatrix) * vec4(0.0, 0.0, 0.0, 1.0)).xyz - worldPosition.xyz;
 
     float distance = length(positionRelativeToCamera.xyz);
-    visibility = exp(-pow(distance * density, gradient));
+    visibility = exp(-pow(distance * fogDensity, fogGradient));
     visibility = clamp(visibility, 0.0, 1.0);
 }

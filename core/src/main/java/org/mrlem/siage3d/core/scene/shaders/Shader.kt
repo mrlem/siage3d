@@ -112,7 +112,12 @@ abstract class Shader(
 
     interface LightAware {
         fun loadLight(light: PointLight)
-        fun loadSkyColor(skyColor: Vector3f)
+    }
+
+    interface FogAware {
+        fun loadFogColor(color: Vector3f)
+        fun loadFogGradient(gradient: Float)
+        fun loadFogDensity(density: Float)
     }
 
     interface TransformationAware {
@@ -178,12 +183,22 @@ abstract class Shader(
             }
         }
 
-        fun notifyLight(light: PointLight, skyColor: Vector3f) {
+        fun notifyLight(light: PointLight) {
             shaders.forEach {
                 if (it is LightAware) {
                     it.use()
                     it.loadLight(light)
-                    it.loadSkyColor(skyColor)
+                }
+            }
+        }
+
+        fun notifyFog(color: Vector3f, gradient: Float, density: Float) {
+            shaders.forEach {
+                if (it is FogAware) {
+                    it.use()
+                    it.loadFogColor(color)
+                    it.loadFogGradient(gradient)
+                    it.loadFogDensity(density)
                 }
             }
         }

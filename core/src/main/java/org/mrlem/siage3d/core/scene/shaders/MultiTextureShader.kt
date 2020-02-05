@@ -9,7 +9,7 @@ import org.mrlem.siage3d.core.scene.lights.PointLight
 class MultiTextureShader : Shader(
     text(R.raw.shader_default_v), text(R.raw.shader_multitexture_f),
     Attribute.values().asList(), Uniform.values().asList()
-), Shader.ProjectionAware, Shader.ViewAware, Shader.TransformationAware, Shader.LightAware {
+), Shader.ProjectionAware, Shader.ViewAware, Shader.TransformationAware, Shader.LightAware, Shader.FogAware {
 
     override fun loadProjectionMatrix(matrix: Matrix4f) {
         loadMatrix(Uniform.PROJECTION_MATRIX, matrix)
@@ -23,15 +23,6 @@ class MultiTextureShader : Shader(
         loadMatrix(Uniform.TRANSFORMATION_MATRIX, matrix)
     }
 
-    override fun loadLight(light: PointLight) {
-        loadVector(Uniform.LIGHT_POSITION, light.position)
-        loadVector(Uniform.LIGHT_COLOR, light.color)
-    }
-
-    override fun loadSkyColor(skyColor: Vector3f) {
-        loadVector(Uniform.SKY_COLOR, skyColor)
-    }
-
     fun loadShine(shineDamper: Float, reflectivity: Float) {
         loadFloat(Uniform.SHINE_DAMPER, shineDamper)
         loadFloat(Uniform.REFLECTIVITY, reflectivity)
@@ -39,6 +30,23 @@ class MultiTextureShader : Shader(
 
     fun loadFakeLighting(useFakeLighting: Boolean) {
         loadFloat(Uniform.USE_FAKE_LIGHTING, if (useFakeLighting) 1f else 0f)
+    }
+
+    override fun loadLight(light: PointLight) {
+        loadVector(Uniform.LIGHT_POSITION, light.position)
+        loadVector(Uniform.LIGHT_COLOR, light.color)
+    }
+
+    override fun loadFogColor(color: Vector3f) {
+        loadVector(Uniform.FOG_COLOR, color)
+    }
+
+    override fun loadFogGradient(gradient: Float) {
+        loadFloat(Uniform.FOG_GRADIENT, gradient)
+    }
+
+    override fun loadFogDensity(density: Float) {
+        loadFloat(Uniform.FOG_DENSITY, density)
     }
 
     fun loadTileSize(tileSize: Float) {
@@ -66,7 +74,9 @@ class MultiTextureShader : Shader(
         SHINE_DAMPER("shineDamper"),
         REFLECTIVITY("reflectivity"),
         USE_FAKE_LIGHTING("useFakeLighting"),
-        SKY_COLOR("skyColor"),
+        FOG_COLOR("fogColor"),
+        FOG_GRADIENT("fogGradient"),
+        FOG_DENSITY("fogDensity"),
         TILE_SIZE("tileSize"),
 
         BLEND_MAP("blendMap"),
