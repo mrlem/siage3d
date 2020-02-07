@@ -1,13 +1,9 @@
 #version 320 es
 precision mediump float;
 
-in vec2 _textureCoords;
-in vec3 surfaceNormal;
-in vec3 toLightVector;
-in vec3 toCamera;
-in float visibility;
+const float ambientLight = 0.2;
 
-out vec4 outColor;
+// uniforms
 
 uniform sampler2D textureSampler;
 uniform float tileSize;
@@ -16,18 +12,44 @@ uniform float shineDamper;
 uniform float reflectivity;
 uniform vec3 fogColor;
 
-void main(void) {
+// attributes
 
-    // diffuse lighting calc
+in vec2 _textureCoords;
+in vec3 surfaceNormal;
+in vec3 toLightVector;
+in vec3 toCamera;
+in float visibility;
+
+out vec4 outColor;
+
+// protos
+
+vec4 calcDiffuseLight(vec3 unitNormal, vec3 unitLightVector);
+vec4 calcSpecularLight(vec3 unitNormal, vec3 unitLightVector);
+vec4 getTextureColor();
+
+// main
+
+void main(void) {
     vec3 unitNormal = normalize(surfaceNormal);
     vec3 unitLightVector = normalize(toLightVector);
 
-    float dotProduct = dot(unitNormal, unitLightVector);
-    float brightness = max(dotProduct, 0.2); // ambient light
-    vec3 diffuse = brightness * lightColor;
+    outColor += calcDiffuseLight(unitNormal, unitLightVector);  // diffuse
+    outColor += calcSpecularLight(unitNormal, unitLightVector); // specular
+    outColor = mix(vec4(fogColor, 1.0), outColor, visibility);  // fog
+}
 
-    // specular lighting calc
-    vec3 finalSpecular = vec3(0.0);
+// functions
+
+vec4 calcDiffuseLight(vec3 unitNormal, vec3 unitLightVector) {
+    float dotProduct = dot(unitNormal, unitLightVector);
+    float brightness = max(dotProduct, ambientLight);           // ambient light
+
+    return vec4(brightness * lightColor, 1.0) * getTextureColor();
+}
+
+vec4 calcSpecularLight(vec3 unitNormal, vec3 unitLightVector) {
+    vec3 specular = vec3(0.0);
     if (reflectivity > 0.0) {
         vec3 unitToCamera = normalize(toCamera);
         vec3 lightDirection = -unitLightVector;
@@ -35,16 +57,21 @@ void main(void) {
         float specularFactor = dot(reflectedLightDirection, unitToCamera);
         specularFactor = max(specularFactor, 0.0);
         float dampedFactor = pow(specularFactor, shineDamper);
-        finalSpecular = dampedFactor * reflectivity * lightColor;
+        specular = dampedFactor * reflectivity * lightColor;
     }
 
-    // transparency calc
+    return vec4(specular, 1.0);
+}
+
+vec4 getTextureColor() {
+    // texture color
     vec2 tiledCoords = _textureCoords * tileSize;
     vec4 textureColor = texture(textureSampler, tiledCoords);
+
+    // handle transparency
     if (textureColor.a < 0.5) {
         discard;
     }
 
-    outColor = (vec4(diffuse, 1.0) * textureColor + vec4(finalSpecular, 1.0));
-    outColor = mix(vec4(fogColor, 1.0), outColor, visibility);
+    return textureColor;
 }
