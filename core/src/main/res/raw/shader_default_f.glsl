@@ -54,10 +54,12 @@ vec4 calcSpecularLight(vec3 unitNormal, vec3 unitLightVector) {
         vec3 unitToCamera = normalize(toCamera);
         vec3 lightDirection = -unitLightVector;
         vec3 reflectedLightDirection = reflect(lightDirection, unitNormal);
+
         float specularFactor = dot(reflectedLightDirection, unitToCamera);
         specularFactor = max(specularFactor, 0.0);
-        float dampedFactor = pow(specularFactor, shineDamper);
-        specular = dampedFactor * reflectivity * lightColor;
+        specularFactor = pow(specularFactor, shineDamper);      // damped factor
+
+        specular = specularFactor * reflectivity * lightColor;
     }
 
     return vec4(specular, 1.0);
