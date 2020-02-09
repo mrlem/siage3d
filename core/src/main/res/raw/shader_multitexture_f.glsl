@@ -10,6 +10,11 @@ struct PointLight {
     vec3 position;
 };
 
+struct Material {
+    float shineDamper;
+    float reflectivity;
+};
+
 // uniforms
 
 uniform sampler2D blendMap;
@@ -19,8 +24,7 @@ uniform sampler2D gTexture;
 uniform sampler2D bTexture;
 uniform float tileSize;
 uniform PointLight light;
-uniform float shineDamper;
-uniform float reflectivity;
+uniform Material material;
 uniform vec3 fogColor;
 
 // attributes
@@ -61,16 +65,16 @@ vec4 calcDiffuseLight(vec3 unitNormal, vec3 unitLightVector) {
 
 vec4 calcSpecularLight(vec3 unitNormal, vec3 unitLightVector) {
     vec3 specular = vec3(0.0);
-    if (reflectivity > 0.0) {
+    if (material.reflectivity > 0.0) {
         vec3 unitToCamera = normalize(_toCamera);
         vec3 lightDirection = -unitLightVector;
         vec3 reflectedLightDirection = reflect(lightDirection, unitNormal);
 
         float specularFactor = dot(reflectedLightDirection, unitToCamera);
         specularFactor = max(specularFactor, 0.0);
-        specularFactor = pow(specularFactor, shineDamper);      // damped factor
+        specularFactor = pow(specularFactor, material.shineDamper);      // damped factor
 
-        specular = specularFactor * reflectivity * light.color;
+        specular = specularFactor * material.reflectivity * light.color;
     }
 
     return vec4(specular, 1.0);
