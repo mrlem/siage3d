@@ -8,17 +8,18 @@ const float ambientLight = 0.2;
 uniform sampler2D textureSampler;
 uniform float tileSize;
 uniform vec3 lightColor;
+uniform vec3 lightPosition;
 uniform float shineDamper;
 uniform float reflectivity;
 uniform vec3 fogColor;
 
 // attributes
 
+in vec3 _worldPosition;
 in vec2 _textureCoords;
-in vec3 surfaceNormal;
-in vec3 toLightVector;
-in vec3 toCamera;
-in float visibility;
+in vec3 _surfaceNormal;
+in vec3 _toCamera;
+in float _visibility;
 
 out vec4 outColor;
 
@@ -31,12 +32,12 @@ vec4 getTextureColor();
 // main
 
 void main(void) {
-    vec3 unitNormal = normalize(surfaceNormal);
-    vec3 unitLightVector = normalize(toLightVector);
+    vec3 unitNormal = normalize(_surfaceNormal);
+    vec3 unitLightVector = normalize(lightPosition - _worldPosition.xyz);
 
     outColor += calcDiffuseLight(unitNormal, unitLightVector);  // diffuse
     outColor += calcSpecularLight(unitNormal, unitLightVector); // specular
-    outColor = mix(vec4(fogColor, 1.0), outColor, visibility);  // fog
+    outColor = mix(vec4(fogColor, 1.0), outColor, _visibility);  // fog
 }
 
 // functions
@@ -51,7 +52,7 @@ vec4 calcDiffuseLight(vec3 unitNormal, vec3 unitLightVector) {
 vec4 calcSpecularLight(vec3 unitNormal, vec3 unitLightVector) {
     vec3 specular = vec3(0.0);
     if (reflectivity > 0.0) {
-        vec3 unitToCamera = normalize(toCamera);
+        vec3 unitToCamera = normalize(_toCamera);
         vec3 lightDirection = -unitLightVector;
         vec3 reflectedLightDirection = reflect(lightDirection, unitNormal);
 
