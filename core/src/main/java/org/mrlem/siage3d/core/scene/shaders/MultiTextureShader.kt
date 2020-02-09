@@ -73,17 +73,16 @@ class MultiTextureShader : Shader(
         LIGHT_COLOR("light.color"),
         REFLECTIVITY("material.reflectivity"),
         SHINE_DAMPER("material.shineDamper"),
+        BLEND_MAP("material.diffuse.blendMap"),
+        TEXTURE_BACKGROUND("material.diffuse.backgroundTexture"),
+        TEXTURE_RED("material.diffuse.rTexture"),
+        TEXTURE_GREEN("material.diffuse.gTexture"),
+        TEXTURE_BLUE("material.diffuse.bTexture"),
         USE_FAKE_LIGHTING("useFakeLighting"),
         FOG_COLOR("fogColor"),
         FOG_GRADIENT("fogGradient"),
         FOG_DENSITY("fogDensity"),
         TILE_SIZE("tileSize"),
-
-        BLEND_MAP("blendMap"),
-        TEXTURE_BACKGROUND("backgroundTexture"),
-        TEXTURE_RED("rTexture"),
-        TEXTURE_GREEN("gTexture"),
-        TEXTURE_BLUE("bTexture")
 
     }
 

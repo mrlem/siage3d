@@ -10,18 +10,22 @@ struct PointLight {
     vec3 position;
 };
 
+struct BlendMap {
+    sampler2D blendMap;
+    sampler2D backgroundTexture;
+    sampler2D rTexture;
+    sampler2D gTexture;
+    sampler2D bTexture;
+};
+
 struct Material {
-    float shineDamper;
+    BlendMap diffuse;
     float reflectivity;
+    float shineDamper;
 };
 
 // uniforms
 
-uniform sampler2D blendMap;
-uniform sampler2D backgroundTexture;
-uniform sampler2D rTexture;
-uniform sampler2D gTexture;
-uniform sampler2D bTexture;
 uniform float tileSize;
 uniform PointLight light;
 uniform Material material;
@@ -81,13 +85,13 @@ vec4 calcSpecularLight(vec3 unitNormal, vec3 unitLightVector) {
 }
 
 vec4 getTextureColor() {
-    vec4 blendColor = texture(blendMap, _textureCoords);
+    vec4 blendColor = texture(material.diffuse.blendMap, _textureCoords);
     float backgroundAmount = 1.0 - blendColor.r - blendColor.g - blendColor.b;
 
     vec2 tiledCoords = _textureCoords * tileSize;
-    vec4 backgroundColor = texture(backgroundTexture, tiledCoords) * backgroundAmount;
-    vec4 rColor = texture(rTexture, tiledCoords) * blendColor.r;
-    vec4 gColor = texture(gTexture, tiledCoords) * blendColor.g;
-    vec4 bColor = texture(bTexture, tiledCoords) * blendColor.b;
+    vec4 backgroundColor = texture(material.diffuse.backgroundTexture, tiledCoords) * backgroundAmount;
+    vec4 rColor = texture(material.diffuse.rTexture, tiledCoords) * blendColor.r;
+    vec4 gColor = texture(material.diffuse.gTexture, tiledCoords) * blendColor.g;
+    vec4 bColor = texture(material.diffuse.bTexture, tiledCoords) * blendColor.b;
     return backgroundColor + rColor + gColor + bColor;
 }

@@ -11,13 +11,13 @@ struct PointLight {
 };
 
 struct Material {
-    float shineDamper;
+    sampler2D diffuse;
     float reflectivity;
+    float shineDamper;
 };
 
 // uniforms
 
-uniform sampler2D textureSampler;
 uniform float tileSize;
 uniform PointLight light;
 uniform Material material;
@@ -79,7 +79,7 @@ vec4 calcSpecularLight(vec3 unitNormal, vec3 unitLightVector) {
 vec4 getTextureColor() {
     // texture color
     vec2 tiledCoords = _textureCoords * tileSize;
-    vec4 textureColor = texture(textureSampler, tiledCoords);
+    vec4 textureColor = texture(material.diffuse, tiledCoords);
 
     // handle transparency
     if (textureColor.a < 0.5) {
