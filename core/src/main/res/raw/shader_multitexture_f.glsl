@@ -3,6 +3,13 @@ precision mediump float;
 
 const float ambientLight = 0.2f;
 
+// types
+
+struct PointLight {
+    vec3 color;
+    vec3 position;
+};
+
 // uniforms
 
 uniform sampler2D blendMap;
@@ -11,8 +18,7 @@ uniform sampler2D rTexture;
 uniform sampler2D gTexture;
 uniform sampler2D bTexture;
 uniform float tileSize;
-uniform vec3 lightColor;
-uniform vec3 lightPosition;
+uniform PointLight light;
 uniform float shineDamper;
 uniform float reflectivity;
 uniform vec3 fogColor;
@@ -37,7 +43,7 @@ vec4 getTextureColor();
 
 void main(void) {
     vec3 unitNormal = normalize(_surfaceNormal);
-    vec3 unitLightVector = normalize(lightPosition - _worldPosition.xyz);
+    vec3 unitLightVector = normalize(light.position - _worldPosition.xyz);
 
     outColor += calcDiffuseLight(unitNormal, unitLightVector);  // diffuse
     outColor += calcSpecularLight(unitNormal, unitLightVector); // specular
@@ -50,7 +56,7 @@ vec4 calcDiffuseLight(vec3 unitNormal, vec3 unitLightVector) {
     float dotProduct = dot(unitNormal, unitLightVector);
     float brightness = max(dotProduct, ambientLight);           // ambient light
 
-    return vec4(brightness * lightColor, 1.0) * getTextureColor();
+    return vec4(brightness * light.color, 1.0) * getTextureColor();
 }
 
 vec4 calcSpecularLight(vec3 unitNormal, vec3 unitLightVector) {
@@ -64,7 +70,7 @@ vec4 calcSpecularLight(vec3 unitNormal, vec3 unitLightVector) {
         specularFactor = max(specularFactor, 0.0);
         specularFactor = pow(specularFactor, shineDamper);      // damped factor
 
-        specular = specularFactor * reflectivity * lightColor;
+        specular = specularFactor * reflectivity * light.color;
     }
 
     return vec4(specular, 1.0);
