@@ -70,7 +70,7 @@ class MultiTextureShader : Shader(
         VIEW_MATRIX("viewMatrix"),
         TRANSFORMATION_MATRIX("transformationMatrix"),
         LIGHT_POSITION("light.position"),
-        LIGHT_COLOR("light.color"),
+        LIGHT_COLOR("light.diffuse"),
         REFLECTIVITY("material.reflectivity"),
         SHINE_DAMPER("material.shineDamper"),
         BLEND_MAP("material.diffuse.blendMap"),

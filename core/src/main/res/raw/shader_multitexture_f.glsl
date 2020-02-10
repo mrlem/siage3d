@@ -6,8 +6,8 @@ const float ambientLight = 0.2f;
 // types
 
 struct PointLight {
-    vec3 color;
     vec3 position;
+    vec3 diffuse;
 };
 
 struct BlendMap {
@@ -64,7 +64,7 @@ vec4 calcDiffuseLight(vec3 unitNormal, vec3 unitLightVector) {
     float dotProduct = dot(unitNormal, unitLightVector);
     float brightness = max(dotProduct, ambientLight);           // ambient light
 
-    return vec4(brightness * light.color, 1.0) * getTextureColor();
+    return vec4(brightness * light.diffuse, 1.0) * getTextureColor();
 }
 
 vec4 calcSpecularLight(vec3 unitNormal, vec3 unitLightVector) {
@@ -78,7 +78,7 @@ vec4 calcSpecularLight(vec3 unitNormal, vec3 unitLightVector) {
         specularFactor = max(specularFactor, 0.0);
         specularFactor = pow(specularFactor, material.shineDamper);      // damped factor
 
-        specular = specularFactor * material.reflectivity * light.color;
+        specular = specularFactor * material.reflectivity * light.diffuse;
     }
 
     return vec4(specular, 1.0);
