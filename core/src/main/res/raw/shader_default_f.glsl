@@ -1,5 +1,5 @@
 #version 320 es
-precision mediump float;
+precision highp float;
 
 const float ambientLight = 0.2;
 
@@ -16,12 +16,18 @@ struct Material {
     float shineDamper;
 };
 
+struct Fog {
+    vec3 color;
+    float density;
+    float gradient;
+};
+
 // uniforms
 
 uniform float tileSize;
 uniform PointLight light;
 uniform Material material;
-uniform vec3 fogColor;
+uniform Fog fog;
 
 // attributes
 
@@ -45,9 +51,9 @@ void main(void) {
     vec3 unitNormal = normalize(_surfaceNormal);
     vec3 unitLightVector = normalize(light.position - _worldPosition.xyz);
 
-    outColor += calcDiffuseLight(unitNormal, unitLightVector);  // diffuse
-    outColor += calcSpecularLight(unitNormal, unitLightVector); // specular
-    outColor = mix(vec4(fogColor, 1.0), outColor, _visibility);  // fog
+    outColor += calcDiffuseLight(unitNormal, unitLightVector);      // diffuse
+    outColor += calcSpecularLight(unitNormal, unitLightVector);     // specular
+    outColor = mix(vec4(fog.color, 1.0), outColor, _visibility);    // fog
 }
 
 // functions

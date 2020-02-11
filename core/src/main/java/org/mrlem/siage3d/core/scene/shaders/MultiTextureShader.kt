@@ -79,9 +79,9 @@ class MultiTextureShader : Shader(
         TEXTURE_GREEN("material.diffuse.gTexture"),
         TEXTURE_BLUE("material.diffuse.bTexture"),
         USE_FAKE_LIGHTING("useFakeLighting"),
-        FOG_COLOR("fogColor"),
-        FOG_GRADIENT("fogGradient"),
-        FOG_DENSITY("fogDensity"),
+        FOG_COLOR("fog.color"),
+        FOG_GRADIENT("fog.gradient"),
+        FOG_DENSITY("fog.density"),
         TILE_SIZE("tileSize"),
 
     }

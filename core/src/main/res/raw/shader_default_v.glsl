@@ -1,4 +1,23 @@
 #version 320 es
+precision highp float;
+
+// types
+
+struct Fog {
+    vec3 color;
+    float density;
+    float gradient;
+};
+
+// uniforms
+
+uniform mat4 projectionMatrix;
+uniform mat4 viewMatrix;
+uniform mat4 transformationMatrix;
+uniform float useFakeLighting;
+uniform Fog fog;
+
+// attributes
 
 in vec3 position;
 in vec2 textureCoords;
@@ -10,12 +29,7 @@ out vec3 _surfaceNormal;
 out vec3 _toCamera;
 out float _visibility;
 
-uniform mat4 projectionMatrix;
-uniform mat4 viewMatrix;
-uniform mat4 transformationMatrix;
-uniform float fogDensity;
-uniform float fogGradient;
-uniform float useFakeLighting;
+// main
 
 void main(void) {
 
@@ -39,6 +53,6 @@ void main(void) {
 
     // visibility: based on distance/fog
     float distance = length(positionRelativeToCamera.xyz);
-    _visibility = exp(-pow(distance * fogDensity, fogGradient));
+    _visibility = exp(-pow(distance * fog.density, fog.gradient));
     _visibility = clamp(_visibility, 0.0, 1.0);
 }

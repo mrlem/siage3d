@@ -66,9 +66,9 @@ open class DefaultShader: Shader(
         REFLECTIVITY("material.reflectivity"),
         SHINE_DAMPER("material.shineDamper"),
         USE_FAKE_LIGHTING("useFakeLighting"),
-        FOG_COLOR("fogColor"),
-        FOG_GRADIENT("fogGradient"),
-        FOG_DENSITY("fogDensity"),
+        FOG_COLOR("fog.color"),
+        FOG_GRADIENT("fog.gradient"),
+        FOG_DENSITY("fog.density"),
         TILE_SIZE("tileSize")
 
     }
