@@ -110,6 +110,7 @@ class MainSceneAdapter : SceneAdapter() {
     override fun onUpdate(delta: Float) {
         time += delta
         light.position.x = sin(time) * 10f
+        light.position.z = cos(time) * 10f
 
         // animate camera
         scene.camera.apply {
