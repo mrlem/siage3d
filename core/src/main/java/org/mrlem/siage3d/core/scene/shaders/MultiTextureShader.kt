@@ -32,7 +32,8 @@ class MultiTextureShader : Shader(
         loadFloat(Uniform.USE_FAKE_LIGHTING, if (useFakeLighting) 1f else 0f)
     }
 
-    override fun loadLight(light: PointLight) {
+    override fun loadLight(light: PointLight, index: Int) {
+        // TODO - use index
         loadVector(Uniform.LIGHT_POSITION, light.position)
         loadVector(Uniform.LIGHT_AMBIENT, light.ambient)
         loadVector(Uniform.LIGHT_DIFFUSE, light.diffuse)

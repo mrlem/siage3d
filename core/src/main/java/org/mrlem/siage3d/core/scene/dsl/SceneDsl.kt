@@ -63,7 +63,7 @@ fun Scene.camera(init: Camera.() -> Unit) = Camera()
 
 fun Scene.light(init: PointLight.() -> Unit) = PointLight()
     .apply { init() }
-    .also { light = it }
+    .also { lights += it }
 
 fun Scene.sky(color: Vector3f, cubemap: Int? = null) = (cubemap?.let {
     Sky.Skybox(textureCubemap(cubemap), color)

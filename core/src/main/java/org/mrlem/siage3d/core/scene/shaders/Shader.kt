@@ -111,7 +111,7 @@ abstract class Shader(
     }
 
     interface LightAware {
-        fun loadLight(light: PointLight)
+        fun loadLight(light: PointLight, index: Int)
     }
 
     interface FogAware {
@@ -183,11 +183,11 @@ abstract class Shader(
             }
         }
 
-        fun notifyLight(light: PointLight) {
+        fun notifyLight(light: PointLight, index: Int) {
             shaders.forEach {
                 if (it is LightAware) {
                     it.use()
-                    it.loadLight(light)
+                    it.loadLight(light, index)
                 }
             }
         }

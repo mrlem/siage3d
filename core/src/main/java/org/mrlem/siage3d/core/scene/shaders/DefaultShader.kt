@@ -23,7 +23,8 @@ open class DefaultShader: Shader(
         loadMatrix(Uniform.TRANSFORMATION_MATRIX, matrix)
     }
 
-    override fun loadLight(light: PointLight) {
+    override fun loadLight(light: PointLight, index: Int) {
+        // TODO - use index
         loadVector(Uniform.LIGHT_POSITION, light.position)
         loadVector(Uniform.LIGHT_AMBIENT, light.ambient)
         loadVector(Uniform.LIGHT_DIFFUSE, light.diffuse)

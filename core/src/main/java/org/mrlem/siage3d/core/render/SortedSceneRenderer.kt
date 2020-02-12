@@ -16,7 +16,9 @@ class SortedSceneRenderer(scene: Scene) : SceneRenderer(scene) {
         scene.sky.render()
 
         // draw scene
-        Shader.notifyLight(scene.light)
+        scene.lights.forEachIndexed { index, light ->
+            Shader.notifyLight(light, index)
+        }
         Shader.notifyFog(scene.sky.color, 3f, 0.007f)
 
         val objects = gatherObjects(scene, mutableListOf())
