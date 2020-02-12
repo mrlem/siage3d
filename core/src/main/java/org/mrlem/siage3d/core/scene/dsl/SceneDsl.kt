@@ -23,7 +23,7 @@ fun scene(init: Scene.() -> Unit) = Scene().apply {
 
 fun color(r: Float, g: Float, b: Float) = Vector3f(r, g, b)
 
-fun textureMaterial(texture: Int, tileSize: Float = 1f) = TextureMaterial(texture2D(texture), tileSize)
+fun textureMaterial(texture: Int, scale: Float = 1f) = TextureMaterial(texture2D(texture), scale)
 
 fun multiTextureMaterial(
     blendMap: Int,
@@ -31,14 +31,14 @@ fun multiTextureMaterial(
     redTexture: Int,
     greenTexture: Int,
     blueTexture: Int,
-    tileSize: Float = 1f
+    scale: Float = 1f
 ) = MultiTextureMaterial(
     texture2D(blendMap),
     texture2D(backgroundTexture),
     texture2D(redTexture),
     texture2D(greenTexture),
     texture2D(blueTexture),
-    tileSize
+    scale
 )
 
 fun box() = Box()

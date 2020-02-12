@@ -50,8 +50,8 @@ open class DefaultShader: Shader(
         loadFloat(Uniform.FOG_DENSITY, density)
     }
 
-    fun loadTileSize(tileSize: Float) {
-        loadFloat(Uniform.TILE_SIZE, tileSize)
+    fun loadScale(scale: Float) {
+        loadFloat(Uniform.SCALE, scale)
     }
 
     enum class Uniform(
@@ -67,7 +67,7 @@ open class DefaultShader: Shader(
         LIGHT_DIFFUSE("light.diffuse"),
         REFLECTIVITY("material.reflectivity"),
         SHINE_DAMPER("material.shineDamper"),
-        TILE_SIZE("material.tileSize"),
+        SCALE("material.scale"),
         USE_FAKE_LIGHTING("useFakeLighting"),
         FOG_COLOR("fog.color"),
         FOG_GRADIENT("fog.gradient"),

@@ -50,8 +50,8 @@ class MultiTextureShader : Shader(
         loadFloat(Uniform.FOG_DENSITY, density)
     }
 
-    fun loadTileSize(tileSize: Float) {
-        loadFloat(Uniform.TILE_SIZE, tileSize)
+    fun loadScale(scale: Float) {
+        loadFloat(Uniform.SCALE, scale)
     }
 
     fun loadSamplers() {
@@ -80,7 +80,7 @@ class MultiTextureShader : Shader(
         TEXTURE_RED("material.diffuse.rTexture"),
         TEXTURE_GREEN("material.diffuse.gTexture"),
         TEXTURE_BLUE("material.diffuse.bTexture"),
-        TILE_SIZE("material.tileSize"),
+        SCALE("material.scale"),
         USE_FAKE_LIGHTING("useFakeLighting"),
         FOG_COLOR("fog.color"),
         FOG_GRADIENT("fog.gradient"),

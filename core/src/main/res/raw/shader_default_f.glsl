@@ -13,7 +13,7 @@ struct Material {
     sampler2D diffuse;
     float reflectivity;
     float shineDamper;
-    float tileSize;
+    float scale;
 };
 
 struct Fog {
@@ -87,7 +87,7 @@ vec4 calcSpecularLight(vec3 unitNormal, vec3 unitLightVector) {
 
 vec4 getTextureColor() {
     // texture color
-    vec2 tiledCoords = _textureCoords * material.tileSize;
+    vec2 tiledCoords = _textureCoords / material.scale;
     vec4 textureColor = texture(material.diffuse, tiledCoords);
 
     // handle transparency

@@ -11,7 +11,7 @@ class MultiTextureMaterial(
     private val redTexture: Texture2D,
     private val greenTexture: Texture2D,
     private val blueTexture: Texture2D,
-    private val tileSize: Float = 1f,
+    private val scale: Float = 1f,
     private var shineDamper: Float = 1f,
     private var reflectvity: Float = 0f,
     private val hasTransparency: Boolean = false,
@@ -25,7 +25,7 @@ class MultiTextureMaterial(
 
         shader.loadFakeLighting(fakeLighting)
         shader.loadShine(shineDamper, reflectvity)
-        shader.loadTileSize(tileSize)
+        shader.loadScale(scale)
         shader.loadSamplers()
 
         blendMap.use(GL_TEXTURE0)

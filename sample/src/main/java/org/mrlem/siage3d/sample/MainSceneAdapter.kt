@@ -48,7 +48,7 @@ class MainSceneAdapter : SceneAdapter() {
                     R.drawable.texture_mud,
                     R.drawable.texture_grass_flowers,
                     R.drawable.texture_path,
-                    50f
+                    0.02f
                 )
             )
                 .also { groundNode = it }
@@ -75,7 +75,7 @@ class MainSceneAdapter : SceneAdapter() {
                 objectNode(
                     "crate1",
                     shape = box(),
-                    material = textureMaterial(R.raw.crate1_diffuse, 2f)
+                    material = textureMaterial(R.raw.crate1_diffuse, 0.5f)
                 )
                     .apply {
                         val x = randomFloat() * 150f - 75f
