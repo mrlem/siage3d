@@ -33,10 +33,9 @@ class MultiTextureShader : Shader(
     }
 
     override fun loadLight(light: PointLight, index: Int) {
-        // TODO - use index
-        loadVector(Uniform.LIGHT_POSITION, light.position)
-        loadVector(Uniform.LIGHT_AMBIENT, light.ambient)
-        loadVector(Uniform.LIGHT_DIFFUSE, light.diffuse)
+        loadVector(lightPosition[index], light.position)
+        loadVector(lightAmbient[index], light.ambient)
+        loadVector(lightDiffuse[index], light.diffuse)
     }
 
     override fun loadFogColor(color: Vector3f) {
@@ -71,9 +70,15 @@ class MultiTextureShader : Shader(
         PROJECTION_MATRIX("projectionMatrix"),
         VIEW_MATRIX("viewMatrix"),
         TRANSFORMATION_MATRIX("transformationMatrix"),
-        LIGHT_POSITION("lights[0].position"),
-        LIGHT_AMBIENT("lights[0].ambient"),
-        LIGHT_DIFFUSE("lights[0].diffuse"),
+        LIGHT0_POSITION("lights[0].position"),
+        LIGHT0_AMBIENT("lights[0].ambient"),
+        LIGHT0_DIFFUSE("lights[0].diffuse"),
+        LIGHT1_POSITION("lights[1].position"),
+        LIGHT1_AMBIENT("lights[1].ambient"),
+        LIGHT1_DIFFUSE("lights[1].diffuse"),
+        LIGHT2_POSITION("lights[2].position"),
+        LIGHT2_AMBIENT("lights[2].ambient"),
+        LIGHT2_DIFFUSE("lights[2].diffuse"),
         REFLECTIVITY("material.reflectivity"),
         SHINE_DAMPER("material.shineDamper"),
         BLEND_MAP("material.diffuse.blendMap"),
@@ -88,5 +93,23 @@ class MultiTextureShader : Shader(
         FOG_DENSITY("fog.density"),
 
     }
+
+    private val lightPosition = arrayOf(
+        Uniform.LIGHT0_POSITION,
+        Uniform.LIGHT1_POSITION,
+        Uniform.LIGHT2_POSITION
+    )
+
+    private val lightAmbient = arrayOf(
+        Uniform.LIGHT0_AMBIENT,
+        Uniform.LIGHT1_AMBIENT,
+        Uniform.LIGHT2_AMBIENT
+    )
+
+    private val lightDiffuse = arrayOf(
+        Uniform.LIGHT0_DIFFUSE,
+        Uniform.LIGHT1_DIFFUSE,
+        Uniform.LIGHT2_DIFFUSE
+    )
 
 }

@@ -1,8 +1,6 @@
 #version 320 es
 precision highp float;
 
-const float ambientLight = 0.2f;
-
 // types
 
 struct PointLight {

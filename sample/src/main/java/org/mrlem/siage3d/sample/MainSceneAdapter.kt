@@ -20,16 +20,22 @@ class MainSceneAdapter : SceneAdapter() {
 
     lateinit var groundNode: Node
     lateinit var terrain: Terrain
-    lateinit var light: PointLight
+    lateinit var light0: PointLight
+    lateinit var light1: PointLight
 
     private var time = 0f
 
     override fun onInit() = scene {
         light {
             position(0f, 25f, 0f)
+            ambient(0.0f, 0.0f, 0.0f)
+            diffuse(1f, 1f, .8f)
+        }.also { this@MainSceneAdapter.light0 = it }
+        light {
+            position(0f, 25f, 0f)
             ambient(0.2f, 0.2f, 0.2f)
             diffuse(1f, 1f, .8f)
-        }.also { this@MainSceneAdapter.light = it }
+        }.also { this@MainSceneAdapter.light1 = it }
         camera {
             position(0f, 1.75f, 5f)
         }
@@ -109,8 +115,10 @@ class MainSceneAdapter : SceneAdapter() {
 
     override fun onUpdate(delta: Float) {
         time += delta
-        light.position.x = sin(time) * 10f
-        light.position.z = cos(time) * 10f
+        light0.position.z = cos(time) * 10f
+        light0.position.x = sin(time) * 10f
+        light1.position.z = cos(time * 1.7f) * 14f
+        light1.position.x = 5 + sin(time * 1.7f) * 14f
 
         // animate camera
         scene.camera.apply {
