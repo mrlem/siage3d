@@ -22,7 +22,7 @@ class MainSceneAdapter : SceneAdapter() {
 
     override fun onInit() = scene {
         light {
-            position(0f, 40f, 0f)
+            position(0f, 25f, 0f)
             color(1f, 1f, .8f)
         }
         camera {
@@ -91,6 +91,14 @@ class MainSceneAdapter : SceneAdapter() {
             )
                 .position(-2f, 0.5f, 0f)
                 .scale(1f)
+            objectNode(
+                "lightcube",
+                shape = box(),
+                material = textureMaterial(R.drawable.white)
+            )
+                .position(0f, 25f, 0f)
+                .scale(0.5f)
+                .also { println(terrain.heightAt(0f, 0f)) }
         }
     }
 
