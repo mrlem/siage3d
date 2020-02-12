@@ -80,11 +80,11 @@ class MultiTextureShader : Shader(
         TEXTURE_RED("material.diffuse.rTexture"),
         TEXTURE_GREEN("material.diffuse.gTexture"),
         TEXTURE_BLUE("material.diffuse.bTexture"),
+        TILE_SIZE("material.tileSize"),
         USE_FAKE_LIGHTING("useFakeLighting"),
         FOG_COLOR("fog.color"),
         FOG_GRADIENT("fog.gradient"),
         FOG_DENSITY("fog.density"),
-        TILE_SIZE("tileSize"),
 
     }
 

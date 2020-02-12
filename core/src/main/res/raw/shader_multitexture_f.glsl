@@ -23,6 +23,7 @@ struct Material {
     BlendMap diffuse;
     float reflectivity;
     float shineDamper;
+    float tileSize;
 };
 
 struct Fog {
@@ -33,7 +34,6 @@ struct Fog {
 
 // uniforms
 
-uniform float tileSize;
 uniform PointLight light;
 uniform Material material;
 uniform Fog fog;
@@ -99,7 +99,7 @@ vec4 getTextureColor() {
     vec4 blendColor = texture(material.diffuse.blendMap, _textureCoords);
     float backgroundAmount = 1.0 - blendColor.r - blendColor.g - blendColor.b;
 
-    vec2 tiledCoords = _textureCoords * tileSize;
+    vec2 tiledCoords = _textureCoords * material.tileSize;
     vec4 backgroundColor = texture(material.diffuse.backgroundTexture, tiledCoords) * backgroundAmount;
     vec4 rColor = texture(material.diffuse.rTexture, tiledCoords) * blendColor.r;
     vec4 gColor = texture(material.diffuse.gTexture, tiledCoords) * blendColor.g;
