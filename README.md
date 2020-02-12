@@ -60,9 +60,9 @@ class MainSceneAdapter : SceneAdapter() {
             position(0f, 1.75f, 5f)
         }
         sky(
-            color = color(.6f, .8f, 1f)
+            color = color(.6f, .8f, 1f),
             cubemap = textureCubemap(R.array.skybox_daylight)
-        }
+        )
         objectNode(
             "My Box",
             shape = box(),
@@ -90,7 +90,7 @@ class MainSceneAdapter : SceneAdapter() {
 * Rendering
   - Skybox
   - Distance fog
-  - Lighting: point light
+  - Lighting: multiple point lights
   - Multi-texturing
 
 ## About
