@@ -34,7 +34,8 @@ class MultiTextureShader : Shader(
 
     override fun loadLight(light: PointLight) {
         loadVector(Uniform.LIGHT_POSITION, light.position)
-        loadVector(Uniform.LIGHT_COLOR, light.color)
+        loadVector(Uniform.LIGHT_AMBIENT, light.ambient)
+        loadVector(Uniform.LIGHT_DIFFUSE, light.diffuse)
     }
 
     override fun loadFogColor(color: Vector3f) {
@@ -70,7 +71,8 @@ class MultiTextureShader : Shader(
         VIEW_MATRIX("viewMatrix"),
         TRANSFORMATION_MATRIX("transformationMatrix"),
         LIGHT_POSITION("light.position"),
-        LIGHT_COLOR("light.diffuse"),
+        LIGHT_AMBIENT("light.ambient"),
+        LIGHT_DIFFUSE("light.diffuse"),
         REFLECTIVITY("material.reflectivity"),
         SHINE_DAMPER("material.shineDamper"),
         BLEND_MAP("material.diffuse.blendMap"),

@@ -23,7 +23,8 @@ class MainSceneAdapter : SceneAdapter() {
     override fun onInit() = scene {
         light {
             position(0f, 25f, 0f)
-            color(1f, 1f, .8f)
+            ambient(0.2f, 0.2f, 0.2f)
+            diffuse(1f, 1f, .8f)
         }
         camera {
             position(0f, 1.75f, 5f)

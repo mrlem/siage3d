@@ -81,7 +81,8 @@ fun Camera.position(x: Float, y: Float, z: Float) = position(Vector3f(x, y, z))
 ///////////////////////////////////////////////////////////////////////////
 
 fun PointLight.position(x: Float, y: Float, z: Float) = position.set(x, y, z)
-fun PointLight.color(red: Float, green: Float, blue: Float) = color.set(red, green, blue)
+fun PointLight.ambient(red: Float, green: Float, blue: Float) = ambient.set(red, green, blue)
+fun PointLight.diffuse(red: Float, green: Float, blue: Float) = diffuse.set(red, green, blue)
 
 ///////////////////////////////////////////////////////////////////////////
 // Node scope functions

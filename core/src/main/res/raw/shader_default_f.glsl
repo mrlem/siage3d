@@ -1,12 +1,11 @@
 #version 320 es
 precision highp float;
 
-const float ambientLight = 0.2;
-
 // types
 
 struct PointLight {
     vec3 position;
+    vec3 ambient;
     vec3 diffuse;
 };
 
@@ -41,6 +40,7 @@ out vec4 outColor;
 
 // protos
 
+vec4 calcAmbientLight();
 vec4 calcDiffuseLight(vec3 unitNormal, vec3 unitLightVector);
 vec4 calcSpecularLight(vec3 unitNormal, vec3 unitLightVector);
 vec4 getTextureColor();
@@ -51,6 +51,7 @@ void main(void) {
     vec3 unitNormal = normalize(_surfaceNormal);
     vec3 unitLightVector = normalize(light.position - _worldPosition.xyz);
 
+    outColor += calcAmbientLight();                                 // ambient
     outColor += calcDiffuseLight(unitNormal, unitLightVector);      // diffuse
     outColor += calcSpecularLight(unitNormal, unitLightVector);     // specular
     outColor = mix(vec4(fog.color, 1.0), outColor, _visibility);    // fog
@@ -58,10 +59,12 @@ void main(void) {
 
 // functions
 
-vec4 calcDiffuseLight(vec3 unitNormal, vec3 unitLightVector) {
-    float dotProduct = dot(unitNormal, unitLightVector);
-    float brightness = max(dotProduct, ambientLight);           // ambient light
+vec4 calcAmbientLight() {
+    return vec4(light.ambient, 1.0) * getTextureColor();
+}
 
+vec4 calcDiffuseLight(vec3 unitNormal, vec3 unitLightVector) {
+    float brightness = dot(unitNormal, unitLightVector);
     return vec4(brightness * light.diffuse, 1.0) * getTextureColor();
 }
 
