@@ -40,9 +40,7 @@ out vec4 outColor;
 
 // protos
 
-vec4 calcAmbientLight();
-vec4 calcDiffuseLight(vec3 unitNormal, vec3 unitLightVector);
-vec4 calcSpecularLight(vec3 unitNormal, vec3 unitLightVector);
+vec4 calcPointLight(PointLight light, vec3 unitNormal, vec3 unitLightVector);
 vec4 getTextureColor();
 
 // main
@@ -51,24 +49,21 @@ void main(void) {
     vec3 unitNormal = normalize(_surfaceNormal);
     vec3 unitLightVector = normalize(light.position - _worldPosition.xyz);
 
-    outColor += calcAmbientLight();                                 // ambient
-    outColor += calcDiffuseLight(unitNormal, unitLightVector);      // diffuse
-    outColor += calcSpecularLight(unitNormal, unitLightVector);     // specular
+    outColor += calcPointLight(light, unitNormal, unitLightVector); // point light
     outColor = mix(vec4(fog.color, 1.0), outColor, _visibility);    // fog
 }
 
 // functions
 
-vec4 calcAmbientLight() {
-    return vec4(light.ambient, 1.0) * getTextureColor();
-}
+vec4 calcPointLight(PointLight light, vec3 unitNormal, vec3 unitLightVector) {
+    // ambient
+    vec4 result = vec4(light.ambient, 1.0) * getTextureColor();
 
-vec4 calcDiffuseLight(vec3 unitNormal, vec3 unitLightVector) {
+    // diffuse
     float brightness = dot(unitNormal, unitLightVector);
-    return vec4(brightness * light.diffuse, 1.0) * getTextureColor();
-}
+    result += vec4(brightness * light.diffuse, 1.0) * getTextureColor();
 
-vec4 calcSpecularLight(vec3 unitNormal, vec3 unitLightVector) {
+    // specular
     vec3 specular = vec3(0.0);
     if (material.reflectivity > 0.0) {
         vec3 unitToCamera = normalize(_toCamera);
@@ -81,8 +76,9 @@ vec4 calcSpecularLight(vec3 unitNormal, vec3 unitLightVector) {
 
         specular = specularFactor * material.reflectivity * light.diffuse;
     }
+    result += vec4(specular, 1.0);
 
-    return vec4(specular, 1.0);
+    return result;
 }
 
 vec4 getTextureColor() {
