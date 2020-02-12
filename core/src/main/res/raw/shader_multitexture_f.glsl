@@ -33,8 +33,8 @@ struct Fog {
 };
 
 // uniforms
-
-uniform PointLight light;
+#define MAX_LIGHTS 3
+uniform PointLight lights[MAX_LIGHTS];
 uniform Material material;
 uniform Fog fog;
 
@@ -50,22 +50,25 @@ out vec4 outColor;
 
 // protos
 
-vec4 calcPointLight(PointLight light, vec3 unitNormal, vec3 unitLightVector);
+vec4 calcPointLight(PointLight light, vec3 unitNormal);
 vec4 getTextureColor();
 
 // main
 
 void main(void) {
     vec3 unitNormal = normalize(_surfaceNormal);
-    vec3 unitLightVector = normalize(light.position - _worldPosition.xyz);
 
-    outColor += calcPointLight(light, unitNormal, unitLightVector); // point light
-    outColor = mix(vec4(fog.color, 1.0), outColor, _visibility);    // fog
+    for (int i=0 ; i<MAX_LIGHTS ; i++) {                                    // point lights
+        outColor += calcPointLight(lights[i], unitNormal);
+    }
+    outColor = mix(vec4(fog.color, 1.0), outColor, _visibility);            // fog
 }
 
 // functions
 
-vec4 calcPointLight(PointLight light, vec3 unitNormal, vec3 unitLightVector) {
+vec4 calcPointLight(PointLight light, vec3 unitNormal) {
+    vec3 unitLightVector = normalize(light.position - _worldPosition.xyz);
+
     // ambient
     vec4 result = vec4(light.ambient, 1.0) * getTextureColor();
 
