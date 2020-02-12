@@ -6,6 +6,7 @@ import org.mrlem.siage3d.core.common.math.randomFloat
 import org.mrlem.siage3d.core.common.math.toRadians
 import org.mrlem.siage3d.core.scene.Node
 import org.mrlem.siage3d.core.scene.dsl.*
+import org.mrlem.siage3d.core.scene.lights.PointLight
 import org.mrlem.siage3d.core.scene.shapes.Terrain
 import org.mrlem.siage3d.core.view.SceneAdapter
 import kotlin.math.PI
@@ -19,13 +20,16 @@ class MainSceneAdapter : SceneAdapter() {
 
     lateinit var groundNode: Node
     lateinit var terrain: Terrain
+    lateinit var light: PointLight
+
+    private var time = 0f
 
     override fun onInit() = scene {
         light {
             position(0f, 25f, 0f)
             ambient(0.2f, 0.2f, 0.2f)
             diffuse(1f, 1f, .8f)
-        }
+        }.also { this@MainSceneAdapter.light = it }
         camera {
             position(0f, 1.75f, 5f)
         }
@@ -104,6 +108,9 @@ class MainSceneAdapter : SceneAdapter() {
     }
 
     override fun onUpdate(delta: Float) {
+        time += delta
+        light.position.x = sin(time) * 10f
+
         // animate camera
         scene.camera.apply {
             yaw += angularVelocity * delta
