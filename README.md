@@ -57,15 +57,13 @@ class MainSceneAdapter : SceneAdapter() {
 
     override fun onInit() = scene {
         light(
-            name = "My Light"
+            "My Light",
             ambient = color(0f, 0f, 0f),
             diffuse = color(1f, 1f, .8f)
         )
             .translate(0f, 25f, 0f)
 
-        camera(
-            name = "My camera"
-        )
+        camera("My Camera")
             .translate(0f, 1.75f, 5f)
 
         sky(
@@ -78,6 +76,9 @@ class MainSceneAdapter : SceneAdapter() {
             shape = box(),
             material = textureMaterial(R.drawable.white)
         )
+            .translate(0f, 0f, -.5f)
+            .rotate(0f, 15f, 0f)
+            .scale(0.5f)
             .also { sampleNode = it }
     }
 
