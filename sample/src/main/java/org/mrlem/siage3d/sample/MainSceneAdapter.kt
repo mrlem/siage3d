@@ -25,32 +25,34 @@ class MainSceneAdapter : SceneAdapter() {
 
     private var time = 0f
 
-    // TODO - lights should be nodes as well (position: translation)
     // TODO - colors from resources
 
     override fun onInit() = scene {
         light(
-            position = position(0f, 25f, 0f),
+            name = "light0",
             ambient = color(0f, 0f, 0f),
             diffuse = color(1f, 1f, .8f)
         )
+            .translate(0f, 25f, 0f)
             .also { this@MainSceneAdapter.light0 = it }
-
         light(
-            position = position(0f, 25f, 0f),
+            name = "light1",
             ambient = color(.2f, .2f, .2f),
             diffuse = color(1f, 1f, .8f)
         )
+            .translate(0f, 25f, 0f)
             .also { this@MainSceneAdapter.light1 = it }
 
         camera(
-            position = position(0f, 1.75f, 5f)
+            name = "camera"
         )
+            .translate(0f, 1.75f, 5f)
 
         sky(
             color = color(.6f, .8f, 1f),
             cubemap = R.array.skybox_daylight
         )
+
         groupNode {
 
             ///////////////////////////////////////////////////////////////////////////
@@ -87,6 +89,7 @@ class MainSceneAdapter : SceneAdapter() {
                     .rotate(0f, (randomFloat() * 2 * PI).toFloat(), 0f)
                     .scale(.1f)
             }
+
             for (i in 0 .. 200) {
                 val x = randomFloat() * 150f - 75f
                 val z = randomFloat() * 150f - 75f
@@ -99,12 +102,13 @@ class MainSceneAdapter : SceneAdapter() {
                     .rotate(0f, (randomFloat() * 2 * PI).toFloat(), 0f)
                     .scale(1f)
             }
+
             objectNode(
                 "lightcube0",
                 shape = box(),
                 material = textureMaterial(R.drawable.white)
             )
-                .translate(light0.position)
+                .translate(light0.position())
                 .scale(0.5f)
         }
     }
@@ -113,15 +117,17 @@ class MainSceneAdapter : SceneAdapter() {
         time += delta
 
         // animate lights
-        light0.position.set(sin(time) * 10f, light0.position.y, cos(time) * 10f)
-        light1.position.set(5 + sin(time * 1.7f) * 14f, light0.position.y, sin(time * 1.7f) * 14f)
+        light0.position(sin(time) * 10f, light0.position().y, cos(time) * 10f)
+        light1.position(5 + sin(time * 1.7f) * 14f, light0.position().y, sin(time * 1.7f) * 14f)
 
         // animate camera
         scene.camera.apply {
             yaw += angularVelocity * delta
+            val position = position()
             position.x += sin(yaw.toRadians()) * linearVelocity * delta
             position.z -= cos(yaw.toRadians()) * linearVelocity * delta
             position.y = 40f
+            position(position)
         }
     }
 

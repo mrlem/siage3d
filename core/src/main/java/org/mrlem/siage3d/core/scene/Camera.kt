@@ -1,16 +1,16 @@
 package org.mrlem.siage3d.core.scene
 
 import org.joml.Matrix4f
-import org.joml.Vector3f
 import org.mrlem.siage3d.core.scene.shaders.Shader
 import org.mrlem.siage3d.core.common.math.fromCamera
 
 class Camera(
-    val position: Vector3f = Vector3f(0f, 0f, 0f),
+    name: String,
+    // TODO - handle those using node rotation
     var yaw: Float = 0f,
     var pitch: Float = 0f,
     var roll: Float = 0f
-) {
+) : Node(name) {
 
     val near = 0.1f
     val far = 300f
@@ -31,11 +31,6 @@ class Camera(
     fun use() {
         viewMatrix.fromCamera(this)
         Shader.notifyViewMatrix(viewMatrix)
-    }
-
-    fun position(position: Vector3f): Camera {
-        this.position.set(position)
-        return this
     }
 
 }

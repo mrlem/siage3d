@@ -4,6 +4,7 @@ import org.joml.Matrix4f
 import org.joml.Vector3f
 import org.mrlem.k3d.core.R
 import org.mrlem.siage3d.core.common.io.AssetManager.text
+import org.mrlem.siage3d.core.scene.dsl.position
 import org.mrlem.siage3d.core.scene.lights.PointLight
 
 class MultiTextureShader : Shader(
@@ -33,7 +34,7 @@ class MultiTextureShader : Shader(
     }
 
     override fun loadLight(light: PointLight, index: Int) {
-        loadVector(lightPosition[index], light.position)
+        loadVector(lightPosition[index], light.position())
         loadVector(lightAmbient[index], light.ambient)
         loadVector(lightDiffuse[index], light.diffuse)
     }

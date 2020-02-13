@@ -59,10 +59,10 @@ fun heightMap(@RawRes resId: Int) = HeightMapLoader().load(resId)
 // Scene scope functions
 ///////////////////////////////////////////////////////////////////////////
 
-fun Scene.camera(position: Vector3f) = Camera(position)
+fun Scene.camera(name: String) = Camera(name)
     .also { camera = it }
 
-fun Scene.light(position: Vector3f, ambient: Vector3f, diffuse: Vector3f) = PointLight(position, ambient, diffuse)
+fun Scene.light(name: String, ambient: Vector3f, diffuse: Vector3f) = PointLight(name, ambient, diffuse)
     .also { lights.add(it) }
 
 fun Scene.sky(color: Vector3f, cubemap: Int? = null) = (cubemap?.let {
@@ -75,29 +75,27 @@ fun Scene.sky(color: Vector3f, cubemap: Int? = null) = (cubemap?.let {
 ///////////////////////////////////////////////////////////////////////////
 
 fun <T : Node> T.translate(x: Float, y: Float, z: Float) = this
-    .also {
-        localTransform.setTranslation(x, y, z)
-    }
+    .also { localTransform.setTranslation(x, y, z) }
 
 fun <T : Node> T.translate(position: Vector3f) = this
-    .also {
-        localTransform.setTranslation(position)
-    }
+    .also { localTransform.setTranslation(position) }
 
 fun <T : Node> T.scale(scale: Float) = this
-    .also {
-        localTransform.scale(scale)
-    }
+    .also { localTransform.scale(scale) }
 
 fun <T : Node> T.scale(scaleX: Float, scaleY: Float, scaleZ: Float) = this
-    .also {
-        localTransform.scale(scaleX, scaleY, scaleZ)
-    }
+    .also { localTransform.scale(scaleX, scaleY, scaleZ) }
 
 fun <T : Node> T.rotate(x: Float, y: Float, z: Float) = this
-    .also {
-        localTransform.setRotationXYZ(x, y, z)
-    }
+    .also { localTransform.setRotationXYZ(x, y, z) }
+
+fun <T : Node> T.position(): Vector3f = localTransform.getTranslation(Vector3f())
+
+fun <T : Node> T.position(x: Float, y: Float, z: Float) = this
+    .apply { localTransform.setTranslation(x, y, z) }
+
+fun <T : Node> T.position(position: Vector3f) = this
+    .apply { localTransform.setTranslation(position) }
 
 ///////////////////////////////////////////////////////////////////////////
 // Group node scope functions
