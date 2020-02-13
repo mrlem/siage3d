@@ -57,17 +57,22 @@ class MainSceneAdapter : SceneAdapter() {
 
     override fun onInit() = scene {
         light(
-            position = position(0f, 25f, 0f),
+            name = "My Light"
             ambient = color(0f, 0f, 0f),
             diffuse = color(1f, 1f, .8f)
         )
+            .translate(0f, 25f, 0f)
+
         camera(
-            position = position(0f, 1.75f, 5f)
+            name = "My camera"
         )
+            .translate(0f, 1.75f, 5f)
+
         sky(
             color = color(.6f, .8f, 1f),
             cubemap = textureCubemap(R.array.skybox_daylight)
         )
+
         objectNode(
             "My Box",
             shape = box(),
