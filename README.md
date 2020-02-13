@@ -56,9 +56,14 @@ class MainSceneAdapter : SceneAdapter() {
     private lateinit var sampleNode: ObjectNode
 
     override fun onInit() = scene {
-        camera {
-            position(0f, 1.75f, 5f)
-        }
+        light(
+            position = position(0f, 25f, 0f),
+            ambient = color(0f, 0f, 0f),
+            diffuse = color(1f, 1f, .8f)
+        )
+        camera(
+            position = position(0f, 1.75f, 5f)
+        )
         sky(
             color = color(.6f, .8f, 1f),
             cubemap = textureCubemap(R.array.skybox_daylight)
