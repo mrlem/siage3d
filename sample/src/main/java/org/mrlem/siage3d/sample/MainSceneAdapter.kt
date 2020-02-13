@@ -25,20 +25,28 @@ class MainSceneAdapter : SceneAdapter() {
 
     private var time = 0f
 
+    // TODO - lights should be nodes as well (position: translation)
+    // TODO - colors from resources
+
     override fun onInit() = scene {
-        light {
-            position(0f, 25f, 0f)
-            ambient(0.0f, 0.0f, 0.0f)
-            diffuse(1f, 1f, .8f)
-        }.also { this@MainSceneAdapter.light0 = it }
-        light {
-            position(0f, 25f, 0f)
-            ambient(0.2f, 0.2f, 0.2f)
-            diffuse(1f, 1f, .8f)
-        }.also { this@MainSceneAdapter.light1 = it }
-        camera {
-            position(0f, 1.75f, 5f)
-        }
+        light(
+            position = position(0f, 25f, 0f),
+            ambient = color(0f, 0f, 0f),
+            diffuse = color(1f, 1f, .8f)
+        )
+            .also { this@MainSceneAdapter.light0 = it }
+
+        light(
+            position = position(0f, 25f, 0f),
+            ambient = color(.2f, .2f, .2f),
+            diffuse = color(1f, 1f, .8f)
+        )
+            .also { this@MainSceneAdapter.light1 = it }
+
+        camera(
+            position = position(0f, 1.75f, 5f)
+        )
+
         sky(
             color = color(.6f, .8f, 1f),
             cubemap = R.array.skybox_daylight
@@ -67,58 +75,46 @@ class MainSceneAdapter : SceneAdapter() {
             // Objects
             ///////////////////////////////////////////////////////////////////////////
 
-            for (i in 0 .. 200) {
+            for (i in 0 ..200) {
+                val x = randomFloat() * 150f - 75f
+                val z = randomFloat() * 150f - 75f
                 objectNode(
-                    "tree1",
+                    "tree",
                     shape = shape(R.raw.model_tree_lowpoly_mesh),
                     material = textureMaterial(R.raw.model_tree_lowpoly_texture)
                 )
-                    .apply {
-                        val x = randomFloat() * 150f - 75f
-                        val z = randomFloat() * 150f - 75f
-                        position(x, terrain.heightAt(x, z), z)
-                    }
+                    .translate(x, terrain.heightAt(x, z), z)
                     .rotate(0f, (randomFloat() * 2 * PI).toFloat(), 0f)
                     .scale(.1f)
             }
             for (i in 0 .. 200) {
+                val x = randomFloat() * 150f - 75f
+                val z = randomFloat() * 150f - 75f
                 objectNode(
-                    "crate1",
+                    "crate$i",
                     shape = box(),
                     material = textureMaterial(R.raw.crate1_diffuse, 0.5f)
                 )
-                    .apply {
-                        val x = randomFloat() * 150f - 75f
-                        val z = randomFloat() * 150f - 75f
-                        position(x, terrain.heightAt(x, z) + 0.5f, z)
-                    }
+                    .translate(x, terrain.heightAt(x, z) + 0.5f, z)
                     .rotate(0f, (randomFloat() * 2 * PI).toFloat(), 0f)
                     .scale(1f)
             }
             objectNode(
-                "crate2",
-                shape = box(),
-                material = textureMaterial(R.drawable.texture_mud)
-            )
-                .position(-2f, 0.5f, 0f)
-                .scale(1f)
-            objectNode(
-                "lightcube",
+                "lightcube0",
                 shape = box(),
                 material = textureMaterial(R.drawable.white)
             )
-                .position(0f, 25f, 0f)
+                .translate(light0.position)
                 .scale(0.5f)
-                .also { println(terrain.heightAt(0f, 0f)) }
         }
     }
 
     override fun onUpdate(delta: Float) {
         time += delta
-        light0.position.z = cos(time) * 10f
-        light0.position.x = sin(time) * 10f
-        light1.position.z = cos(time * 1.7f) * 14f
-        light1.position.x = 5 + sin(time * 1.7f) * 14f
+
+        // animate lights
+        light0.position.set(sin(time) * 10f, light0.position.y, cos(time) * 10f)
+        light1.position.set(5 + sin(time * 1.7f) * 14f, light0.position.y, sin(time * 1.7f) * 14f)
 
         // animate camera
         scene.camera.apply {

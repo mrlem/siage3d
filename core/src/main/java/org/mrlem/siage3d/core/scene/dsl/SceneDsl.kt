@@ -23,6 +23,8 @@ fun scene(init: Scene.() -> Unit) = Scene().apply {
 
 fun color(r: Float, g: Float, b: Float) = Vector3f(r, g, b)
 
+fun position(x: Float, y: Float, z: Float) = Vector3f(x, y, z)
+
 fun textureMaterial(texture: Int, scale: Float = 1f) = TextureMaterial(texture2D(texture), scale)
 
 fun multiTextureMaterial(
@@ -57,13 +59,11 @@ fun heightMap(@RawRes resId: Int) = HeightMapLoader().load(resId)
 // Scene scope functions
 ///////////////////////////////////////////////////////////////////////////
 
-fun Scene.camera(init: Camera.() -> Unit) = Camera()
-    .apply { init() }
+fun Scene.camera(position: Vector3f) = Camera(position)
     .also { camera = it }
 
-fun Scene.light(init: PointLight.() -> Unit) = PointLight()
-    .apply { init() }
-    .also { lights += it }
+fun Scene.light(position: Vector3f, ambient: Vector3f, diffuse: Vector3f) = PointLight(position, ambient, diffuse)
+    .also { lights.add(it) }
 
 fun Scene.sky(color: Vector3f, cubemap: Int? = null) = (cubemap?.let {
     Sky.Skybox(textureCubemap(cubemap), color)
@@ -71,26 +71,15 @@ fun Scene.sky(color: Vector3f, cubemap: Int? = null) = (cubemap?.let {
     .also { sky = it }
 
 ///////////////////////////////////////////////////////////////////////////
-// Camera scope functions
-///////////////////////////////////////////////////////////////////////////
-
-fun Camera.position(x: Float, y: Float, z: Float) = position(Vector3f(x, y, z))
-
-///////////////////////////////////////////////////////////////////////////
-// Light scope functions
-///////////////////////////////////////////////////////////////////////////
-
-fun PointLight.position(x: Float, y: Float, z: Float) = position.set(x, y, z)
-fun PointLight.ambient(red: Float, green: Float, blue: Float) = ambient.set(red, green, blue)
-fun PointLight.diffuse(red: Float, green: Float, blue: Float) = diffuse.set(red, green, blue)
-
-///////////////////////////////////////////////////////////////////////////
 // Node scope functions
 ///////////////////////////////////////////////////////////////////////////
 
-fun Node.position(x: Float, y: Float, z: Float) = position(Vector3f(x, y, z))
+fun <T : Node> T.translate(x: Float, y: Float, z: Float) = this
+    .also {
+        localTransform.setTranslation(x, y, z)
+    }
 
-fun <T : Node> T.position(position: Vector3f) = this
+fun <T : Node> T.translate(position: Vector3f) = this
     .also {
         localTransform.setTranslation(position)
     }
