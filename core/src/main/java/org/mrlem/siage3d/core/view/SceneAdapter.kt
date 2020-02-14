@@ -1,17 +1,17 @@
 package org.mrlem.siage3d.core.view
 
 import org.mrlem.siage3d.core.render.SceneRenderer
-import org.mrlem.siage3d.core.render.SortedSceneRenderer
+import org.mrlem.siage3d.core.render.MainSceneRenderer
 import org.mrlem.siage3d.core.scene.Scene
 
 abstract class SceneAdapter {
 
     lateinit var scene: Scene
-    private lateinit var sceneRenderer: SceneRenderer
+    private var renderers = mutableListOf<SceneRenderer>()
 
     internal fun init() {
         scene = onInit()
-        sceneRenderer = SortedSceneRenderer(scene)
+        renderers.add(MainSceneRenderer(scene))
     }
 
     internal fun resize(width: Int, height: Int) {
@@ -22,7 +22,7 @@ abstract class SceneAdapter {
     internal fun update(delta: Float) {
         onUpdate(delta)
         scene.update()
-        sceneRenderer.render()
+        renderers.forEach { it.render() }
     }
 
     internal fun destroy() {
