@@ -4,9 +4,6 @@ import org.mrlem.siage3d.core.scene.ObjectNode
 import org.mrlem.siage3d.core.scene.Scene
 import org.mrlem.siage3d.core.scene.shaders.Shader
 
-// TODO - have another renderer dedicated to shadows rendering
-//  use the same depth map over & over again to handle multiple light sourcesWh
-
 class MainSceneRenderer(scene: Scene) : SceneRenderer(scene) {
 
     override fun render() {

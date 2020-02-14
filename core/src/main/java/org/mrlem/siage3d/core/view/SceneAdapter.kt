@@ -1,17 +1,21 @@
 package org.mrlem.siage3d.core.view
 
-import org.mrlem.siage3d.core.render.SceneRenderer
 import org.mrlem.siage3d.core.render.MainSceneRenderer
+import org.mrlem.siage3d.core.render.ShadowSceneRenderer
 import org.mrlem.siage3d.core.scene.Scene
 
 abstract class SceneAdapter {
 
     lateinit var scene: Scene
-    private var renderers = mutableListOf<SceneRenderer>()
+    private val renderers by lazy {
+        listOf(
+            ShadowSceneRenderer(scene),
+            MainSceneRenderer(scene)
+        )
+    }
 
     internal fun init() {
         scene = onInit()
-        renderers.add(MainSceneRenderer(scene))
     }
 
     internal fun resize(width: Int, height: Int) {
