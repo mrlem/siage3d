@@ -47,6 +47,21 @@ object TextureFactory {
         texImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Z, 0, frontBitmap, 0)
     }
 
+    fun createDepthMap(fbo: Fbo, width: Int, height: Int): Texture2D = Texture2D(createTexture()).apply {
+        use()
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST)
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST)
+        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_REPEAT)
+        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_REPEAT)
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, width, height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, null)
+
+        fbo.use {
+            glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, id, 0)
+            glDrawBuffers(GL_NONE, null)
+            glReadBuffer(GL_NONE)
+        }
+    }
+
     private fun createTexture(): Int {
         glGenTextures(1, arrays, 0)
         return arrays[0]

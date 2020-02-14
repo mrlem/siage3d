@@ -1,7 +1,7 @@
 package org.mrlem.siage3d.core.common.gl
 
 abstract class Texture(
-    protected val id: Int
+    val id: Int
 ) {
 
     fun destroy() {
