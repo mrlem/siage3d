@@ -124,6 +124,10 @@ abstract class Shader(
         fun loadTransformationMatrix(matrix: Matrix4f)
     }
 
+    ///////////////////////////////////////////////////////////////////////////
+    // Constants: shader interface definition
+    ///////////////////////////////////////////////////////////////////////////
+
     interface AttributeDefinition {
         val id: String
         val index: Int
@@ -133,6 +137,10 @@ abstract class Shader(
         val id: String
         var location: Int
     }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Constants: attributes
+    ///////////////////////////////////////////////////////////////////////////
 
     enum class Attribute(
         override val id: String,
@@ -146,6 +154,7 @@ abstract class Shader(
     }
 
     companion object {
+
         private val matrixBuffer = FloatBuffer.allocate(16)
 
         private val shaders = mutableListOf<Shader>()
@@ -201,7 +210,9 @@ abstract class Shader(
                     it.loadFogDensity(density)
                 }
             }
+
         }
+
     }
 
 }

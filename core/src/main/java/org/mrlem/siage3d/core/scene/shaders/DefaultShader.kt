@@ -12,6 +12,10 @@ open class DefaultShader: Shader(
     Attribute.values().asList(), Uniform.values().asList()
 ), Shader.ProjectionAware, Shader.ViewAware, Shader.TransformationAware, Shader.LightAware, Shader.FogAware {
 
+    ///////////////////////////////////////////////////////////////////////////
+    // Matrices
+    ///////////////////////////////////////////////////////////////////////////
+
     override fun loadProjectionMatrix(matrix: Matrix4f) {
         loadMatrix(Uniform.PROJECTION_MATRIX, matrix)
     }
@@ -24,20 +28,23 @@ open class DefaultShader: Shader(
         loadMatrix(Uniform.TRANSFORMATION_MATRIX, matrix)
     }
 
+    ///////////////////////////////////////////////////////////////////////////
+    // Lighting
+    ///////////////////////////////////////////////////////////////////////////
+
     override fun loadLight(light: PointLight, index: Int) {
         loadVector(lightPosition[index], light.position())
         loadVector(lightAmbient[index], light.ambient)
         loadVector(lightDiffuse[index], light.diffuse)
     }
 
-    fun loadShine(shineDamper: Float, reflectivity: Float) {
-        loadFloat(Uniform.MATERIAL_SHINE_DAMPER, shineDamper)
-        loadFloat(Uniform.MATERIAL_REFLECTIVITY, reflectivity)
-    }
-
     fun loadFakeLighting(useFakeLighting: Boolean) {
         loadFloat(Uniform.USE_FAKE_LIGHTING, if (useFakeLighting) 1f else 0f)
     }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Fog
+    ///////////////////////////////////////////////////////////////////////////
 
     override fun loadFogColor(color: Vector3f) {
         loadVector(Uniform.FOG_COLOR, color)
@@ -51,9 +58,22 @@ open class DefaultShader: Shader(
         loadFloat(Uniform.FOG_DENSITY, density)
     }
 
+    ///////////////////////////////////////////////////////////////////////////
+    // Material
+    ///////////////////////////////////////////////////////////////////////////
+
+    fun loadShine(shineDamper: Float, reflectivity: Float) {
+        loadFloat(Uniform.MATERIAL_SHINE_DAMPER, shineDamper)
+        loadFloat(Uniform.MATERIAL_REFLECTIVITY, reflectivity)
+    }
+
     fun loadScale(scale: Float) {
         loadFloat(Uniform.MATERIAL_SCALE, scale)
     }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Constants: uniforms
+    ///////////////////////////////////////////////////////////////////////////
 
     enum class Uniform(
         override val id: String,
@@ -82,22 +102,26 @@ open class DefaultShader: Shader(
 
     }
 
-    private val lightPosition = arrayOf(
-        Uniform.LIGHT0_POSITION,
-        Uniform.LIGHT1_POSITION,
-        Uniform.LIGHT2_POSITION
-    )
+    companion object {
 
-    private val lightAmbient = arrayOf(
-        Uniform.LIGHT0_AMBIENT,
-        Uniform.LIGHT1_AMBIENT,
-        Uniform.LIGHT2_AMBIENT
-    )
+        private val lightPosition = arrayOf(
+            Uniform.LIGHT0_POSITION,
+            Uniform.LIGHT1_POSITION,
+            Uniform.LIGHT2_POSITION
+        )
 
-    private val lightDiffuse = arrayOf(
-        Uniform.LIGHT0_DIFFUSE,
-        Uniform.LIGHT1_DIFFUSE,
-        Uniform.LIGHT2_DIFFUSE
-    )
+        private val lightAmbient = arrayOf(
+            Uniform.LIGHT0_AMBIENT,
+            Uniform.LIGHT1_AMBIENT,
+            Uniform.LIGHT2_AMBIENT
+        )
+
+        private val lightDiffuse = arrayOf(
+            Uniform.LIGHT0_DIFFUSE,
+            Uniform.LIGHT1_DIFFUSE,
+            Uniform.LIGHT2_DIFFUSE
+        )
+
+    }
 
 }

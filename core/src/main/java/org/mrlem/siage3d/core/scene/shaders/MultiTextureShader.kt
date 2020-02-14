@@ -12,6 +12,10 @@ class MultiTextureShader : Shader(
     Attribute.values().asList(), Uniform.values().asList()
 ), Shader.ProjectionAware, Shader.ViewAware, Shader.TransformationAware, Shader.LightAware, Shader.FogAware {
 
+    ///////////////////////////////////////////////////////////////////////////
+    // Matrices
+    ///////////////////////////////////////////////////////////////////////////
+
     override fun loadProjectionMatrix(matrix: Matrix4f) {
         loadMatrix(Uniform.PROJECTION_MATRIX, matrix)
     }
@@ -24,20 +28,23 @@ class MultiTextureShader : Shader(
         loadMatrix(Uniform.TRANSFORMATION_MATRIX, matrix)
     }
 
-    fun loadShine(shineDamper: Float, reflectivity: Float) {
-        loadFloat(Uniform.MATERIAL_SHINE_DAMPER, shineDamper)
-        loadFloat(Uniform.MATERIAL_REFLECTIVITY, reflectivity)
-    }
-
-    fun loadFakeLighting(useFakeLighting: Boolean) {
-        loadFloat(Uniform.USE_FAKE_LIGHTING, if (useFakeLighting) 1f else 0f)
-    }
+    ///////////////////////////////////////////////////////////////////////////
+    // Lighting
+    ///////////////////////////////////////////////////////////////////////////
 
     override fun loadLight(light: PointLight, index: Int) {
         loadVector(lightPosition[index], light.position())
         loadVector(lightAmbient[index], light.ambient)
         loadVector(lightDiffuse[index], light.diffuse)
     }
+
+    fun loadFakeLighting(useFakeLighting: Boolean) {
+        loadFloat(Uniform.USE_FAKE_LIGHTING, if (useFakeLighting) 1f else 0f)
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Fog
+    ///////////////////////////////////////////////////////////////////////////
 
     override fun loadFogColor(color: Vector3f) {
         loadVector(Uniform.FOG_COLOR, color)
@@ -51,9 +58,9 @@ class MultiTextureShader : Shader(
         loadFloat(Uniform.FOG_DENSITY, density)
     }
 
-    fun loadScale(scale: Float) {
-        loadFloat(Uniform.MATERIAL_SCALE, scale)
-    }
+    ///////////////////////////////////////////////////////////////////////////
+    // Material
+    ///////////////////////////////////////////////////////////////////////////
 
     fun loadSamplers() {
         loadInt(Uniform.MATERIAL_DIFFUSE_BLEND_MAP, 0)
@@ -62,6 +69,19 @@ class MultiTextureShader : Shader(
         loadInt(Uniform.MATERIAL_DIFFUSE_GREEN, 3)
         loadInt(Uniform.MATERIAL_DIFFUSE_BLUE, 4)
     }
+
+    fun loadShine(shineDamper: Float, reflectivity: Float) {
+        loadFloat(Uniform.MATERIAL_SHINE_DAMPER, shineDamper)
+        loadFloat(Uniform.MATERIAL_REFLECTIVITY, reflectivity)
+    }
+
+    fun loadScale(scale: Float) {
+        loadFloat(Uniform.MATERIAL_SCALE, scale)
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Constants: uniforms
+    ///////////////////////////////////////////////////////////////////////////
 
     enum class Uniform(
         override val id: String,

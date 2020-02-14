@@ -12,6 +12,10 @@ class SkyboxShader : Shader(
 
     private val rotationOnlyMatrix = Matrix4f()
 
+    ///////////////////////////////////////////////////////////////////////////
+    // Matrices
+    ///////////////////////////////////////////////////////////////////////////
+
     override fun loadProjectionMatrix(matrix: Matrix4f) {
         loadMatrix(Uniform.PROJECTION_MATRIX, matrix)
     }
@@ -22,6 +26,10 @@ class SkyboxShader : Shader(
             .setTranslation(0f, 0f, 0f)
         loadMatrix(Uniform.VIEW_MATRIX, rotationOnlyMatrix)
     }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Fog
+    ///////////////////////////////////////////////////////////////////////////
 
     override fun loadFogColor(color: Vector3f) {
         loadVector(Uniform.FOG_COLOR, color)
@@ -35,6 +43,10 @@ class SkyboxShader : Shader(
         // nothing
     }
 
+    ///////////////////////////////////////////////////////////////////////////
+    // Constants: attributes
+    ///////////////////////////////////////////////////////////////////////////
+
     enum class Attribute(
         override val id: String,
         override val index: Int
@@ -43,6 +55,10 @@ class SkyboxShader : Shader(
         POSITIONS("position", 0)
 
     }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Constants: uniforms
+    ///////////////////////////////////////////////////////////////////////////
 
     enum class Uniform(
         override val id: String,
