@@ -25,8 +25,8 @@ class MultiTextureShader : Shader(
     }
 
     fun loadShine(shineDamper: Float, reflectivity: Float) {
-        loadFloat(Uniform.SHINE_DAMPER, shineDamper)
-        loadFloat(Uniform.REFLECTIVITY, reflectivity)
+        loadFloat(Uniform.MATERIAL_SHINE_DAMPER, shineDamper)
+        loadFloat(Uniform.MATERIAL_REFLECTIVITY, reflectivity)
     }
 
     fun loadFakeLighting(useFakeLighting: Boolean) {
@@ -52,15 +52,15 @@ class MultiTextureShader : Shader(
     }
 
     fun loadScale(scale: Float) {
-        loadFloat(Uniform.SCALE, scale)
+        loadFloat(Uniform.MATERIAL_SCALE, scale)
     }
 
     fun loadSamplers() {
-        loadInt(Uniform.BLEND_MAP, 0)
-        loadInt(Uniform.TEXTURE_BACKGROUND, 1)
-        loadInt(Uniform.TEXTURE_RED, 2)
-        loadInt(Uniform.TEXTURE_GREEN, 3)
-        loadInt(Uniform.TEXTURE_BLUE, 4)
+        loadInt(Uniform.MATERIAL_DIFFUSE_BLEND_MAP, 0)
+        loadInt(Uniform.MATERIAL_DIFFUSE_BACKGROUND, 1)
+        loadInt(Uniform.MATERIAL_DIFFUSE_RED, 2)
+        loadInt(Uniform.MATERIAL_DIFFUSE_GREEN, 3)
+        loadInt(Uniform.MATERIAL_DIFFUSE_BLUE, 4)
     }
 
     enum class Uniform(
@@ -80,14 +80,14 @@ class MultiTextureShader : Shader(
         LIGHT2_POSITION("lights[2].position"),
         LIGHT2_AMBIENT("lights[2].ambient"),
         LIGHT2_DIFFUSE("lights[2].diffuse"),
-        REFLECTIVITY("material.reflectivity"),
-        SHINE_DAMPER("material.shineDamper"),
-        BLEND_MAP("material.diffuse.blendMap"),
-        TEXTURE_BACKGROUND("material.diffuse.backgroundTexture"),
-        TEXTURE_RED("material.diffuse.rTexture"),
-        TEXTURE_GREEN("material.diffuse.gTexture"),
-        TEXTURE_BLUE("material.diffuse.bTexture"),
-        SCALE("material.scale"),
+        MATERIAL_REFLECTIVITY("material.reflectivity"),
+        MATERIAL_SHINE_DAMPER("material.shineDamper"),
+        MATERIAL_DIFFUSE_BLEND_MAP("material.diffuse.blendMap"),
+        MATERIAL_DIFFUSE_BACKGROUND("material.diffuse.backgroundTexture"),
+        MATERIAL_DIFFUSE_RED("material.diffuse.rTexture"),
+        MATERIAL_DIFFUSE_GREEN("material.diffuse.gTexture"),
+        MATERIAL_DIFFUSE_BLUE("material.diffuse.bTexture"),
+        MATERIAL_SCALE("material.scale"),
         USE_FAKE_LIGHTING("useFakeLighting"),
         FOG_COLOR("fog.color"),
         FOG_GRADIENT("fog.gradient"),

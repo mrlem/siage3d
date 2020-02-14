@@ -31,8 +31,8 @@ open class DefaultShader: Shader(
     }
 
     fun loadShine(shineDamper: Float, reflectivity: Float) {
-        loadFloat(Uniform.SHINE_DAMPER, shineDamper)
-        loadFloat(Uniform.REFLECTIVITY, reflectivity)
+        loadFloat(Uniform.MATERIAL_SHINE_DAMPER, shineDamper)
+        loadFloat(Uniform.MATERIAL_REFLECTIVITY, reflectivity)
     }
 
     fun loadFakeLighting(useFakeLighting: Boolean) {
@@ -52,7 +52,7 @@ open class DefaultShader: Shader(
     }
 
     fun loadScale(scale: Float) {
-        loadFloat(Uniform.SCALE, scale)
+        loadFloat(Uniform.MATERIAL_SCALE, scale)
     }
 
     enum class Uniform(
@@ -72,9 +72,9 @@ open class DefaultShader: Shader(
         LIGHT2_POSITION("lights[2].position"),
         LIGHT2_AMBIENT("lights[2].ambient"),
         LIGHT2_DIFFUSE("lights[2].diffuse"),
-        REFLECTIVITY("material.reflectivity"),
-        SHINE_DAMPER("material.shineDamper"),
-        SCALE("material.scale"),
+        MATERIAL_REFLECTIVITY("material.reflectivity"),
+        MATERIAL_SHINE_DAMPER("material.shineDamper"),
+        MATERIAL_SCALE("material.scale"),
         USE_FAKE_LIGHTING("useFakeLighting"),
         FOG_COLOR("fog.color"),
         FOG_GRADIENT("fog.gradient"),
