@@ -18,6 +18,7 @@ struct BlendMap {
 };
 
 struct Material {
+    float ambient;
     BlendMap diffuse;
     float reflectivity;
     float shineDamper;
@@ -68,7 +69,7 @@ vec4 calcPointLight(PointLight light, vec3 unitNormal) {
     vec3 unitLightVector = normalize(light.position - _worldPosition.xyz);
 
     // ambient
-    vec4 result = vec4(light.ambient, 1.0) * getTextureColor();
+    vec4 result = vec4(light.ambient, 1.0) * material.ambient * getTextureColor();
 
     // diffuse
     float brightness = dot(unitNormal, unitLightVector);

@@ -5,6 +5,7 @@ import org.mrlem.siage3d.core.common.io.AssetManager.shape
 import org.mrlem.siage3d.core.common.math.randomFloat
 import org.mrlem.siage3d.core.common.math.toRadians
 import org.mrlem.siage3d.core.scene.Node
+import org.mrlem.siage3d.core.scene.ObjectNode
 import org.mrlem.siage3d.core.scene.dsl.*
 import org.mrlem.siage3d.core.scene.lights.PointLight
 import org.mrlem.siage3d.core.scene.shapes.Terrain
@@ -20,8 +21,11 @@ class MainSceneAdapter : SceneAdapter() {
 
     lateinit var groundNode: Node
     lateinit var terrain: Terrain
+
     lateinit var light0: PointLight
     lateinit var light1: PointLight
+    lateinit var lightCube0: ObjectNode
+    lateinit var lightCube1: ObjectNode
 
     private var time = 0f
 
@@ -106,10 +110,20 @@ class MainSceneAdapter : SceneAdapter() {
             objectNode(
                 "lightcube0",
                 shape = box(),
-                material = textureMaterial(R.drawable.white)
+                material = textureMaterial(R.drawable.white, ambient = 100f)
             )
                 .translate(light0.position())
                 .scale(0.5f)
+                .also { lightCube0 = it }
+
+            objectNode(
+                "lightcube1",
+                shape = box(),
+                material = textureMaterial(R.drawable.white, ambient = 100f)
+            )
+                .translate(light0.position())
+                .scale(0.5f)
+                .also { lightCube1 = it }
         }
     }
 
@@ -119,6 +133,8 @@ class MainSceneAdapter : SceneAdapter() {
         // animate lights
         light0.position(sin(time) * 10f, light0.position().y, cos(time) * 10f)
         light1.position(5 + sin(time * 1.7f) * 14f, light0.position().y, sin(time * 1.7f) * 14f)
+        lightCube0.position(light0.position())
+        lightCube1.position(light1.position())
 
         // animate camera
         scene.camera.apply {

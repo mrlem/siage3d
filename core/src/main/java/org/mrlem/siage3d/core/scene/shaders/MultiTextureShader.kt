@@ -70,6 +70,10 @@ class MultiTextureShader : Shader(
         loadInt(Uniform.MATERIAL_DIFFUSE_BLUE, 4)
     }
 
+    fun loadAmbient(ambient: Float) {
+        loadFloat(Uniform.MATERIAL_AMBIENT, ambient)
+    }
+
     fun loadShine(shineDamper: Float, reflectivity: Float) {
         loadFloat(Uniform.MATERIAL_SHINE_DAMPER, shineDamper)
         loadFloat(Uniform.MATERIAL_REFLECTIVITY, reflectivity)
@@ -100,6 +104,7 @@ class MultiTextureShader : Shader(
         LIGHT2_POSITION("lights[2].position"),
         LIGHT2_AMBIENT("lights[2].ambient"),
         LIGHT2_DIFFUSE("lights[2].diffuse"),
+        MATERIAL_AMBIENT("material.ambient"),
         MATERIAL_REFLECTIVITY("material.reflectivity"),
         MATERIAL_SHINE_DAMPER("material.shineDamper"),
         MATERIAL_DIFFUSE_BLEND_MAP("material.diffuse.blendMap"),

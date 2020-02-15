@@ -25,7 +25,7 @@ fun color(r: Float, g: Float, b: Float) = Vector3f(r, g, b)
 
 fun position(x: Float, y: Float, z: Float) = Vector3f(x, y, z)
 
-fun textureMaterial(texture: Int, scale: Float = 1f) = TextureMaterial(texture2D(texture), scale)
+fun textureMaterial(texture: Int, scale: Float = 1f, ambient: Float = 0f) = TextureMaterial(texture2D(texture), scale, ambient)
 
 fun multiTextureMaterial(
     blendMap: Int,
@@ -33,14 +33,16 @@ fun multiTextureMaterial(
     redTexture: Int,
     greenTexture: Int,
     blueTexture: Int,
-    scale: Float = 1f
+    scale: Float = 1f,
+    ambient: Float = 1f
 ) = MultiTextureMaterial(
     texture2D(blendMap),
     texture2D(backgroundTexture),
     texture2D(redTexture),
     texture2D(greenTexture),
     texture2D(blueTexture),
-    scale
+    scale,
+    ambient
 )
 
 fun box() = Box()
