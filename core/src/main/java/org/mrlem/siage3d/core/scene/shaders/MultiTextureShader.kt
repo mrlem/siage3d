@@ -4,7 +4,9 @@ import org.joml.Matrix4f
 import org.joml.Vector3f
 import org.mrlem.k3d.core.R
 import org.mrlem.siage3d.core.common.io.AssetManager.text
+import org.mrlem.siage3d.core.common.math.directionUp
 import org.mrlem.siage3d.core.scene.dsl.position
+import org.mrlem.siage3d.core.scene.lights.DirectionLight
 import org.mrlem.siage3d.core.scene.lights.PointLight
 
 class MultiTextureShader : Shader(
@@ -32,10 +34,16 @@ class MultiTextureShader : Shader(
     // Lighting
     ///////////////////////////////////////////////////////////////////////////
 
-    override fun loadLight(light: PointLight, index: Int) {
+    override fun loadPointLight(light: PointLight, index: Int) {
         loadVector(lightPosition[index], light.position())
         loadVector(lightAmbient[index], light.ambient)
         loadVector(lightDiffuse[index], light.diffuse)
+    }
+
+    override fun loadDirectionLight(light: DirectionLight) {
+        loadVector(Uniform.DIRECTIONLIGHT_DIRECTION, light.localTransform.directionUp().negate())
+        loadVector(Uniform.DIRECTIONLIGHT_AMBIENT, light.ambient)
+        loadVector(Uniform.DIRECTIONLIGHT_DIFFUSE, light.diffuse)
     }
 
     fun loadFakeLighting(useFakeLighting: Boolean) {
@@ -95,15 +103,18 @@ class MultiTextureShader : Shader(
         PROJECTION_MATRIX("projectionMatrix"),
         VIEW_MATRIX("viewMatrix"),
         TRANSFORMATION_MATRIX("transformationMatrix"),
-        LIGHT0_POSITION("lights[0].position"),
-        LIGHT0_AMBIENT("lights[0].ambient"),
-        LIGHT0_DIFFUSE("lights[0].diffuse"),
-        LIGHT1_POSITION("lights[1].position"),
-        LIGHT1_AMBIENT("lights[1].ambient"),
-        LIGHT1_DIFFUSE("lights[1].diffuse"),
-        LIGHT2_POSITION("lights[2].position"),
-        LIGHT2_AMBIENT("lights[2].ambient"),
-        LIGHT2_DIFFUSE("lights[2].diffuse"),
+        DIRECTIONLIGHT_DIRECTION("directionLight.direction"),
+        DIRECTIONLIGHT_AMBIENT("directionLight.ambient"),
+        DIRECTIONLIGHT_DIFFUSE("directionLight.diffuse"),
+        POINTLIGHT0_POSITION("pointLights[0].position"),
+        POINTLIGHT0_AMBIENT("pointLights[0].ambient"),
+        POINTLIGHT0_DIFFUSE("pointLights[0].diffuse"),
+        POINTLIGHT1_POSITION("pointLights[1].position"),
+        POINTLIGHT1_AMBIENT("pointLights[1].ambient"),
+        POINTLIGHT1_DIFFUSE("pointLights[1].diffuse"),
+        POINTLIGHT2_POSITION("pointLights[2].position"),
+        POINTLIGHT2_AMBIENT("pointLights[2].ambient"),
+        POINTLIGHT2_DIFFUSE("pointLights[2].diffuse"),
         MATERIAL_AMBIENT("material.ambient"),
         MATERIAL_REFLECTIVITY("material.reflectivity"),
         MATERIAL_SHINE_DAMPER("material.shineDamper"),
@@ -121,21 +132,21 @@ class MultiTextureShader : Shader(
     }
 
     private val lightPosition = arrayOf(
-        Uniform.LIGHT0_POSITION,
-        Uniform.LIGHT1_POSITION,
-        Uniform.LIGHT2_POSITION
+        Uniform.POINTLIGHT0_POSITION,
+        Uniform.POINTLIGHT1_POSITION,
+        Uniform.POINTLIGHT2_POSITION
     )
 
     private val lightAmbient = arrayOf(
-        Uniform.LIGHT0_AMBIENT,
-        Uniform.LIGHT1_AMBIENT,
-        Uniform.LIGHT2_AMBIENT
+        Uniform.POINTLIGHT0_AMBIENT,
+        Uniform.POINTLIGHT1_AMBIENT,
+        Uniform.POINTLIGHT2_AMBIENT
     )
 
     private val lightDiffuse = arrayOf(
-        Uniform.LIGHT0_DIFFUSE,
-        Uniform.LIGHT1_DIFFUSE,
-        Uniform.LIGHT2_DIFFUSE
+        Uniform.POINTLIGHT0_DIFFUSE,
+        Uniform.POINTLIGHT1_DIFFUSE,
+        Uniform.POINTLIGHT2_DIFFUSE
     )
 
 }

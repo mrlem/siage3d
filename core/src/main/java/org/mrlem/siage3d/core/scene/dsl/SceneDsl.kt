@@ -6,6 +6,7 @@ import org.mrlem.siage3d.core.common.io.AssetManager.texture2D
 import org.mrlem.siage3d.core.common.io.AssetManager.textureCubemap
 import org.mrlem.siage3d.core.common.io.loaders.HeightMapLoader
 import org.mrlem.siage3d.core.scene.*
+import org.mrlem.siage3d.core.scene.lights.DirectionLight
 import org.mrlem.siage3d.core.scene.lights.PointLight
 import org.mrlem.siage3d.core.scene.materials.Material
 import org.mrlem.siage3d.core.scene.materials.MultiTextureMaterial
@@ -64,7 +65,10 @@ fun heightMap(@RawRes resId: Int) = HeightMapLoader().load(resId)
 fun Scene.camera(name: String) = Camera(name)
     .also { camera = it }
 
-fun Scene.light(name: String, ambient: Vector3f, diffuse: Vector3f) = PointLight(name, ambient, diffuse)
+fun Scene.pointLight(name: String, ambient: Vector3f, diffuse: Vector3f) = PointLight(name, ambient, diffuse)
+    .also { lights.add(it) }
+
+fun Scene.directionLight(name: String, ambient: Vector3f, diffuse: Vector3f) = DirectionLight(name, ambient, diffuse)
     .also { lights.add(it) }
 
 fun Scene.sky(color: Vector3f, cubemap: Int? = null) = (cubemap?.let {

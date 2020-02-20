@@ -3,6 +3,7 @@ package org.mrlem.siage3d.core.scene.shaders
 import android.opengl.GLES30.*
 import org.joml.Matrix4f
 import org.joml.Vector3f
+import org.mrlem.siage3d.core.scene.lights.DirectionLight
 import org.mrlem.siage3d.core.scene.lights.PointLight
 import java.nio.FloatBuffer
 import kotlin.system.exitProcess
@@ -111,7 +112,8 @@ abstract class Shader(
     }
 
     interface LightAware {
-        fun loadLight(light: PointLight, index: Int)
+        fun loadPointLight(light: PointLight, index: Int)
+        fun loadDirectionLight(light: DirectionLight)
     }
 
     interface FogAware {
@@ -192,11 +194,20 @@ abstract class Shader(
             }
         }
 
-        fun notifyLight(light: PointLight, index: Int) {
+        fun notifyPointLight(light: PointLight, index: Int) {
             shaders.forEach {
                 if (it is LightAware) {
                     it.use()
-                    it.loadLight(light, index)
+                    it.loadPointLight(light, index)
+                }
+            }
+        }
+
+        fun notifyDirectionLight(light: DirectionLight) {
+            shaders.forEach {
+                if (it is LightAware) {
+                    it.use()
+                    it.loadDirectionLight(light)
                 }
             }
         }

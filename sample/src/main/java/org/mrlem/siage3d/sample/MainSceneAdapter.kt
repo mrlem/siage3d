@@ -32,20 +32,28 @@ class MainSceneAdapter : SceneAdapter() {
     // TODO - colors from resources
 
     override fun onInit() = scene {
-        light(
+        pointLight(
             name = "light0",
             ambient = color(0f, 0f, 0f),
             diffuse = color(1f, 1f, .8f)
         )
             .translate(0f, 25f, 0f)
             .also { this@MainSceneAdapter.light0 = it }
-        light(
+
+        pointLight(
             name = "light1",
             ambient = color(.2f, .2f, .2f),
             diffuse = color(1f, 1f, .8f)
         )
             .translate(0f, 25f, 0f)
             .also { this@MainSceneAdapter.light1 = it }
+
+        directionLight(
+            name = "Sun",
+            ambient = color(.3f, .3f, .3f),
+            diffuse = color(1f, 1f, 1f)
+        )
+            .rotate(45f, 0f, 0f)
 
         camera(
             name = "camera"
