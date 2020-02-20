@@ -30,7 +30,7 @@ class Terrain(
                 positions[i] = heightMap.heights[row][col] * maxHeight
 
                 // normal
-                val normal = calculateNormal(row, col, heightMap.heights)
+                val normal = calculateNormal(row, col, heightMap.heights, maxHeight)
                 normals[i - 1] = normal.x
                 normals[i] = normal.y
                 normals[i + 1] = normal.z
@@ -39,12 +39,12 @@ class Terrain(
             return this
         }
 
-        private fun calculateNormal(x: Int, z: Int, heights: Array<Array<Float>>): Vector3f {
+        private fun calculateNormal(x: Int, z: Int, heights: Array<Array<Float>>, maxHeight: Float): Vector3f {
             val max = heights.size - 1
-            val heightLeft = heights[max(0, x-1)][z]
-            val heightRight = heights[min(max, x+1)][z]
-            val heightUp = heights[x][min(max, z+1)]
-            val heightDown = heights[x][max(0, z-1)]
+            val heightLeft = heights[max(0, x-1)][z] * maxHeight
+            val heightRight = heights[min(max, x+1)][z] * maxHeight
+            val heightUp = heights[x][min(max, z+1)] * maxHeight
+            val heightDown = heights[x][max(0, z-1)] * maxHeight
             return Vector3f(heightLeft - heightRight, 2f, heightDown - heightUp).normalize()
         }
 
