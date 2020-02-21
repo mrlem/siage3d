@@ -80,7 +80,8 @@ class MainSceneAdapter : SceneAdapter() {
                     R.drawable.texture_mud,
                     R.drawable.texture_grass_flowers,
                     R.drawable.texture_path,
-                    0.02f
+                    0.02f,
+                    reflectivity = .3f
                 )
             )
                 .also { groundNode = it }
@@ -89,26 +90,26 @@ class MainSceneAdapter : SceneAdapter() {
             // Objects
             ///////////////////////////////////////////////////////////////////////////
 
-            for (i in 0 ..200) {
+            for (i in 0 ..100) {
                 val x = randomFloat() * 150f - 75f
                 val z = randomFloat() * 150f - 75f
                 objectNode(
                     "tree",
                     shape = shape(R.raw.model_tree_lowpoly_mesh),
-                    material = textureMaterial(R.raw.model_tree_lowpoly_texture)
+                    material = textureMaterial(R.raw.model_tree_lowpoly_texture, reflectivity = 0.1f)
                 )
                     .translate(x, terrain.heightAt(x, z), z)
                     .rotate(0f, (randomFloat() * 2 * PI).toFloat(), 0f)
                     .scale(.1f)
             }
 
-            for (i in 0 .. 200) {
+            for (i in 0 .. 100) {
                 val x = randomFloat() * 150f - 75f
                 val z = randomFloat() * 150f - 75f
                 objectNode(
                     "crate$i",
                     shape = box(),
-                    material = textureMaterial(R.raw.crate1_diffuse, 0.5f)
+                    material = textureMaterial(R.raw.crate1_diffuse, 0.5f, reflectivity = 0.4f)
                 )
                     .translate(x, terrain.heightAt(x, z) + 0.5f, z)
                     .rotate(0f, (randomFloat() * 2 * PI).toFloat(), 0f)
@@ -139,8 +140,8 @@ class MainSceneAdapter : SceneAdapter() {
         time += delta
 
         // animate lights
-        light0.position(sin(time) * 10f, light0.position().y, cos(time) * 10f)
-        light1.position(5 + sin(time * 1.7f) * 14f, light0.position().y, sin(time * 1.7f) * 14f)
+        light0.position(sin(time) * 100f, light0.position().y, cos(time) * 100f)
+        light1.position(5 + sin(time * 1.7f) * 44f, light0.position().y, cos(time * 1.7f) * 44f)
         lightCube0.position(light0.position())
         lightCube1.position(light1.position())
 
