@@ -83,28 +83,22 @@ vec4 calcPointLight(PointLight light, vec3 normal, vec3 viewDir) {
 }
 
 vec4 calcLight(LightColor color, vec3 normal, vec3 viewDir, vec3 lightDir) {
-    // ambient
-    vec4 result = vec4(color.ambient, 1.0) * material.ambient * getTextureColor();
+    vec3 result;
 
-    // diffuse
-    float brightness = dot(normal, lightDir);
-    result += vec4(brightness * color.diffuse, 1.0) * getTextureColor();
+    float diffuseAmount = max(dot(normal, lightDir), 0.0);
+    vec4 diffuseColor = getTextureColor();
+    vec3 ambient = color.ambient * material.ambient * diffuseColor.rgb;
+    vec3 diffuse = color.diffuse * diffuseAmount * diffuseColor.rgb;
+    result = (ambient + diffuse);
 
-    // specular
-    vec3 specular = vec3(0.0);
     if (material.reflectivity > 0.0) {
-        vec3 lightDirection = -lightDir;
-        vec3 reflectedLightDirection = reflect(lightDirection, normal);
-
-        float specularFactor = dot(reflectedLightDirection, viewDir);
-        specularFactor = max(specularFactor, 0.0);
-        specularFactor = pow(specularFactor, material.shineDamper);     // damped factor
-
-        specular = specularFactor * material.reflectivity * color.diffuse;
+        vec3 reflectDir = reflect(-lightDir, normal);
+        float specularAmount = pow(max(dot(viewDir, reflectDir), 0.0), material.shineDamper);
+        vec3 specular = color.diffuse * specularAmount * material.reflectivity;
+        result += specular;
     }
-    result += vec4(specular, 1.0);
 
-    return result;
+    return vec4(result, diffuseColor.a);
 }
 
 vec4 getTextureColor() {
