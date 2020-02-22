@@ -52,53 +52,53 @@ out vec4 outColor;
 
 // protos
 
-vec4 calcDirectionLight(DirectionLight light, vec3 unitNormal, vec3 unitToCamera);
-vec4 calcPointLight(PointLight light, vec3 unitNormal, vec3 unitToCamera);
-vec4 calcLight(LightColor color, vec3 unitNormal, vec3 unitToCamera, vec3 unitLight);
+vec4 calcDirectionLight(DirectionLight light, vec3 normal, vec3 viewDir);
+vec4 calcPointLight(PointLight light, vec3 normal, vec3 viewDir);
+vec4 calcLight(LightColor color, vec3 normal, vec3 viewDir, vec3 lightDir);
 vec4 getTextureColor();
 
 // main
 
 void main(void) {
-    vec3 unitNormal = normalize(_surfaceNormal);
-    vec3 unitToCamera = normalize(_toCamera);
+    vec3 normal = normalize(_surfaceNormal);
+    vec3 viewDir = normalize(_toCamera);
 
-    outColor += calcDirectionLight(directionLight, unitNormal, unitToCamera);   // direction light
-    for (int i=0 ; i<MAX_LIGHTS ; i++) {                                        // point lights
-        outColor += calcPointLight(pointLights[i], unitNormal, unitToCamera);
+    outColor += calcDirectionLight(directionLight, normal, viewDir);    // direction light
+    for (int i=0 ; i<MAX_LIGHTS ; i++) {                                // point lights
+        outColor += calcPointLight(pointLights[i], normal, viewDir);
     }
-    outColor = mix(vec4(fog.color, 1.0), outColor, _visibility);            // fog
+    outColor = mix(vec4(fog.color, 1.0), outColor, _visibility);        // fog
 }
 
 // functions
 
-vec4 calcDirectionLight(DirectionLight light, vec3 unitNormal, vec3 unitToCamera) {
-    vec3 unitLight = normalize(-light.direction);
-    return calcLight(light.color, unitNormal, unitToCamera, unitLight);
+vec4 calcDirectionLight(DirectionLight light, vec3 normal, vec3 viewDir) {
+    vec3 lightDir = normalize(-light.direction);
+    return calcLight(light.color, normal, viewDir, lightDir);
 }
 
-vec4 calcPointLight(PointLight light, vec3 unitNormal, vec3 unitToCamera) {
-    vec3 unitLight = normalize(light.position - _worldPosition.xyz);
-    return calcLight(light.color, unitNormal, unitToCamera, unitLight);
+vec4 calcPointLight(PointLight light, vec3 normal, vec3 viewDir) {
+    vec3 lightDir = normalize(light.position - _worldPosition.xyz);
+    return calcLight(light.color, normal, viewDir, lightDir);
 }
 
-vec4 calcLight(LightColor color, vec3 unitNormal, vec3 unitToCamera, vec3 unitLight) {
+vec4 calcLight(LightColor color, vec3 normal, vec3 viewDir, vec3 lightDir) {
     // ambient
     vec4 result = vec4(color.ambient, 1.0) * material.ambient * getTextureColor();
 
     // diffuse
-    float brightness = dot(unitNormal, unitLight);
+    float brightness = dot(normal, lightDir);
     result += vec4(brightness * color.diffuse, 1.0) * getTextureColor();
 
     // specular
     vec3 specular = vec3(0.0);
     if (material.reflectivity > 0.0) {
-        vec3 lightDirection = -unitLight;
-        vec3 reflectedLightDirection = reflect(lightDirection, unitNormal);
+        vec3 lightDirection = -lightDir;
+        vec3 reflectedLightDirection = reflect(lightDirection, normal);
 
-        float specularFactor = dot(reflectedLightDirection, unitToCamera);
+        float specularFactor = dot(reflectedLightDirection, viewDir);
         specularFactor = max(specularFactor, 0.0);
-        specularFactor = pow(specularFactor, material.shineDamper);      // damped factor
+        specularFactor = pow(specularFactor, material.shineDamper);     // damped factor
 
         specular = specularFactor * material.reflectivity * color.diffuse;
     }
