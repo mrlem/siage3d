@@ -36,6 +36,9 @@ open class DefaultShader: Shader(
 
     override fun loadPointLight(light: PointLight, index: Int) {
         loadVector(lightPosition[index], light.position())
+        loadFloat(lightConstant[index], light.constant)
+        loadFloat(lightLinear[index], light.linear)
+        loadFloat(lightQuadratic[index], light.quadratic)
         loadVector(lightAmbient[index], light.ambient)
         loadVector(lightDiffuse[index], light.diffuse)
     }
@@ -99,12 +102,21 @@ open class DefaultShader: Shader(
         DIRECTIONLIGHT_AMBIENT("directionLight.color.ambient"),
         DIRECTIONLIGHT_DIFFUSE("directionLight.color.diffuse"),
         POINTLIGHT0_POSITION("pointLights[0].position"),
+        POINTLIGHT0_CONSTANT("pointLights[0].constant"),
+        POINTLIGHT0_LINEAR("pointLights[0].linear"),
+        POINTLIGHT0_QUADRATIC("pointLights[0].quadratic"),
         POINTLIGHT0_AMBIENT("pointLights[0].color.ambient"),
         POINTLIGHT0_DIFFUSE("pointLights[0].color.diffuse"),
         POINTLIGHT1_POSITION("pointLights[1].color.position"),
+        POINTLIGHT1_CONSTANT("pointLights[1].constant"),
+        POINTLIGHT1_LINEAR("pointLights[1].linear"),
+        POINTLIGHT1_QUADRATIC("pointLights[1].quadratic"),
         POINTLIGHT1_AMBIENT("pointLights[1].color.ambient"),
         POINTLIGHT1_DIFFUSE("pointLights[1].color.diffuse"),
         POINTLIGHT2_POSITION("pointLights[2].position"),
+        POINTLIGHT2_CONSTANT("pointLights[2].constant"),
+        POINTLIGHT2_LINEAR("pointLights[2].linear"),
+        POINTLIGHT2_QUADRATIC("pointLights[2].quadratic"),
         POINTLIGHT2_AMBIENT("pointLights[2].color.ambient"),
         POINTLIGHT2_DIFFUSE("pointLights[2].color.diffuse"),
         MATERIAL_AMBIENT("material.ambient"),
@@ -124,6 +136,24 @@ open class DefaultShader: Shader(
             Uniform.POINTLIGHT0_POSITION,
             Uniform.POINTLIGHT1_POSITION,
             Uniform.POINTLIGHT2_POSITION
+        )
+
+        private val lightConstant = arrayOf(
+            Uniform.POINTLIGHT0_CONSTANT,
+            Uniform.POINTLIGHT1_CONSTANT,
+            Uniform.POINTLIGHT2_CONSTANT
+        )
+
+        private val lightLinear = arrayOf(
+            Uniform.POINTLIGHT0_LINEAR,
+            Uniform.POINTLIGHT1_LINEAR,
+            Uniform.POINTLIGHT2_LINEAR
+        )
+
+        private val lightQuadratic = arrayOf(
+            Uniform.POINTLIGHT0_QUADRATIC,
+            Uniform.POINTLIGHT1_QUADRATIC,
+            Uniform.POINTLIGHT2_QUADRATIC
         )
 
         private val lightAmbient = arrayOf(

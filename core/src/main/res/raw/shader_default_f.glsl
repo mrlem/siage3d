@@ -15,6 +15,9 @@ struct DirectionLight {
 
 struct PointLight {
     vec3 position;
+    float constant;
+    float linear;
+    float quadratic;
     LightColor color;
 };
 
@@ -54,7 +57,7 @@ out vec4 outColor;
 
 vec4 calcDirectionLight(DirectionLight light, vec3 normal, vec3 viewDir);
 vec4 calcPointLight(PointLight light, vec3 normal, vec3 viewDir);
-vec4 calcLight(LightColor color, vec3 normal, vec3 viewDir, vec3 lightDir);
+vec4 calcLight(LightColor color, vec3 normal, vec3 viewDir, vec3 lightDir, float attenuation);
 vec4 getTextureColor();
 
 // main
@@ -74,15 +77,22 @@ void main(void) {
 
 vec4 calcDirectionLight(DirectionLight light, vec3 normal, vec3 viewDir) {
     vec3 lightDir = normalize(-light.direction);
-    return calcLight(light.color, normal, viewDir, lightDir);
+    return calcLight(light.color, normal, viewDir, lightDir, 1.0);
 }
 
 vec4 calcPointLight(PointLight light, vec3 normal, vec3 viewDir) {
     vec3 lightDir = normalize(light.position - _worldPosition.xyz);
-    return calcLight(light.color, normal, viewDir, lightDir);
+
+    float attenuation = 1.0;
+    if (light.constant > 0.0) {
+        float distance = length(light.position - _worldPosition);
+        attenuation = 1.0 / (light.constant + light.linear * distance + light.quadratic * (distance * distance));
+    }
+
+    return calcLight(light.color, normal, viewDir, lightDir, attenuation);
 }
 
-vec4 calcLight(LightColor color, vec3 normal, vec3 viewDir, vec3 lightDir) {
+vec4 calcLight(LightColor color, vec3 normal, vec3 viewDir, vec3 lightDir, float attenuation) {
     vec3 result;
 
     float diffuseAmount = max(dot(normal, lightDir), 0.0);
@@ -98,7 +108,7 @@ vec4 calcLight(LightColor color, vec3 normal, vec3 viewDir, vec3 lightDir) {
         result += specular;
     }
 
-    return vec4(result, diffuseColor.a);
+    return vec4(result * attenuation, diffuseColor.a);
 }
 
 vec4 getTextureColor() {

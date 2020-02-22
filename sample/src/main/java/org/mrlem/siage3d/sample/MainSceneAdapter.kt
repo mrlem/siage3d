@@ -42,7 +42,7 @@ class MainSceneAdapter : SceneAdapter() {
 
         pointLight(
             name = "light1",
-            ambient = color(.2f, .2f, .2f),
+            ambient = color(0f, 0f, 0f),
             diffuse = color(1f, 1f, .8f)
         )
             .translate(0f, 25f, 0f)
@@ -140,8 +140,8 @@ class MainSceneAdapter : SceneAdapter() {
         time += delta
 
         // animate lights
-        light0.position(sin(time) * 100f, light0.position().y, cos(time) * 100f)
-        light1.position(5 + sin(time * 1.7f) * 44f, light0.position().y, cos(time * 1.7f) * 44f)
+        light0.position(sin(time) * 10f, light0.position().y, cos(time) * 10f)
+        light1.position(5 + sin(time * 1.7f) * 14f, light0.position().y, cos(time * 1.7f) * 14f)
         lightCube0.position(light0.position())
         lightCube1.position(light1.position())
 
