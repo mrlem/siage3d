@@ -3,16 +3,19 @@ precision highp float;
 
 // types
 
-struct DirectionLight {
-    vec3 direction;
+struct LightColor {
     vec3 ambient;
     vec3 diffuse;
 };
 
+struct DirectionLight {
+    vec3 direction;
+    LightColor color;
+};
+
 struct PointLight {
     vec3 position;
-    vec3 ambient;
-    vec3 diffuse;
+    LightColor color;
 };
 
 struct Material {
@@ -49,75 +52,55 @@ out vec4 outColor;
 
 // protos
 
-vec4 calcDirectionLight(DirectionLight light, vec3 unitNormal);
-vec4 calcPointLight(PointLight light, vec3 unitNormal);
+vec4 calcDirectionLight(DirectionLight light, vec3 unitNormal, vec3 unitToCamera);
+vec4 calcPointLight(PointLight light, vec3 unitNormal, vec3 unitToCamera);
+vec4 calcLight(LightColor color, vec3 unitNormal, vec3 unitToCamera, vec3 unitLight);
 vec4 getTextureColor();
 
 // main
 
 void main(void) {
     vec3 unitNormal = normalize(_surfaceNormal);
+    vec3 unitToCamera = normalize(_toCamera);
 
-    outColor += calcDirectionLight(directionLight, unitNormal);             // direction light
-    for (int i=0 ; i<MAX_LIGHTS ; i++) {                                    // point lights
-        outColor += calcPointLight(pointLights[i], unitNormal);
+    outColor += calcDirectionLight(directionLight, unitNormal, unitToCamera);   // direction light
+    for (int i=0 ; i<MAX_LIGHTS ; i++) {                                        // point lights
+        outColor += calcPointLight(pointLights[i], unitNormal, unitToCamera);
     }
     outColor = mix(vec4(fog.color, 1.0), outColor, _visibility);            // fog
 }
 
 // functions
 
-// TODO - need to take away all common code (dir light / point light)
-vec4 calcDirectionLight(DirectionLight light, vec3 unitNormal) {
-    vec3 unitLightVector = normalize(-light.direction);
-
-    // ambient
-    vec4 result = vec4(light.ambient, 1.0) * material.ambient * getTextureColor();
-
-    // diffuse
-    float brightness = dot(unitNormal, unitLightVector);
-    result += vec4(brightness * light.diffuse, 1.0) * getTextureColor();
-
-    // specular
-    vec3 specular = vec3(0.0);
-    if (material.reflectivity > 0.0) {
-        vec3 unitToCamera = normalize(_toCamera);
-        vec3 lightDirection = -unitLightVector;
-        vec3 reflectedLightDirection = reflect(lightDirection, unitNormal);
-
-        float specularFactor = dot(reflectedLightDirection, unitToCamera);
-        specularFactor = max(specularFactor, 0.0);
-        specularFactor = pow(specularFactor, material.shineDamper);      // damped factor
-
-        specular = specularFactor * material.reflectivity * light.diffuse;
-    }
-    result += vec4(specular, 1.0);
-
-    return result;
+vec4 calcDirectionLight(DirectionLight light, vec3 unitNormal, vec3 unitToCamera) {
+    vec3 unitLight = normalize(-light.direction);
+    return calcLight(light.color, unitNormal, unitToCamera, unitLight);
 }
 
-vec4 calcPointLight(PointLight light, vec3 unitNormal) {
-    vec3 unitLightVector = normalize(light.position - _worldPosition.xyz);
+vec4 calcPointLight(PointLight light, vec3 unitNormal, vec3 unitToCamera) {
+    vec3 unitLight = normalize(light.position - _worldPosition.xyz);
+    return calcLight(light.color, unitNormal, unitToCamera, unitLight);
+}
 
+vec4 calcLight(LightColor color, vec3 unitNormal, vec3 unitToCamera, vec3 unitLight) {
     // ambient
-    vec4 result = vec4(light.ambient, 1.0) * material.ambient * getTextureColor();
+    vec4 result = vec4(color.ambient, 1.0) * material.ambient * getTextureColor();
 
     // diffuse
-    float brightness = dot(unitNormal, unitLightVector);
-    result += vec4(brightness * light.diffuse, 1.0) * getTextureColor();
+    float brightness = dot(unitNormal, unitLight);
+    result += vec4(brightness * color.diffuse, 1.0) * getTextureColor();
 
     // specular
     vec3 specular = vec3(0.0);
     if (material.reflectivity > 0.0) {
-        vec3 unitToCamera = normalize(_toCamera);
-        vec3 lightDirection = -unitLightVector;
+        vec3 lightDirection = -unitLight;
         vec3 reflectedLightDirection = reflect(lightDirection, unitNormal);
 
         float specularFactor = dot(reflectedLightDirection, unitToCamera);
         specularFactor = max(specularFactor, 0.0);
         specularFactor = pow(specularFactor, material.shineDamper);      // damped factor
 
-        specular = specularFactor * material.reflectivity * light.diffuse;
+        specular = specularFactor * material.reflectivity * color.diffuse;
     }
     result += vec4(specular, 1.0);
 
