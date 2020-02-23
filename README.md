@@ -97,11 +97,11 @@ class MainSceneAdapter : SceneAdapter() {
   - kotlin DSL
   - height-maps
 * Object loading
-  - OBJ files
+  - OBJ files (partial)
 * Rendering
   - Skybox
   - Distance fog
-  - Lighting: multiple point lights
+  - Lighting: directional light, up to 3 point-lights
   - Multi-texturing
 
 ## About
