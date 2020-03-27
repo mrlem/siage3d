@@ -21,18 +21,18 @@ import kotlin.math.sin
  */
 class MainSceneAdapter : SceneAdapter() {
 
+    // scene objects refs
+    private lateinit var groundNode: Node
+    private lateinit var terrain: Terrain
+    private lateinit var light0: PointLight
+    private lateinit var light1: PointLight
+    private lateinit var lightCube0: ObjectNode
+    private lateinit var lightCube1: ObjectNode
+
+    // time-bound variables
+    private var time = 0f
     var linearVelocity = 0f
     var angularVelocity = 0f
-
-    lateinit var groundNode: Node
-    lateinit var terrain: Terrain
-
-    lateinit var light0: PointLight
-    lateinit var light1: PointLight
-    lateinit var lightCube0: ObjectNode
-    lateinit var lightCube1: ObjectNode
-
-    private var time = 0f
 
     // TODO - colors from resources
 
