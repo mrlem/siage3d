@@ -140,19 +140,21 @@ class MainSceneAdapter : SceneAdapter() {
         time += delta
 
         // animate lights
-        light0.position(sin(time) * 10f, light0.position().y, cos(time) * 10f)
-        light1.position(5 + sin(time * 1.7f) * 14f, light0.position().y, cos(time * 1.7f) * 14f)
-        lightCube0.position(light0.position())
-        lightCube1.position(light1.position())
+        light0
+            .position(sin(time) * 10f, light0.position().y, cos(time) * 10f)
+            .also { lightCube0.position(it.position()) }
+        light1
+            .position(5 + sin(time * 1.7f) * 14f, light0.position().y, cos(time * 1.7f) * 14f)
+            .also { lightCube1.position(it.position()) }
 
         // animate camera
         scene.camera.apply {
             yaw += angularVelocity * delta
-            val position = position()
-            position.x += sin(yaw.toRadians()) * linearVelocity * delta
-            position.z -= cos(yaw.toRadians()) * linearVelocity * delta
-            position.y = 40f
-            position(position)
+            position(position()
+                .apply { x += sin(yaw.toRadians()) * linearVelocity * delta }
+                .apply { z -= cos(yaw.toRadians()) * linearVelocity * delta }
+                .apply { y = 40f }
+            )
         }
     }
 
