@@ -102,7 +102,6 @@ class MainSceneAdapter : SceneAdapter() {
     private fun Scene.createSceneGraph() {
         groupNode {
             // ground
-
             objectNode(
                 "ground",
                 shape = terrain(500f, heightMap(R.raw.heightmap), 50f).also { terrain = it },
@@ -118,8 +117,7 @@ class MainSceneAdapter : SceneAdapter() {
             )
                 .also { groundNode = it }
 
-            // objects
-
+            // objects: trees
             for (i in 0 ..100) {
                 val x = randomFloat() * 150f - 75f
                 val z = randomFloat() * 150f - 75f
@@ -133,6 +131,7 @@ class MainSceneAdapter : SceneAdapter() {
                     .scale(.1f)
             }
 
+            // objects: crates
             for (i in 0 .. 100) {
                 val x = randomFloat() * 150f - 75f
                 val z = randomFloat() * 150f - 75f
@@ -146,6 +145,7 @@ class MainSceneAdapter : SceneAdapter() {
                     .scale(1f)
             }
 
+            // objects: light cubes
             objectNode(
                 "lightcube0",
                 shape = box(),
@@ -154,7 +154,6 @@ class MainSceneAdapter : SceneAdapter() {
                 .translate(light0.position())
                 .scale(0.5f)
                 .also { lightCube0 = it }
-
             objectNode(
                 "lightcube1",
                 shape = box(),
