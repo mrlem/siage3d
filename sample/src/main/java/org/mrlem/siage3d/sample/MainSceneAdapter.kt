@@ -6,6 +6,7 @@ import org.mrlem.siage3d.core.common.math.randomFloat
 import org.mrlem.siage3d.core.common.math.toRadians
 import org.mrlem.siage3d.core.scene.Node
 import org.mrlem.siage3d.core.scene.ObjectNode
+import org.mrlem.siage3d.core.scene.Scene
 import org.mrlem.siage3d.core.scene.dsl.*
 import org.mrlem.siage3d.core.scene.lights.PointLight
 import org.mrlem.siage3d.core.scene.shapes.Terrain
@@ -14,6 +15,10 @@ import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
 
+/**
+ * Scene adapter: this is where we describe what we want to display, and how it changes through
+ * time.
+ */
 class MainSceneAdapter : SceneAdapter() {
 
     var linearVelocity = 0f
@@ -32,6 +37,16 @@ class MainSceneAdapter : SceneAdapter() {
     // TODO - colors from resources
 
     override fun onInit() = scene {
+        camera(
+            name = "camera"
+        )
+            .translate(0f, 1.75f, 5f)
+
+        sky(
+            color = color(.6f, .8f, 1f),
+            cubemap = R.array.skybox_daylight
+        )
+
         pointLight(
             name = "light0",
             ambient = color(0f, 0f, 0f),
@@ -55,21 +70,38 @@ class MainSceneAdapter : SceneAdapter() {
         )
             .rotate(45f, 0f, 0f)
 
-        camera(
-            name = "camera"
-        )
-            .translate(0f, 1.75f, 5f)
+        createSceneGraph()
+    }
 
-        sky(
-            color = color(.6f, .8f, 1f),
-            cubemap = R.array.skybox_daylight
-        )
+    override fun onUpdate(delta: Float) {
+        time += delta
 
+        // animate lights
+        light0
+            .position(sin(time) * 10f, light0.position().y, cos(time) * 10f)
+            .also { lightCube0.position(it.position()) }
+        light1
+            .position(5 + sin(time * 1.7f) * 14f, light0.position().y, cos(time * 1.7f) * 14f)
+            .also { lightCube1.position(it.position()) }
+
+        // animate camera
+        scene.camera.apply {
+            yaw += angularVelocity * delta
+            position(position()
+                .apply { x += sin(yaw.toRadians()) * linearVelocity * delta }
+                .apply { z -= cos(yaw.toRadians()) * linearVelocity * delta }
+                .apply { y = 40f }
+            )
+        }
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Internal
+    ///////////////////////////////////////////////////////////////////////////
+
+    private fun Scene.createSceneGraph() {
         groupNode {
-
-            ///////////////////////////////////////////////////////////////////////////
-            // Ground
-            ///////////////////////////////////////////////////////////////////////////
+            // ground
 
             objectNode(
                 "ground",
@@ -86,9 +118,7 @@ class MainSceneAdapter : SceneAdapter() {
             )
                 .also { groundNode = it }
 
-            ///////////////////////////////////////////////////////////////////////////
-            // Objects
-            ///////////////////////////////////////////////////////////////////////////
+            // objects
 
             for (i in 0 ..100) {
                 val x = randomFloat() * 150f - 75f
@@ -133,28 +163,6 @@ class MainSceneAdapter : SceneAdapter() {
                 .translate(light0.position())
                 .scale(0.5f)
                 .also { lightCube1 = it }
-        }
-    }
-
-    override fun onUpdate(delta: Float) {
-        time += delta
-
-        // animate lights
-        light0
-            .position(sin(time) * 10f, light0.position().y, cos(time) * 10f)
-            .also { lightCube0.position(it.position()) }
-        light1
-            .position(5 + sin(time * 1.7f) * 14f, light0.position().y, cos(time * 1.7f) * 14f)
-            .also { lightCube1.position(it.position()) }
-
-        // animate camera
-        scene.camera.apply {
-            yaw += angularVelocity * delta
-            position(position()
-                .apply { x += sin(yaw.toRadians()) * linearVelocity * delta }
-                .apply { z -= cos(yaw.toRadians()) * linearVelocity * delta }
-                .apply { y = 40f }
-            )
         }
     }
 
