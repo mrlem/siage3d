@@ -4,6 +4,6 @@ import org.mrlem.siage3d.core.SceneActivity
 
 class SimpleActivity : SceneActivity() {
 
-    override val sceneAdapter by lazy { SimpleSceneAdapter() }
+    override val sceneAdapter = SimpleSceneAdapter()
 
 }

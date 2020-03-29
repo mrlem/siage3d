@@ -32,7 +32,7 @@ Create an activity for you game:
 ```Kotlin
 class SimpleActivity : SceneActivity() {
 
-    override val sceneAdapter by lazy { SimpleSceneAdapter() }
+    override val sceneAdapter = SimpleSceneAdapter()
 
 }
 ```

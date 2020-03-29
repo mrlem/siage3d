@@ -9,7 +9,7 @@ class AdvancedActivity : SceneActivity() {
 
     override val layoutId: Int = R.layout.activity_advanced
     override val sceneId: Int = R.id.sceneView
-    override val sceneAdapter by lazy { AdvancedSceneAdapter() }
+    override val sceneAdapter = AdvancedSceneAdapter()
 
     private val padListener = object : DirectionPadView.OnDirectionPadListener {
         override fun onDirectionChanged(direction: DirectionPadView.Direction?, active: Boolean) {
