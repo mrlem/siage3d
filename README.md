@@ -67,7 +67,6 @@ class SimpleSceneAdapter : SceneAdapter() {
             rotation(0f, 60f, 0f)
         }
 
-        // objects: crates
         objectNode("my-cube", Box()) {
             textureMaterial(R.drawable.crate1_diffuse, 1f, reflectivity = 0.1f)
             position(0f, 1.5f, -2f)
