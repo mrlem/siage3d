@@ -27,7 +27,7 @@ implementation "org.mrlem.siage3d:core:1.0.0"
 
 ### Usage
 
-Create an activity for you game:
+Create an activity for your game:
 
 ```Kotlin
 class SimpleActivity : SceneActivity() {
@@ -48,7 +48,7 @@ Declare it in your manifest:
         </activity>
 ```
 
-Create the scene adapter:
+Create the scene adapter, that's where you can describe & manipulate the scene:
 
 ```kotlin
 class SimpleSceneAdapter : SceneAdapter() {
@@ -75,6 +75,8 @@ class SimpleSceneAdapter : SceneAdapter() {
 
 }
 ```
+
+And voilà!
 
 Want to know more? checkout the slightly more [advanced sample](sample/src/main/java/org/mrlem/siage3d/sample/AdvancedSceneAdapter.kt)!
 
