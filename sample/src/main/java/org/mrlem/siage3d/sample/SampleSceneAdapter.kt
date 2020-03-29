@@ -36,12 +36,11 @@ class SampleSceneAdapter : SceneAdapter() {
     var linearVelocity = 0f
     var angularVelocity = 0f
 
-    // TODO - colors from resources
-    // TODO - why do we appear to be above the ground?
+    // TODO - minor - colors from resources
 
     override fun onCreateScene() = scene {
         camera {
-            position(0f, 1.75f, 5f)
+            position(0f, 40f, 5f)
         }
 
         sky {
@@ -132,16 +131,16 @@ class SampleSceneAdapter : SceneAdapter() {
                 position(x, 0.5f + (terrain?.heightAt(x, z) ?: 0f), z)
                 rotation(0f, (randomFloat() * 2 * PI).toFloat(), 0f)
             }
+        }
 
-            // objects: light cubes
-            objectNode("light-cube0", Box()) {
-                textureMaterial(R.drawable.white, ambient = 100f)
-                scale(0.5f)
-            }
-            objectNode("light-cube1", Box()) {
-                textureMaterial(R.drawable.white, ambient = 100f)
-                scale(0.5f)
-            }
+        // objects: light cubes
+        objectNode("light-cube0", Box()) {
+            textureMaterial(R.drawable.white, ambient = 100f)
+            scale(0.5f)
+        }
+        objectNode("light-cube1", Box()) {
+            textureMaterial(R.drawable.white, ambient = 100f)
+            scale(0.5f)
         }
     }
 }

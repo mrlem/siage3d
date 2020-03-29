@@ -7,8 +7,6 @@ import org.mrlem.siage3d.core.view.DirectionPadView
 
 class MainActivity : SceneActivity() {
 
-    // FIXME - make simple scene adapter work too
-
     override val sceneAdapter by lazy { SampleSceneAdapter() }
 
     private val padListener = object : DirectionPadView.OnDirectionPadListener {
