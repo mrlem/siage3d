@@ -4,6 +4,7 @@ import org.mrlem.siage3d.core.scene.ObjectNode
 import org.mrlem.siage3d.core.scene.Scene
 import org.mrlem.siage3d.core.scene.lights.DirectionLight
 import org.mrlem.siage3d.core.scene.lights.PointLight
+import org.mrlem.siage3d.core.scene.materials.Material
 import org.mrlem.siage3d.core.scene.shaders.Shader
 
 class MainSceneRenderer(scene: Scene) : SceneRenderer(scene) {
@@ -16,6 +17,7 @@ class MainSceneRenderer(scene: Scene) : SceneRenderer(scene) {
         scene.sky.render()
 
         // draw scene
+        prepareDraw()
 
         // .. lights
         scene.lights
@@ -38,6 +40,10 @@ class MainSceneRenderer(scene: Scene) : SceneRenderer(scene) {
                 it.render()
             }
         }
+    }
+
+    private fun prepareDraw() {
+        Material.activeMaterial = null
     }
 
 }
