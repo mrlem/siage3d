@@ -30,9 +30,9 @@ implementation "org.mrlem.siage3d:core:1.0.0"
 Create an activity for you game:
 
 ```Kotlin
-class MainActivity : SceneActivity() {
+class SimpleActivity : SceneActivity() {
 
-    override val sceneAdapter by lazy { MainSceneAdapter() }
+    override val sceneAdapter by lazy { SimpleSceneAdapter() }
 
 }
 ```
@@ -40,7 +40,7 @@ class MainActivity : SceneActivity() {
 Declare it in your manifest:
 
 ```xml
-        <activity android:name=".sample.MainActivity">
+        <activity android:name=".SimpleActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -51,44 +51,33 @@ Declare it in your manifest:
 Create the scene adapter:
 
 ```kotlin
-class MainSceneAdapter : SceneAdapter() {
+class SimpleSceneAdapter : SceneAdapter() {
 
-    private lateinit var sampleNode: ObjectNode
+    override fun onCreateScene() = scene {
+        camera {
+            position(0f, 1.75f, 5f)
+        }
 
-    override fun onInit() = scene {
-        light(
-            "My Light",
-            ambient = color(0f, 0f, 0f),
-            diffuse = color(1f, 1f, .8f)
-        )
-            .translate(0f, 25f, 0f)
+        sky {
+            color(.6f, .8f, 1f)
+        }
 
-        camera("My Camera")
-            .translate(0f, 1.75f, 5f)
+        directionLight("sun") {
+            diffuse(1f, 1f, 1f)
+            rotation(0f, 60f, 0f)
+        }
 
-        sky(
-            color = color(.6f, .8f, 1f),
-            cubemap = textureCubemap(R.array.skybox_daylight)
-        )
-
-        objectNode(
-            "My Box",
-            shape = box(),
-            material = textureMaterial(R.drawable.white)
-        )
-            .translate(0f, 0f, -.5f)
-            .rotate(0f, 15f, 0f)
-            .scale(0.5f)
-            .also { sampleNode = it }
-    }
-
-    override fun onUpdate(delta: Float) {
-        // animate the scene
-        sampleNode.localTransform.rotateY(delta)
+        // objects: crates
+        objectNode("my-cube", Box()) {
+            textureMaterial(R.drawable.crate1_diffuse, 1f, reflectivity = 0.1f)
+            position(0f, 1.5f, -2f)
+        }
     }
 
 }
 ```
+
+Want to know more? checkout the slightly more [advanced sample](sample/src/main/java/org/mrlem/siage3d/sample/AdvancedSceneAdapter.kt)!
 
 ## Features
 
