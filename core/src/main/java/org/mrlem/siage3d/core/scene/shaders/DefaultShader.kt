@@ -107,7 +107,7 @@ open class DefaultShader: Shader(
         POINTLIGHT0_QUADRATIC("pointLights[0].quadratic"),
         POINTLIGHT0_AMBIENT("pointLights[0].color.ambient"),
         POINTLIGHT0_DIFFUSE("pointLights[0].color.diffuse"),
-        POINTLIGHT1_POSITION("pointLights[1].color.position"),
+        POINTLIGHT1_POSITION("pointLights[1].position"),
         POINTLIGHT1_CONSTANT("pointLights[1].constant"),
         POINTLIGHT1_LINEAR("pointLights[1].linear"),
         POINTLIGHT1_QUADRATIC("pointLights[1].quadratic"),

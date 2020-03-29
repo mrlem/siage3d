@@ -44,6 +44,7 @@ struct Fog {
 };
 
 // uniforms
+
 uniform DirectionLight directionLight;
 #define MAX_LIGHTS 3
 uniform PointLight pointLights[MAX_LIGHTS];
