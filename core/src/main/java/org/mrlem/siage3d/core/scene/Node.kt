@@ -9,17 +9,21 @@ import org.mrlem.siage3d.core.scene.shaders.Shader
 import org.mrlem.siage3d.core.scene.shapes.Shape
 import org.mrlem.siage3d.core.scene.shapes.Terrain
 
-abstract class Node(
-    val name: String
-) {
+abstract class Node(val name: String) {
 
     var parent: GroupNode? = null
+
+    internal abstract fun update()
+
+}
+
+abstract class SpatialNode(name: String) : Node(name) {
 
     val localTransform: Matrix4f = Matrix4f()
     protected val globalTransform = Matrix4f()
 
     @CallSuper
-    internal open fun update() {
+    override fun update() {
         val parent = parent
         if (parent != null) {
             globalTransform
@@ -34,7 +38,7 @@ abstract class Node(
 
 open class GroupNode(
     name: String? = null
-) : Node(name ?: "Group #${counter++}") {
+) : SpatialNode(name ?: "Group #${counter++}") {
 
     private val _children: MutableList<Node> = mutableListOf()
     val children: List<Node> get() = _children
@@ -85,7 +89,7 @@ open class ObjectNode(
     val shape: Shape,
     val material: Material,
     name: String? = null
-) : Node(name ?: "Object #${counter++}") {
+) : SpatialNode(name ?: "Object #${counter++}") {
 
     fun render() {
         (material.shader as? Shader.TransformationAware)
@@ -131,28 +135,31 @@ class TerrainNode(
 val Node.terrain
     get() = (this as? ObjectNode)?.shape as? Terrain
 
-fun <T : Node> T.translate(x: Float, y: Float, z: Float) = this
+fun <T : SpatialNode> T.translate(x: Float, y: Float, z: Float) = this
     .also { localTransform.setTranslation(x, y, z) }
 
-fun <T : Node> T.translate(position: Vector3f) = this
+fun <T : SpatialNode> T.translate(position: Vector3f) = this
     .also { localTransform.setTranslation(position) }
 
-fun <T : Node> T.scale(scale: Float) = this
+fun <T : SpatialNode> T.scale(scale: Float) = this
     .also { localTransform.scale(scale) }
 
-fun <T : Node> T.scale(scaleX: Float, scaleY: Float, scaleZ: Float) = this
+fun <T : SpatialNode> T.scale(scaleX: Float, scaleY: Float, scaleZ: Float) = this
     .also { localTransform.scale(scaleX, scaleY, scaleZ) }
 
-fun <T : Node> T.rotate(x: Float, y: Float, z: Float) = this
-    .also { localTransform.setRotationXYZ(
-        x,
-        y,
-        z) }
+fun <T : SpatialNode> T.rotate(x: Float, y: Float, z: Float) = this
+    .also {
+        localTransform.setRotationXYZ(
+            Math.toRadians(x.toDouble()).toFloat(),
+            Math.toRadians(y.toDouble()).toFloat(),
+            Math.toRadians(z.toDouble()).toFloat()
+        )
+    }
 
-fun <T : Node> T.position(): Vector3f = localTransform.getTranslation(Vector3f())
+fun <T : SpatialNode> T.position(): Vector3f = localTransform.getTranslation(Vector3f())
 
-fun <T : Node> T.position(x: Float, y: Float, z: Float) = this
+fun <T : SpatialNode> T.position(x: Float, y: Float, z: Float) = this
     .apply { localTransform.setTranslation(x, y, z) }
 
-fun <T : Node> T.position(position: Vector3f) = this
+fun <T : SpatialNode> T.position(position: Vector3f) = this
     .apply { localTransform.setTranslation(position) }

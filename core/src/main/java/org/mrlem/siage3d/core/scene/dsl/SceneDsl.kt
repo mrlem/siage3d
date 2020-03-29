@@ -59,7 +59,9 @@ class SceneBuilder : GroupNodeBuilder("scene") {
     }
 }
 
-abstract class NodeBuilder(protected var name: String? = null) {
+abstract class NodeBuilder(protected var name: String? = null)
+
+abstract class SpatialNodeBuilder(name: String?) : NodeBuilder(name) {
     private var position = Vector3f()
     private var rotation = Vector3f()
     private var scale = Vector3f(1f, 1f, 1f)
@@ -80,7 +82,7 @@ abstract class NodeBuilder(protected var name: String? = null) {
         scale.set(scaleX, scaleY, scaleZ)
     }
 
-    protected fun applyTransformsTo(node: Node) {
+    protected fun applyTransformsTo(node: SpatialNode) {
         node.localTransform
             .scale(scale)
             .rotateXYZ(
@@ -93,7 +95,7 @@ abstract class NodeBuilder(protected var name: String? = null) {
 }
 
 @SceneDsl
-class CameraBuilder(name: String?) : NodeBuilder(name) {
+class CameraBuilder(name: String?) : SpatialNodeBuilder(name) {
     fun build() = Camera(name).apply {
         applyTransformsTo(this)
     }
@@ -121,7 +123,7 @@ class SkyBuilder() : NodeBuilder() {
 // Lights
 ///////////////////////////////////////////////////////////////////////////
 
-abstract class LightBuilder(name: String?) : NodeBuilder(name) {
+abstract class LightBuilder(name: String?) : SpatialNodeBuilder(name) {
     protected val ambient = Vector3f()
     protected val diffuse = Vector3f()
 
@@ -172,7 +174,7 @@ class DirectionLightBuilder(name: String?) : LightBuilder(name) {
 ///////////////////////////////////////////////////////////////////////////
 
 @SceneDsl
-open class GroupNodeBuilder(name: String?) : NodeBuilder(name) {
+open class GroupNodeBuilder(name: String?) : SpatialNodeBuilder(name) {
     protected val children = mutableListOf<Node>()
     val lastNode get() = children.lastOrNull()
 
@@ -195,7 +197,7 @@ open class GroupNodeBuilder(name: String?) : NodeBuilder(name) {
 }
 
 @SceneDsl
-open class ObjectNodeBuilder(name: String?, protected val shape: Shape) : NodeBuilder(name) {
+open class ObjectNodeBuilder(name: String?, protected val shape: Shape) : SpatialNodeBuilder(name) {
     protected var material: Material = TextureMaterial(texture2D(R.drawable.white))
 
     fun textureMaterial(

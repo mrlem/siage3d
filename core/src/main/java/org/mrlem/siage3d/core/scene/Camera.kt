@@ -11,7 +11,7 @@ class Camera(
     var yaw: Float = 0f,
     var pitch: Float = 0f,
     var roll: Float = 0f
-) : Node(name ?: "camera") {
+) : SpatialNode(name ?: "camera") {
 
     private val near = 0.1f
     private val far = 300f
