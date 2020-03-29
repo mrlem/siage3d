@@ -10,7 +10,7 @@ class Terrain(
 ) : Shape(Grid.generateGrid(1f, heightMap.size).applyHeights(heightMap, maxHeight)) {
 
     fun heightAt(x: Float, z: Float): Float {
-        // TODO - barycenter
+        // TODO - optional - barycenter
         val tileSize = 1f / heightMap.size
         val zIndex = ((z + 0.5f) / tileSize).toInt().coerceIn(0 until heightMap.size)
         val xIndex = ((x + 0.5f) / tileSize).toInt().coerceIn(0 until heightMap.size)
@@ -39,7 +39,7 @@ class Terrain(
         }
 
         private fun Array<Array<Float>>.calculateNormal(x: Int, z: Int, maxHeight: Float): Vector3f {
-            // TODO - could base calculation on 4 surrounding quads, rather than 4 surrounding points
+            // TODO - optional - could base calculation on 4 surrounding quads, rather than 4 surrounding points
             val max = size - 1
 
             // surrounding indices

@@ -144,7 +144,10 @@ fun <T : Node> T.scale(scaleX: Float, scaleY: Float, scaleZ: Float) = this
     .also { localTransform.scale(scaleX, scaleY, scaleZ) }
 
 fun <T : Node> T.rotate(x: Float, y: Float, z: Float) = this
-    .also { localTransform.setRotationXYZ(x, y, z) }
+    .also { localTransform.setRotationXYZ(
+        x,
+        y,
+        z) }
 
 fun <T : Node> T.position(): Vector3f = localTransform.getTranslation(Vector3f())
 

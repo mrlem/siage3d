@@ -2,20 +2,25 @@ package org.mrlem.siage3d.core
 
 import android.os.Bundle
 import android.view.View
+import androidx.annotation.IdRes
+import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import org.mrlem.k3d.core.R
 import org.mrlem.siage3d.core.view.SceneAdapter
+import org.mrlem.siage3d.core.view.SceneView
 
 abstract class SceneActivity : AppCompatActivity() {
+
+    @LayoutRes open val layoutId: Int = R.layout.activity_main
+    @IdRes open val sceneId: Int = R.id.sceneView
 
     abstract val sceneAdapter: SceneAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initFullscreen()
-        setContentView(R.layout.activity_main)
-        sceneView.adapter = sceneAdapter
+        setContentView(layoutId)
+        findViewById<SceneView>(sceneId).adapter = sceneAdapter
     }
 
     override fun onStart() {

@@ -1,2 +1,1 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.mrlem.k3d.core" />
+<manifest package="org.mrlem.siage3d.core" />

@@ -5,6 +5,9 @@ import org.mrlem.siage3d.core.render.ShadowSceneRenderer
 import org.mrlem.siage3d.core.scene.Scene
 import org.mrlem.siage3d.core.scene.dsl.SceneBuilder
 
+/**
+ * Scene adapter: this is where we describe what we want to display, and how it changes through time.
+ */
 abstract class SceneAdapter {
 
     private val renderers by lazy {

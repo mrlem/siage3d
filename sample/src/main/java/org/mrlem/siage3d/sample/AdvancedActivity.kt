@@ -1,13 +1,14 @@
 package org.mrlem.siage3d.sample
 
 import android.os.Bundle
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_advanced.*
 import org.mrlem.siage3d.core.SceneActivity
 import org.mrlem.siage3d.core.view.DirectionPadView
 
-class MainActivity : SceneActivity() {
+class AdvancedActivity : SceneActivity() {
 
-    override val sceneAdapter by lazy { SampleSceneAdapter() }
+    override val layoutId: Int = R.layout.activity_advanced
+    override val sceneAdapter by lazy { AdvancedSceneAdapter() }
 
     private val padListener = object : DirectionPadView.OnDirectionPadListener {
         override fun onDirectionChanged(direction: DirectionPadView.Direction?, active: Boolean) {

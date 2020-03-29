@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">Sample3D</string>
+    <string name="app_name">Siage3D: sample</string>
+    <string name="sample_name">Siage3D advanced</string>
+    <string name="simple_name">Siage3D simple</string>
 </resources>

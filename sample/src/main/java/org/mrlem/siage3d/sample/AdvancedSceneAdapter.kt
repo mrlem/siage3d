@@ -1,6 +1,5 @@
 package org.mrlem.siage3d.sample
 
-import org.mrlem.siage3d.R
 import org.mrlem.siage3d.core.common.io.AssetManager.shape
 import org.mrlem.siage3d.core.common.math.randomFloat
 import org.mrlem.siage3d.core.common.math.toRadians
@@ -11,17 +10,13 @@ import org.mrlem.siage3d.core.scene.lights.PointLight
 import org.mrlem.siage3d.core.scene.position
 import org.mrlem.siage3d.core.scene.shapes.Box
 import org.mrlem.siage3d.core.view.SceneAdapter
-import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
 
 /**
- * Scene adapter: this is where we describe what we want to display, and how it changes through
- * time.
- *
- * This is a more complex example, with terrain, skybox & multiple animated light sources.
+ * This is a slightly more advanced sample, with terrain, skybox & multiple animated light sources & camera control.
  */
-class SampleSceneAdapter : SceneAdapter() {
+class AdvancedSceneAdapter : SceneAdapter() {
 
     // scene objects refs
     private val light0: PointLight by lazy { scene.get<PointLight>("light0")!! }
@@ -117,7 +112,7 @@ class SampleSceneAdapter : SceneAdapter() {
             objectNode("tree", shape(R.raw.model_tree_lowpoly_mesh)) {
                 textureMaterial(R.drawable.model_tree_lowpoly_texture, reflectivity = 0.1f)
                 position(x, terrain?.heightAt(x, z) ?: 0f, z)
-                rotation(0f, (randomFloat() * 2 * PI).toFloat(), 0f)
+                rotation(randomFloat() * 360, 0f, 0f)
                 scale(.1f)
             }
         }
@@ -127,9 +122,9 @@ class SampleSceneAdapter : SceneAdapter() {
             val x = randomFloat() * 150f - 75f
             val z = randomFloat() * 150f - 75f
             objectNode("crate$i", Box()) {
-                textureMaterial(R.drawable.crate1_diffuse, 0.5f, reflectivity = 0.4f)
+                textureMaterial(R.drawable.crate1_diffuse, 1f, reflectivity = 0.1f)
                 position(x, 0.5f + (terrain?.heightAt(x, z) ?: 0f), z)
-                rotation(0f, (randomFloat() * 2 * PI).toFloat(), 0f)
+                rotation(randomFloat() * 360, 0f, 0f)
             }
         }
 

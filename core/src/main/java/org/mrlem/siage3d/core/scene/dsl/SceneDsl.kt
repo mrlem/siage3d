@@ -3,7 +3,7 @@ package org.mrlem.siage3d.core.scene.dsl
 import androidx.annotation.ArrayRes
 import androidx.annotation.DrawableRes
 import org.joml.Vector3f
-import org.mrlem.k3d.core.R
+import org.mrlem.siage3d.core.R
 import org.mrlem.siage3d.core.common.io.AssetManager.texture2D
 import org.mrlem.siage3d.core.common.io.AssetManager.textureCubemap
 import org.mrlem.siage3d.core.common.io.loaders.HeightMapLoader

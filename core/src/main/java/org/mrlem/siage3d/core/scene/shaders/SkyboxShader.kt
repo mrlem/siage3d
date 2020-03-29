@@ -2,7 +2,7 @@ package org.mrlem.siage3d.core.scene.shaders
 
 import org.joml.Matrix4f
 import org.joml.Vector3f
-import org.mrlem.k3d.core.R
+import org.mrlem.siage3d.core.R
 import org.mrlem.siage3d.core.common.io.AssetManager.text
 
 class SkyboxShader : Shader(

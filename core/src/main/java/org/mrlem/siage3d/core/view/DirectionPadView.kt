@@ -7,7 +7,7 @@ import android.view.MotionEvent
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import kotlinx.android.synthetic.main.view_direction_pad.view.*
-import org.mrlem.k3d.core.R
+import org.mrlem.siage3d.core.R
 
 class DirectionPadView @JvmOverloads constructor(
     context: Context,
