@@ -1,7 +1,9 @@
 package org.mrlem.siage3d.core.scene.dsl
 
-import androidx.annotation.RawRes
+import androidx.annotation.ArrayRes
+import androidx.annotation.DrawableRes
 import org.joml.Vector3f
+import org.mrlem.k3d.core.R
 import org.mrlem.siage3d.core.common.io.AssetManager.texture2D
 import org.mrlem.siage3d.core.common.io.AssetManager.textureCubemap
 import org.mrlem.siage3d.core.common.io.loaders.HeightMapLoader
@@ -14,118 +16,242 @@ import org.mrlem.siage3d.core.scene.materials.TextureMaterial
 import org.mrlem.siage3d.core.scene.shapes.*
 import org.mrlem.siage3d.core.scene.sky.Sky
 
+/**
+ * Used to mark builders as part of a DSL definition, and thus prevent some badly scoped calls.
+ */
+@DslMarker private annotation class SceneDsl
+
 ///////////////////////////////////////////////////////////////////////////
-// Root scope functions
+// Scene
 ///////////////////////////////////////////////////////////////////////////
 
-fun scene(init: Scene.() -> Unit) = Scene().apply {
-    init()
+fun scene(init: SceneBuilder.() -> Unit) = SceneBuilder().apply(init)
+
+@SceneDsl
+class SceneBuilder : GroupNodeBuilder("scene") {
+    private var camera: Camera? = null
+    private var sky: Sky? = null
+    private val pointLights = mutableListOf<PointLight>()
+    private val directionLights = mutableListOf<DirectionLight>()
+
+    fun camera(name: String? = null, init: CameraBuilder.() -> Unit) {
+        camera = CameraBuilder(name).apply(init).build()
+    }
+
+    fun sky(init: SkyBuilder.() -> Unit) {
+        sky = SkyBuilder().apply(init).build()
+    }
+
+    fun pointLight(name: String?, init: PointLightBuilder.() -> Unit) {
+        pointLights.add(PointLightBuilder(name).apply(init).build())
+    }
+
+    fun directionLight(name: String?, init: DirectionLightBuilder.() -> Unit) {
+        directionLights.add(DirectionLightBuilder(name).apply(init).build())
+    }
+
+    override fun build() = Scene(name).apply {
+        this@SceneBuilder.camera?.let { camera = it }
+        this@SceneBuilder.sky?.let { sky = it }
+        this@SceneBuilder.pointLights.let { lights.addAll(it) }
+        this@SceneBuilder.directionLights.let { lights.addAll(it) }
+        this@SceneBuilder.children.forEach { add(it) }
+    }
 }
 
-fun color(r: Float, g: Float, b: Float) = Vector3f(r, g, b)
+abstract class NodeBuilder(protected var name: String? = null) {
+    private var position = Vector3f()
+    private var rotation = Vector3f()
+    private var scale = Vector3f(1f, 1f, 1f)
 
-fun position(x: Float, y: Float, z: Float) = Vector3f(x, y, z)
+    fun position(x: Float, y: Float, z: Float) {
+        position.set(x, y, z)
+    }
 
-fun textureMaterial(
-    texture: Int,
-    scale: Float = 1f,
-    ambient: Float = 0f,
-    shineDamper: Float = 1f,
-    reflectivity: Float= 0f
-) = TextureMaterial(
-    texture2D(texture),
-    scale,
-    ambient,
-    shineDamper,
-    reflectivity
-)
+    fun rotation(yaw: Float, pitch: Float, roll: Float) {
+        rotation.set(pitch, yaw, roll)
+    }
 
-fun multiTextureMaterial(
-    blendMap: Int,
-    backgroundTexture: Int,
-    redTexture: Int,
-    greenTexture: Int,
-    blueTexture: Int,
-    scale: Float = 1f,
-    ambient: Float = 0f,
-    shineDamper: Float = 1f,
-    reflectivity: Float= 0f
-) = MultiTextureMaterial(
-    texture2D(blendMap),
-    texture2D(backgroundTexture),
-    texture2D(redTexture),
-    texture2D(greenTexture),
-    texture2D(blueTexture),
-    scale,
-    ambient,
-    shineDamper,
-    reflectivity
-)
+    fun scale(scale: Float) {
+        this.scale.set(scale)
+    }
 
-fun box() = Box()
+    fun scale(scaleX: Float, scaleY: Float, scaleZ: Float) {
+        scale.set(scaleX, scaleY, scaleZ)
+    }
 
-fun triangle() = Triangle()
+    protected fun applyTransformsTo(node: Node) {
+        node.localTransform
+            .scale(scale)
+            .rotateXYZ(
+                Math.toRadians(rotation.x.toDouble()).toFloat(),
+                Math.toRadians(rotation.y.toDouble()).toFloat(),
+                Math.toRadians(rotation.z.toDouble()).toFloat()
+            )
+            .setTranslation(position)
+    }
+}
 
-fun square() = Square()
+@SceneDsl
+class CameraBuilder(name: String?) : NodeBuilder(name) {
+    fun build() = Camera(name).apply {
+        applyTransformsTo(this)
+    }
+}
 
-fun grid(size: Float, vertexCount: Int) = Grid(size, vertexCount)
+@SceneDsl
+class SkyBuilder() : NodeBuilder() {
+    @ArrayRes private var cubemap: Int? = null
+    private val color = Vector3f()
 
-fun terrain(size: Float, heightMap: Terrain.HeightMap, maxHeight: Float) = Terrain(size, heightMap, maxHeight)
+    fun cubemap(@ArrayRes cubemapResId: Int) {
+        cubemap = cubemapResId
+    }
 
-fun heightMap(@RawRes resId: Int) = HeightMapLoader().load(resId)
+    fun color(r: Float, g: Float, b: Float) {
+        color.set(r, g, b)
+    }
 
-///////////////////////////////////////////////////////////////////////////
-// Scene scope functions
-///////////////////////////////////////////////////////////////////////////
-
-fun Scene.camera(name: String) = Camera(name)
-    .also { camera = it }
-
-fun Scene.pointLight(name: String, ambient: Vector3f, diffuse: Vector3f) = PointLight(name, ambient, diffuse)
-    .also { lights.add(it) }
-
-fun Scene.directionLight(name: String, ambient: Vector3f, diffuse: Vector3f) = DirectionLight(name, ambient, diffuse)
-    .also { lights.add(it) }
-
-fun Scene.sky(color: Vector3f, cubemap: Int? = null) = (cubemap?.let {
-    Sky.Skybox(textureCubemap(cubemap), color)
-} ?: Sky.SkyColor(color))
-    .also { sky = it }
+    fun build() = cubemap
+        ?.let { Sky.Skybox(textureCubemap(it), color) }
+        ?: Sky.SkyColor(color)
+}
 
 ///////////////////////////////////////////////////////////////////////////
-// Node scope functions
+// Lights
 ///////////////////////////////////////////////////////////////////////////
 
-fun <T : Node> T.translate(x: Float, y: Float, z: Float) = this
-    .also { localTransform.setTranslation(x, y, z) }
+abstract class LightBuilder(name: String?) : NodeBuilder(name) {
+    protected val ambient = Vector3f()
+    protected val diffuse = Vector3f()
 
-fun <T : Node> T.translate(position: Vector3f) = this
-    .also { localTransform.setTranslation(position) }
+    fun ambient(r: Float, g: Float, b: Float) {
+        ambient.set(r, g, b)
+    }
 
-fun <T : Node> T.scale(scale: Float) = this
-    .also { localTransform.scale(scale) }
+    fun diffuse(r: Float, g: Float, b: Float) {
+        diffuse.set(r, g, b)
+    }
+}
 
-fun <T : Node> T.scale(scaleX: Float, scaleY: Float, scaleZ: Float) = this
-    .also { localTransform.scale(scaleX, scaleY, scaleZ) }
+@SceneDsl
+class PointLightBuilder(name: String?) : LightBuilder(name) {
+    private var constant: Float? = null
+    private var linear: Float? = null
+    private var quadratic: Float? = null
 
-fun <T : Node> T.rotate(x: Float, y: Float, z: Float) = this
-    .also { localTransform.setRotationXYZ(x, y, z) }
+    fun constant(value: Float) {
+        constant = value
+    }
 
-fun <T : Node> T.position(): Vector3f = localTransform.getTranslation(Vector3f())
+    fun linear(value: Float) {
+        linear = value
+    }
 
-fun <T : Node> T.position(x: Float, y: Float, z: Float) = this
-    .apply { localTransform.setTranslation(x, y, z) }
+    fun quadratic(value: Float) {
+        quadratic = value
+    }
 
-fun <T : Node> T.position(position: Vector3f) = this
-    .apply { localTransform.setTranslation(position) }
+    fun build() = PointLight(name, ambient, diffuse).apply {
+        this@PointLightBuilder.constant?.let { constant = it }
+        this@PointLightBuilder.linear?.let { linear = it }
+        this@PointLightBuilder.quadratic?.let { quadratic = it }
+        applyTransformsTo(this)
+    }
+}
+
+@SceneDsl
+class DirectionLightBuilder(name: String?) : LightBuilder(name) {
+    fun build() = DirectionLight(name, ambient, diffuse).apply {
+        applyTransformsTo(this)
+    }
+}
 
 ///////////////////////////////////////////////////////////////////////////
-// Group node scope functions
+// Objects & groups
 ///////////////////////////////////////////////////////////////////////////
 
-fun GroupNode.groupNode(init: GroupNode.() -> Unit) = GroupNode()
-    .apply { init() }
-    .also { add(it) }
+@SceneDsl
+open class GroupNodeBuilder(name: String?) : NodeBuilder(name) {
+    protected val children = mutableListOf<Node>()
+    val lastNode get() = children.lastOrNull()
 
-fun GroupNode.objectNode(name: String, shape: Shape, material: Material) = ObjectNode(shape, material, name)
-    .also { add(it) }
+    fun groupNode(name: String?, init: GroupNodeBuilder.() -> Unit) {
+        children.add(GroupNodeBuilder(name).apply(init).build())
+    }
+
+    fun objectNode(name: String?, shape: Shape, init: ObjectNodeBuilder.() -> Unit) {
+        children.add(ObjectNodeBuilder(name, shape).apply(init).build())
+    }
+
+    fun terrainNode(name: String?, @DrawableRes heightMapResId: Int, init: TerrainNodeBuilder.() -> Unit) {
+        children.add(TerrainNodeBuilder(name, HeightMapLoader().load(heightMapResId)).apply(init).build())
+    }
+
+    open fun build() = GroupNode(name).apply {
+        this@GroupNodeBuilder.children.forEach { add(it) }
+        applyTransformsTo(this)
+    }
+}
+
+@SceneDsl
+open class ObjectNodeBuilder(name: String?, protected val shape: Shape) : NodeBuilder(name) {
+    protected var material: Material = TextureMaterial(texture2D(R.drawable.white))
+
+    fun textureMaterial(
+        @DrawableRes texture: Int,
+        scale: Float = 1f,
+        ambient: Float = 0f,
+        shineDamper: Float = 1f,
+        reflectivity: Float= 0f
+    ) {
+        material = TextureMaterial(
+            texture2D(texture),
+            scale,
+            ambient,
+            shineDamper,
+            reflectivity
+        )
+    }
+
+    fun multiTextureMaterial(
+        @DrawableRes blendMap: Int,
+        @DrawableRes backgroundTexture: Int,
+        @DrawableRes redTexture: Int,
+        @DrawableRes greenTexture: Int,
+        @DrawableRes blueTexture: Int,
+        scale: Float = 1f,
+        ambient: Float = 1f,
+        shineDamper: Float = 1f,
+        reflectivity: Float= 0f
+    ) {
+        material = MultiTextureMaterial(
+            texture2D(blendMap),
+            texture2D(backgroundTexture),
+            texture2D(redTexture),
+            texture2D(greenTexture),
+            texture2D(blueTexture),
+            scale,
+            ambient,
+            shineDamper,
+            reflectivity
+        )
+    }
+
+    open fun build() = ObjectNode(shape, material, name).apply {
+        applyTransformsTo(this)
+    }
+}
+
+@SceneDsl
+class TerrainNodeBuilder(
+    name: String?,
+    heightMap: Terrain.HeightMap,
+    maxHeight: Float = 0.1f
+) : ObjectNodeBuilder(name, Terrain(heightMap, maxHeight)) {
+
+    override fun build() = TerrainNode(shape as Terrain, material, name).apply {
+        applyTransformsTo(this)
+    }
+
+}

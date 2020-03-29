@@ -5,9 +5,9 @@ import org.joml.Vector3f
 import org.mrlem.k3d.core.R
 import org.mrlem.siage3d.core.common.io.AssetManager.text
 import org.mrlem.siage3d.core.common.math.directionUp
-import org.mrlem.siage3d.core.scene.dsl.position
 import org.mrlem.siage3d.core.scene.lights.DirectionLight
 import org.mrlem.siage3d.core.scene.lights.PointLight
+import org.mrlem.siage3d.core.scene.position
 
 open class DefaultShader: Shader(
     text(R.raw.shader_default_v), text(R.raw.shader_default_f),

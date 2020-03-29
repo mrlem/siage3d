@@ -6,12 +6,12 @@ import org.mrlem.siage3d.core.scene.shaders.Shader
 import org.mrlem.siage3d.core.common.math.fromCamera
 
 class Camera(
-    name: String,
+    name: String? = null,
     // TODO - handle those using node rotation
     var yaw: Float = 0f,
     var pitch: Float = 0f,
     var roll: Float = 0f
-) : Node(name) {
+) : Node(name ?: "camera") {
 
     private val near = 0.1f
     private val far = 300f

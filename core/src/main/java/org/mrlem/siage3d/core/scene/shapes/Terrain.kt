@@ -5,16 +5,15 @@ import kotlin.math.max
 import kotlin.math.min
 
 class Terrain(
-    private val size: Float,
     private val heightMap: HeightMap = HeightMap(32) { 0f },
-    private val maxHeight: Float = 1f
-) : Shape(Grid.generateGrid(size, heightMap.size).applyHeights(heightMap, maxHeight)) {
+    private val maxHeight: Float = 0.1f
+) : Shape(Grid.generateGrid(1f, heightMap.size).applyHeights(heightMap, maxHeight)) {
 
     fun heightAt(x: Float, z: Float): Float {
         // TODO - barycenter
-        val tileSize = size / heightMap.size
-        val zIndex = ((z + size/2) / tileSize).toInt().coerceIn(0 until heightMap.size)
-        val xIndex = ((x + size/2) / tileSize).toInt().coerceIn(0 until heightMap.size)
+        val tileSize = 1f / heightMap.size
+        val zIndex = ((z + 0.5f) / tileSize).toInt().coerceIn(0 until heightMap.size)
+        val xIndex = ((x + 0.5f) / tileSize).toInt().coerceIn(0 until heightMap.size)
         return heightMap.heights[zIndex][xIndex] * maxHeight
     }
 
@@ -30,7 +29,7 @@ class Terrain(
                 positions[i] = heightMap.heights[row][col] * maxHeight
 
                 // normal
-                val normal = calculateNormal(row, col, heightMap.heights, maxHeight)
+                val normal = heightMap.heights.calculateNormal(row, col, maxHeight)
                 normals[i - 1] = normal.x
                 normals[i] = normal.y
                 normals[i + 1] = normal.z
@@ -39,13 +38,41 @@ class Terrain(
             return this
         }
 
-        private fun calculateNormal(x: Int, z: Int, heights: Array<Array<Float>>, maxHeight: Float): Vector3f {
-            val max = heights.size - 1
-            val heightLeft = heights[max(0, x-1)][z] * maxHeight
-            val heightRight = heights[min(max, x+1)][z] * maxHeight
-            val heightUp = heights[x][min(max, z+1)] * maxHeight
-            val heightDown = heights[x][max(0, z-1)] * maxHeight
-            return Vector3f(heightLeft - heightRight, 2f, heightDown - heightUp).normalize()
+        private fun Array<Array<Float>>.calculateNormal(x: Int, z: Int, maxHeight: Float): Vector3f {
+            // TODO - could base calculation on 4 surrounding quads, rather than 4 surrounding points
+            val max = size - 1
+
+            // surrounding indices
+            val xLeft = max(0, x-1)
+            val xRight = min(max, x+1)
+            val zUp = min(max, z+1)
+            val zDown = max(0, z-1)
+
+            return calculateQuadNormal(
+                pointAt(xLeft, z, maxHeight),
+                pointAt(x, zUp, maxHeight),
+                pointAt(xRight, z, maxHeight),
+                pointAt(x, zDown, maxHeight)
+            )
+        }
+
+        private fun Array<Array<Float>>.pointAt(x: Int, z: Int, maxHeight: Float): Vector3f {
+            val max = size - 1
+            return Vector3f(x.toFloat() / max, this[x][z] * maxHeight, z.toFloat() / max)
+        }
+
+        /**
+         * Points must be provided clockwise for correct calculation.
+         */
+        private fun calculateQuadNormal(p1: Vector3f, p2: Vector3f, p3: Vector3f, p4: Vector3f): Vector3f {
+            // resulting quad: normals for both triangles
+            val normal1 = p2.sub(p1, Vector3f())
+                .cross(p3.sub(p2, Vector3f())).normalize()
+            val normal2 = p4.sub(p3, Vector3f())
+                .cross(p1.sub(p4, Vector3f())).normalize()
+
+            // quad normal: average of triangles normals
+            return normal1.add(normal2).normalize()
         }
 
     }

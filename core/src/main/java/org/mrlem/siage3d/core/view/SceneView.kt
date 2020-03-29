@@ -47,7 +47,6 @@ class SceneView(context: Context, attributes: AttributeSet) : GLSurfaceView(cont
     }
 
     override fun surfaceDestroyed(holder: SurfaceHolder?) {
-        adapter?.destroy()
         ShapeCache.clear(true)
         Texture2DCache.clear(true)
         TextureCubemapCache.clear(true)

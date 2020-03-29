@@ -3,10 +3,10 @@ package org.mrlem.siage3d.core.view
 import org.mrlem.siage3d.core.render.MainSceneRenderer
 import org.mrlem.siage3d.core.render.ShadowSceneRenderer
 import org.mrlem.siage3d.core.scene.Scene
+import org.mrlem.siage3d.core.scene.dsl.SceneBuilder
 
 abstract class SceneAdapter {
 
-    lateinit var scene: Scene
     private val renderers by lazy {
         listOf(
             ShadowSceneRenderer(scene),
@@ -14,8 +14,11 @@ abstract class SceneAdapter {
         )
     }
 
+    lateinit var scene: Scene
+        private set
+
     internal fun init() {
-        scene = onInit()
+        scene = onCreateScene().build()
     }
 
     internal fun resize(width: Int, height: Int) {
@@ -29,13 +32,8 @@ abstract class SceneAdapter {
         renderers.forEach { it.render() }
     }
 
-    internal fun destroy() {
-        onDestroy()
-    }
-
-    open fun onInit(): Scene = Scene()
+    abstract fun onCreateScene(): SceneBuilder
     open fun onResize(width: Int, height: Int) {}
     open fun onUpdate(delta: Float) {}
-    open fun onDestroy() {}
 
 }
