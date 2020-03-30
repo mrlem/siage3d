@@ -19,10 +19,10 @@ import kotlin.math.sin
 class AdvancedSceneAdapter : SceneAdapter() {
 
     // scene objects refs
-    private val light0: PointLight by lazy { scene.get<PointLight>("light0")!! }
-    private val light1: PointLight by lazy { scene.get<PointLight>("light1")!! }
-    private val lightCube0: ObjectNode by lazy { scene.get<ObjectNode>("light-cube0")!! }
-    private val lightCube1: ObjectNode by lazy { scene.get<ObjectNode>("light-cube1")!! }
+    private val light0 by lazy { scene.get<PointLight>("light0")!! }
+    private val light1 by lazy { scene.get<PointLight>("light1")!! }
+    private val lightCube0 by lazy { scene.get<ObjectNode>("light-cube0")!! }
+    private val lightCube1 by lazy { scene.get<ObjectNode>("light-cube1")!! }
 
     private var terrain: TerrainNode? = null
 
