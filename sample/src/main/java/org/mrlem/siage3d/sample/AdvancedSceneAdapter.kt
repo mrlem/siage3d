@@ -122,7 +122,7 @@ class AdvancedSceneAdapter : SceneAdapter() {
             val x = randomFloat() * 150f - 75f
             val z = randomFloat() * 150f - 75f
             objectNode("crate$i", Box()) {
-                textureMaterial(R.drawable.crate1_diffuse, 1f, reflectivity = 0.1f)
+                textureMaterial(R.drawable.crate1_diffuse, reflectivity = 0.1f)
                 position(x, 0.5f + (terrain?.heightAt(x, z) ?: 0f), z)
                 rotation(randomFloat() * 360, 0f, 0f)
             }

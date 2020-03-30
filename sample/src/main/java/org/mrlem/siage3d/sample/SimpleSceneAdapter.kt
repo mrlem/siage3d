@@ -30,7 +30,7 @@ class SimpleSceneAdapter : SceneAdapter() {
         }
 
         objectNode("my-cube", Box()) {
-            textureMaterial(R.drawable.crate1_diffuse, 1f, reflectivity = 0.1f)
+            textureMaterial(R.drawable.crate1_diffuse)
             position(0f, 1f, -2f)
         }
     }
