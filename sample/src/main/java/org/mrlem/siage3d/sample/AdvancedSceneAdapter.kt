@@ -61,7 +61,7 @@ class AdvancedSceneAdapter : SceneAdapter() {
         }
 
         // ground
-        terrainNode("ground", R.drawable.heightmap) {
+        terrainNode("ground", R.drawable.heightmap, 0.1f) {
             multiTextureMaterial(
                 R.drawable.texture_blend_map,
                 R.drawable.texture_grassy2,

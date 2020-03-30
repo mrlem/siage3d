@@ -186,8 +186,8 @@ open class GroupNodeBuilder(name: String?) : SpatialNodeBuilder(name) {
         children.add(ObjectNodeBuilder(name, shape).apply(init).build())
     }
 
-    fun terrainNode(name: String?, @DrawableRes heightMapResId: Int, init: TerrainNodeBuilder.() -> Unit) {
-        children.add(TerrainNodeBuilder(name, HeightMapLoader().load(heightMapResId)).apply(init).build())
+    fun terrainNode(name: String?, @DrawableRes heightMapResId: Int, maxHeight: Float, init: TerrainNodeBuilder.() -> Unit) {
+        children.add(TerrainNodeBuilder(name, HeightMapLoader().load(heightMapResId), maxHeight).apply(init).build())
     }
 
     open fun build() = GroupNode(name).apply {
@@ -249,7 +249,7 @@ open class ObjectNodeBuilder(name: String?, protected val shape: Shape) : Spatia
 class TerrainNodeBuilder(
     name: String?,
     heightMap: Terrain.HeightMap,
-    maxHeight: Float = 0.1f
+    maxHeight: Float
 ) : ObjectNodeBuilder(name, Terrain(heightMap, maxHeight)) {
 
     override fun build() = TerrainNode(shape as Terrain, material, name).apply {
