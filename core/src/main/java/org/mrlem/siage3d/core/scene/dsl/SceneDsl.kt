@@ -28,26 +28,37 @@ import org.mrlem.siage3d.core.scene.sky.Sky
 fun scene(init: SceneBuilder.() -> Unit) = SceneBuilder().apply(init)
 
 @SceneDsl
-class SceneBuilder : GroupNodeBuilder("scene") {
+class SceneBuilder(
+    private val materials: MutableList<Material> = mutableListOf(TextureMaterial("default", texture2D(R.drawable.white)))
+) : GroupNodeBuilder(materials, "scene") {
     private var camera: Camera? = null
     private var sky: Sky? = null
     private val pointLights = mutableListOf<PointLight>()
     private val directionLights = mutableListOf<DirectionLight>()
 
-    fun camera(name: String? = null, init: CameraBuilder.() -> Unit) {
-        camera = CameraBuilder(name).apply(init).build()
+    fun camera(name: String = "camera", init: CameraBuilder.() -> Unit): Camera {
+        return CameraBuilder(name).apply(init).build()
+            .also { camera = it }
     }
 
-    fun sky(init: SkyBuilder.() -> Unit) {
-        sky = SkyBuilder().apply(init).build()
+    fun sky(name: String = "sky", init: SkyBuilder.() -> Unit): Sky {
+        return SkyBuilder(name).apply(init).build()
+            .also { sky = it }
     }
 
-    fun pointLight(name: String?, init: PointLightBuilder.() -> Unit) {
-        pointLights.add(PointLightBuilder(name).apply(init).build())
+    fun pointLight(name: String = "point-light", init: PointLightBuilder.() -> Unit): PointLight {
+        return PointLightBuilder(name).apply(init).build()
+            .also { pointLights.add(it) }
     }
 
-    fun directionLight(name: String?, init: DirectionLightBuilder.() -> Unit) {
-        directionLights.add(DirectionLightBuilder(name).apply(init).build())
+    fun directionLight(name: String = "direction-light", init: DirectionLightBuilder.() -> Unit): DirectionLight {
+        return DirectionLightBuilder(name).apply(init).build()
+            .also { directionLights.add(it) }
+    }
+
+    fun material(name: String = "material", init: MaterialBuilder.() -> Unit): Material {
+        return MaterialBuilder(name).apply(init).build()
+            .also { materials.add(it) }
     }
 
     override fun build() = Scene(name).apply {
@@ -59,9 +70,9 @@ class SceneBuilder : GroupNodeBuilder("scene") {
     }
 }
 
-abstract class NodeBuilder(protected var name: String? = null)
+abstract class NodeBuilder(protected var name: String)
 
-abstract class SpatialNodeBuilder(name: String?) : NodeBuilder(name) {
+abstract class SpatialNodeBuilder(name: String) : NodeBuilder(name) {
     private var position = Vector3f()
     private var rotation = Vector3f()
     private var scale = Vector3f(1f, 1f, 1f)
@@ -74,8 +85,8 @@ abstract class SpatialNodeBuilder(name: String?) : NodeBuilder(name) {
         rotation.set(pitch, yaw, roll)
     }
 
-    fun scale(scale: Float) {
-        this.scale.set(scale)
+    fun scale(value: Float) {
+        scale.set(value)
     }
 
     fun scale(scaleX: Float, scaleY: Float, scaleZ: Float) {
@@ -95,14 +106,14 @@ abstract class SpatialNodeBuilder(name: String?) : NodeBuilder(name) {
 }
 
 @SceneDsl
-class CameraBuilder(name: String?) : SpatialNodeBuilder(name) {
+class CameraBuilder(name: String) : SpatialNodeBuilder(name) {
     fun build() = Camera(name).apply {
         applyTransformsTo(this)
     }
 }
 
 @SceneDsl
-class SkyBuilder() : NodeBuilder() {
+class SkyBuilder(name: String) : NodeBuilder(name) {
     @ArrayRes private var cubemap: Int? = null
     private val color = Vector3f()
 
@@ -123,7 +134,7 @@ class SkyBuilder() : NodeBuilder() {
 // Lights
 ///////////////////////////////////////////////////////////////////////////
 
-abstract class LightBuilder(name: String?) : SpatialNodeBuilder(name) {
+abstract class LightBuilder(name: String) : SpatialNodeBuilder(name) {
     protected val ambient = Vector3f()
     protected val diffuse = Vector3f()
 
@@ -137,7 +148,7 @@ abstract class LightBuilder(name: String?) : SpatialNodeBuilder(name) {
 }
 
 @SceneDsl
-class PointLightBuilder(name: String?) : LightBuilder(name) {
+class PointLightBuilder(name: String) : LightBuilder(name) {
     private var constant: Float? = null
     private var linear: Float? = null
     private var quadratic: Float? = null
@@ -163,7 +174,7 @@ class PointLightBuilder(name: String?) : LightBuilder(name) {
 }
 
 @SceneDsl
-class DirectionLightBuilder(name: String?) : LightBuilder(name) {
+class DirectionLightBuilder(name: String) : LightBuilder(name) {
     fun build() = DirectionLight(name, ambient, diffuse).apply {
         applyTransformsTo(this)
     }
@@ -174,20 +185,22 @@ class DirectionLightBuilder(name: String?) : LightBuilder(name) {
 ///////////////////////////////////////////////////////////////////////////
 
 @SceneDsl
-open class GroupNodeBuilder(name: String?) : SpatialNodeBuilder(name) {
+open class GroupNodeBuilder(private val materials: List<Material>, name: String) : SpatialNodeBuilder(name) {
     protected val children = mutableListOf<Node>()
-    val lastNode get() = children.lastOrNull()
 
-    fun groupNode(name: String?, init: GroupNodeBuilder.() -> Unit) {
-        children.add(GroupNodeBuilder(name).apply(init).build())
+    fun groupNode(name: String = "group", init: GroupNodeBuilder.() -> Unit): GroupNode {
+        return GroupNodeBuilder(materials, name).apply(init).build()
+            .also { children.add(it) }
     }
 
-    fun objectNode(name: String?, shape: Shape, init: ObjectNodeBuilder.() -> Unit) {
-        children.add(ObjectNodeBuilder(name, shape).apply(init).build())
+    fun objectNode(name: String = "object", shape: Shape, init: ObjectNodeBuilder.() -> Unit): ObjectNode {
+        return ObjectNodeBuilder(materials, name, shape).apply(init).build()
+            .also { children.add(it) }
     }
 
-    fun terrainNode(name: String?, @DrawableRes heightMapResId: Int, maxHeight: Float, init: TerrainNodeBuilder.() -> Unit) {
-        children.add(TerrainNodeBuilder(name, HeightMapLoader().load(heightMapResId), maxHeight).apply(init).build())
+    fun terrainNode(name: String = "terrain", @DrawableRes heightMapResId: Int, maxHeight: Float, init: TerrainNodeBuilder.() -> Unit): TerrainNode {
+        return TerrainNodeBuilder(materials, name, HeightMapLoader().load(heightMapResId), maxHeight).apply(init).build()
+            .also { children.add(it) }
     }
 
     open fun build() = GroupNode(name).apply {
@@ -197,47 +210,17 @@ open class GroupNodeBuilder(name: String?) : SpatialNodeBuilder(name) {
 }
 
 @SceneDsl
-open class ObjectNodeBuilder(name: String?, protected val shape: Shape) : SpatialNodeBuilder(name) {
-    protected var material: Material = TextureMaterial(texture2D(R.drawable.white))
+open class ObjectNodeBuilder(private val materials: List<Material>, name: String, protected val shape: Shape) : SpatialNodeBuilder(name) {
+    protected var material: Material = materials.first()
 
-    fun textureMaterial(
-        @DrawableRes texture: Int,
-        scale: Float = 1f,
-        ambient: Float = 0f,
-        shineDamper: Float = 1f,
-        reflectivity: Float= 0f
-    ) {
-        material = TextureMaterial(
-            texture2D(texture),
-            scale,
-            ambient,
-            shineDamper,
-            reflectivity
-        )
+    fun material(name: String) {
+        materials.firstOrNull { it.name == name }
+            ?.let { material = it }
     }
 
-    fun multiTextureMaterial(
-        @DrawableRes blendMap: Int,
-        @DrawableRes backgroundTexture: Int,
-        @DrawableRes redTexture: Int,
-        @DrawableRes greenTexture: Int,
-        @DrawableRes blueTexture: Int,
-        scale: Float = 1f,
-        ambient: Float = 1f,
-        shineDamper: Float = 1f,
-        reflectivity: Float= 0f
-    ) {
-        material = MultiTextureMaterial(
-            texture2D(blendMap),
-            texture2D(backgroundTexture),
-            texture2D(redTexture),
-            texture2D(greenTexture),
-            texture2D(blueTexture),
-            scale,
-            ambient,
-            shineDamper,
-            reflectivity
-        )
+    fun material(init: MaterialBuilder.() -> Unit): Material {
+        return MaterialBuilder(name).apply(init).build()
+            .also { material = it }
     }
 
     open fun build() = ObjectNode(shape, material, name).apply {
@@ -247,13 +230,99 @@ open class ObjectNodeBuilder(name: String?, protected val shape: Shape) : Spatia
 
 @SceneDsl
 class TerrainNodeBuilder(
-    name: String?,
+    materials: List<Material>,
+    name: String,
     heightMap: Terrain.HeightMap,
     maxHeight: Float
-) : ObjectNodeBuilder(name, Terrain(heightMap, maxHeight)) {
+) : ObjectNodeBuilder(materials, name, Terrain(heightMap, maxHeight)) {
 
     override fun build() = TerrainNode(shape as Terrain, material, name).apply {
         applyTransformsTo(this)
     }
+}
 
+///////////////////////////////////////////////////////////////////////////
+// Materials
+///////////////////////////////////////////////////////////////////////////
+
+@SceneDsl
+class MaterialBuilder(name: String) : NodeBuilder(name) {
+    private var scale: Float? = null
+    private var ambient: Float? = null
+    private var shineDamper: Float? = null
+    private var reflectivity: Float? = null
+
+    @DrawableRes private var textureId: Int? = null
+
+    @DrawableRes private var textureMapId: Int? = null
+    @DrawableRes private var backgroundTextureId: Int? = null
+    @DrawableRes private var redTextureId: Int? = null
+    @DrawableRes private var greenTextureId: Int? = null
+    @DrawableRes private var blueTextureId: Int? = null
+
+    fun scale(value: Float) {
+        scale = value
+    }
+
+    fun ambient(value: Float) {
+        ambient = value
+    }
+
+    fun shineDamper(value: Float) {
+        shineDamper = value
+    }
+
+    fun reflectivity(value: Float) {
+        reflectivity = value
+    }
+
+    fun texture(@DrawableRes texture: Int) {
+        textureId = texture
+        textureMapId = null
+        backgroundTextureId = null
+        redTextureId = null
+        greenTextureId = null
+        blueTextureId = null
+    }
+
+    fun textureMap(
+        @DrawableRes textureMap: Int,
+        @DrawableRes backgroundTexture: Int,
+        @DrawableRes redTexture: Int,
+        @DrawableRes greenTexture: Int,
+        @DrawableRes blueTexture: Int
+    ) {
+        textureMapId = textureMap
+        backgroundTextureId = backgroundTexture
+        redTextureId = redTexture
+        greenTextureId = greenTexture
+        blueTextureId = blueTexture
+        textureId = null
+    }
+
+    fun build(): Material = when {
+        textureId != null ->
+            TextureMaterial(
+                name,
+                texture2D(textureId!!),
+                scale ?: 1f,
+                ambient ?: 1f,
+                shineDamper ?: 1f,
+                reflectivity ?: 0f
+            )
+        textureMapId != null ->
+            MultiTextureMaterial(
+                name,
+                texture2D(textureMapId!!),
+                texture2D(backgroundTextureId!!),
+                texture2D(redTextureId!!),
+                texture2D(greenTextureId!!),
+                texture2D(blueTextureId!!),
+                scale ?: 1f,
+                ambient ?: 1f,
+                shineDamper ?: 1f,
+                reflectivity ?: 0f
+            )
+        else -> TextureMaterial(name, texture2D(R.drawable.white))
+    }
 }

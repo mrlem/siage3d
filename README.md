@@ -54,7 +54,6 @@ Create the scene adapter, that's where you can describe & manipulate the scene:
 class SimpleSceneAdapter : SceneAdapter() {
 
     private val cube by lazy { scene.get<ObjectNode>("my-cube")!! }
-
     private var time = 0f
 
     override fun onCreateScene() = scene {
@@ -72,7 +71,7 @@ class SimpleSceneAdapter : SceneAdapter() {
         }
 
         objectNode("my-cube", Box()) {
-            textureMaterial(R.drawable.crate1_diffuse)
+            material { texture(R.drawable.crate1_diffuse) }
             position(0f, 1f, -2f)
         }
     }

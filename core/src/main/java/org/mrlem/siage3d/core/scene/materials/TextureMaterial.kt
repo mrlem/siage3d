@@ -5,6 +5,7 @@ import org.mrlem.siage3d.core.scene.shaders.DefaultShader
 import org.mrlem.siage3d.core.scene.shaders.Shader
 
 class TextureMaterial(
+    name: String,
     private val texture: Texture2D,
     private val scale: Float = 1f,
     private val ambient: Float = 1f,
@@ -12,7 +13,7 @@ class TextureMaterial(
     private var reflectvity: Float = 0f,
     private val hasTransparency: Boolean = false,
     private val fakeLighting: Boolean = false
-) : Material() {
+) : Material(name) {
 
     override val shader: DefaultShader = Shader.defaultShader
 

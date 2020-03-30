@@ -6,6 +6,7 @@ import org.mrlem.siage3d.core.scene.shaders.MultiTextureShader
 import org.mrlem.siage3d.core.scene.shaders.Shader
 
 class MultiTextureMaterial(
+    name: String,
     private val blendMap: Texture2D,
     private val backgroundTexture: Texture2D,
     private val redTexture: Texture2D,
@@ -17,7 +18,7 @@ class MultiTextureMaterial(
     private var reflectvity: Float = 0f,
     private val hasTransparency: Boolean = false,
     private val fakeLighting: Boolean = false
-) : Material() {
+) : Material(name) {
 
     override val shader: MultiTextureShader = Shader.multiTextureShader
 

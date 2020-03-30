@@ -13,8 +13,6 @@ abstract class Node(val name: String) {
 
     var parent: GroupNode? = null
 
-    internal abstract fun update()
-
 }
 
 abstract class SpatialNode(name: String) : Node(name) {
@@ -23,7 +21,7 @@ abstract class SpatialNode(name: String) : Node(name) {
     protected val globalTransform = Matrix4f()
 
     @CallSuper
-    override fun update() {
+    open fun update() {
         val parent = parent
         if (parent != null) {
             globalTransform
@@ -45,7 +43,9 @@ open class GroupNode(
 
     override fun update() {
         super.update()
-        children.forEach(Node::update)
+        children
+            .filterIsInstance<SpatialNode>()
+            .forEach(SpatialNode::update)
     }
 
     fun add(vararg nodes: Node) {

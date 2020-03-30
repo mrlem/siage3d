@@ -60,22 +60,10 @@ class AdvancedSceneAdapter : SceneAdapter() {
             rotation(180f, 75f, 0f)
         }
 
-        // ground
-        terrainNode("ground", R.drawable.heightmap, 0.1f) {
-            multiTextureMaterial(
-                R.drawable.texture_blend_map,
-                R.drawable.texture_grassy2,
-                R.drawable.texture_mud,
-                R.drawable.texture_grass_flowers,
-                R.drawable.texture_path,
-                0.02f,
-                reflectivity = .3f
-            )
-            scale(500f)
-        }
-        terrain = lastNode as TerrainNode
-
-        createObjects()
+        createGround().also { terrain = it }
+        createTrees()
+        createCrates()
+        createLightCubes()
     }
 
     override fun onUpdate(delta: Float) {
@@ -104,37 +92,69 @@ class AdvancedSceneAdapter : SceneAdapter() {
     // Internal
     ///////////////////////////////////////////////////////////////////////////
 
-    private fun SceneBuilder.createObjects() {
-        // objects: trees
-        for (i in 0..100) {
+    private fun SceneBuilder.createGround(): TerrainNode {
+        return terrainNode("ground", R.drawable.heightmap, 0.1f) {
+            material {
+                textureMap(
+                    R.drawable.texture_blend_map,
+                    R.drawable.texture_grassy2,
+                    R.drawable.texture_mud,
+                    R.drawable.texture_grass_flowers,
+                    R.drawable.texture_path
+                )
+                scale(0.02f)
+            }
+            scale(500f)
+        }
+    }
+
+    private fun SceneBuilder.createTrees() {
+        material("tree") {
+            texture(R.drawable.model_tree_lowpoly_texture)
+        }
+
+        for (i in 0..200) {
             val x = randomFloat() * 150f - 75f
             val z = randomFloat() * 150f - 75f
             objectNode("tree", shape(R.raw.model_tree_lowpoly_mesh)) {
-                textureMaterial(R.drawable.model_tree_lowpoly_texture, reflectivity = 0.1f)
+                material("tree")
                 position(x, terrain?.heightAt(x, z) ?: 0f, z)
                 rotation(randomFloat() * 360, 0f, 0f)
                 scale(.1f)
             }
         }
+    }
 
-        // objects: crates
-        for (i in 0..100) {
+    private fun SceneBuilder.createCrates() {
+        material("crate") {
+            texture(R.drawable.crate1_diffuse)
+            reflectivity(0.1f)
+        }
+
+        for (i in 0..200) {
             val x = randomFloat() * 150f - 75f
             val z = randomFloat() * 150f - 75f
             objectNode("crate$i", Box()) {
-                textureMaterial(R.drawable.crate1_diffuse, reflectivity = 0.1f)
+                material("crate")
                 position(x, 0.5f + (terrain?.heightAt(x, z) ?: 0f), z)
                 rotation(randomFloat() * 360, 0f, 0f)
             }
         }
+    }
 
-        // objects: light cubes
+    private fun SceneBuilder.createLightCubes() {
+        material("white") {
+            texture(R.drawable.white)
+            ambient(100f)
+        }
+
         objectNode("light-cube0", Box()) {
-            textureMaterial(R.drawable.white, ambient = 100f)
+            material("white")
             scale(0.5f)
         }
+
         objectNode("light-cube1", Box()) {
-            textureMaterial(R.drawable.white, ambient = 100f)
+            material("white")
             scale(0.5f)
         }
     }

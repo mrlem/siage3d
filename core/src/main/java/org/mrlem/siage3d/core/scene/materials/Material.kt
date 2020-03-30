@@ -1,9 +1,10 @@
 package org.mrlem.siage3d.core.scene.materials
 
 import android.opengl.GLES30.*
+import org.mrlem.siage3d.core.scene.Node
 import org.mrlem.siage3d.core.scene.shaders.Shader
 
-abstract class Material : Comparable<Material> {
+abstract class Material(name: String) : Node(name), Comparable<Material> {
 
     abstract val shader: Shader
 
