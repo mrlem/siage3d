@@ -91,9 +91,8 @@ open class ObjectNode(
     name: String? = null
 ) : SpatialNode(name ?: "Object #${counter++}") {
 
-    fun render() {
-        (material.shader as? Shader.TransformationAware)
-            ?.loadTransformationMatrix(globalTransform)
+    fun render(shader: Shader = material.shader) {
+        (shader as? Shader.TransformationAware)?.loadTransformationMatrix(globalTransform)
 
         // draw the shape: material is handled at scene-level
         shape.draw()

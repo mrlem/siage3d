@@ -32,7 +32,6 @@ out float _visibility;
 // main
 
 void main(void) {
-
     // position
     vec4 worldPosition = transformationMatrix * vec4(position, 1.0);
     _worldPosition = vec3(worldPosition);

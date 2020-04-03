@@ -3,6 +3,7 @@ package org.mrlem.siage3d.core.common.gl
 import android.graphics.Bitmap
 import android.opengl.GLES30.*
 import android.opengl.GLUtils.*
+import java.nio.IntBuffer
 
 object TextureFactory {
 
@@ -57,7 +58,7 @@ object TextureFactory {
 
         fbo.use {
             glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, id, 0)
-            glDrawBuffers(GL_NONE, null)
+            glDrawBuffers(GL_NONE, IntBuffer.allocate(0))
             glReadBuffer(GL_NONE)
         }
     }

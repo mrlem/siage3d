@@ -13,12 +13,12 @@ class Camera(
     var roll: Float = 0f
 ) : SpatialNode(name ?: "camera") {
 
-    private val near = 0.1f
-    private val far = 300f
-    private val fov = 45.0
+    val near = 0.1f
+    val far = 300f
+    val fov = 45.0
 
     private val projectionMatrix = Matrix4f()
-    private var aspectRatio = 1f
+    var aspectRatio = 1f
 
     private val viewMatrix = Matrix4f()
 
