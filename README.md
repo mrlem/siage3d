@@ -1,8 +1,8 @@
 # Siage3D
 
-![Screenshot](doc/screenshot.png)
-
 **Siage3D** stands for **SI**mple **A**ndroid **G**ame **E**ngine.
+
+![Screenshot](doc/screenshot.png)
 
 So it's a game engine that is:
 
