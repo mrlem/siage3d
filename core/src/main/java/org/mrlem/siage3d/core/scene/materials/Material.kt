@@ -16,7 +16,7 @@ abstract class Material(name: String) : Node(name), Comparable<Material> {
         setup()
     }
 
-    abstract fun setup()
+    protected abstract fun setup()
 
     override fun compareTo(other: Material) = hashCode().compareTo(other.hashCode())
 

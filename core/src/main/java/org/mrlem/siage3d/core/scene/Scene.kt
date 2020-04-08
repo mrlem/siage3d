@@ -8,9 +8,9 @@ import org.mrlem.siage3d.core.scene.sky.Sky
 class Scene(name: String?) : GroupNode(name) {
 
     var camera: Camera = Camera("camera")
-    var lights: MutableList<LightNode> = mutableListOf()
     var sky: Sky = Sky.SkyColor(Vector3f(0f, 0f, 0f))
-    var materials: MutableList<Material> = mutableListOf()
+    val lights: MutableList<LightNode> = mutableListOf()
+    val materials: MutableList<Material> = mutableListOf()
 
     @Suppress("UNCHECKED_CAST")
     override fun <T> get(name: String): T? {
