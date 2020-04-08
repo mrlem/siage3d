@@ -14,7 +14,7 @@ class SimpleSceneAdapter : SceneAdapter() {
     private val cube by lazy { scene.get<ObjectNode>("my-cube")!! }
     private var time = 0f
 
-    override fun onCreateScene() = scene {
+    override fun onSceneCreate() = scene {
         camera {
             position(0f, 1.75f, 5f)
         }

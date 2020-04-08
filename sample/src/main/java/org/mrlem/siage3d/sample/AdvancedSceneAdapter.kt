@@ -33,7 +33,7 @@ class AdvancedSceneAdapter : SceneAdapter() {
 
     // TODO - minor - colors from resources
 
-    override fun onCreateScene() = scene {
+    override fun onSceneCreate() = scene {
         camera {
             position(0f, 40f, 5f)
         }

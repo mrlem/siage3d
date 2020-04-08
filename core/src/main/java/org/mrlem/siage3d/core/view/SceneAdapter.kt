@@ -21,7 +21,8 @@ abstract class SceneAdapter {
         private set
 
     internal fun init() {
-        scene = onCreateScene().build()
+        scene = onSceneCreate().build()
+        onSceneCreated()
     }
 
     internal fun resize(width: Int, height: Int) {
@@ -35,7 +36,8 @@ abstract class SceneAdapter {
         renderers.forEach { it.render() }
     }
 
-    abstract fun onCreateScene(): SceneBuilder
+    abstract fun onSceneCreate(): SceneBuilder
+    open fun onSceneCreated() {}
     open fun onResize(width: Int, height: Int) {}
     open fun onUpdate(delta: Float) {}
 
