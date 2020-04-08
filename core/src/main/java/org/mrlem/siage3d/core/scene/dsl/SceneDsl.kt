@@ -64,8 +64,9 @@ class SceneBuilder(
     override fun build() = Scene(name).apply {
         this@SceneBuilder.camera?.let { camera = it }
         this@SceneBuilder.sky?.let { sky = it }
-        this@SceneBuilder.pointLights.let { lights.addAll(it) }
-        this@SceneBuilder.directionLights.let { lights.addAll(it) }
+        materials.addAll(this@SceneBuilder.materials)
+        lights.addAll(pointLights)
+        lights.addAll(directionLights)
         this@SceneBuilder.children.forEach { add(it) }
     }
 }
