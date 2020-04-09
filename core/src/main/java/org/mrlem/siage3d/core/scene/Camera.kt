@@ -13,6 +13,8 @@ class Camera(
     var roll: Float = 0f
 ) : SpatialNode(name ?: "camera") {
 
+    private var width: Int = 0
+    private var height: Int = 0
     val near = 0.1f
     val far = 300f
     val fov = 45.0
@@ -23,15 +25,18 @@ class Camera(
     private val viewMatrix = Matrix4f()
 
     fun update(width: Int, height: Int) {
-        glViewport(0, 0, width, height)
+        this.width = width
+        this.height = height
 
         aspectRatio = width.toFloat() / height
         projectionMatrix.setPerspective(Math.toRadians(fov).toFloat(), aspectRatio, near, far)
-        Shader.notifyProjectionMatrix(projectionMatrix)
     }
 
     fun use() {
-        viewMatrix.fromCamera(this)
+        glViewport(0, 0, width, height)
+        Shader.notifyProjectionMatrix(projectionMatrix)
+
+        viewMatrix.fromCamera(this) // TODO - minor - only if dirty
         Shader.notifyViewMatrix(viewMatrix)
     }
 
