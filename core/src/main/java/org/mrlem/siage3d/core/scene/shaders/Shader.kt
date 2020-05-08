@@ -164,6 +164,7 @@ abstract class Shader(
         lateinit var defaultShader: DefaultShader
         lateinit var multiTextureShader: MultiTextureShader
         lateinit var skyboxShader: SkyboxShader
+        lateinit var depthMapShader: DepthMapShader
 
         private var activeProgramId = 0
 
@@ -174,6 +175,7 @@ abstract class Shader(
                 .also { shaders.add(it) }
             skyboxShader = SkyboxShader()
                 .also { shaders.add(it) }
+            depthMapShader = DepthMapShader()
         }
 
         fun notifyProjectionMatrix(matrix: Matrix4f) {
