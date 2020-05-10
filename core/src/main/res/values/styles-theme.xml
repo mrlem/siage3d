@@ -1,0 +1,11 @@
+<resources>
+
+    <style name="Theme.Siage3D.Fullscreen" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Fullscreen -->
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+</resources>
