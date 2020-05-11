@@ -2,6 +2,7 @@ package org.mrlem.siage3d.core
 
 import android.os.Bundle
 import android.view.View
+import androidx.annotation.CallSuper
 import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
@@ -31,6 +32,13 @@ abstract class SceneActivity : AppCompatActivity() {
     override fun onStop() {
         sceneView.onPause()
         super.onStop()
+    }
+
+    @CallSuper
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        if (hasFocus) {
+            setupFullscreen()
+        }
     }
 
 }
