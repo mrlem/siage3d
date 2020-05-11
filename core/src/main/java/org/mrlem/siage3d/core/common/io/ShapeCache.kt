@@ -12,10 +12,10 @@ object ShapeCache : AbstractCache<Shape>() {
     }
 
     fun clear(destroy: Boolean = false) {
-        super.clear()
         if (destroy) {
             objects.values.forEach(Shape::destroy)
         }
+        super.clear()
     }
 
 }
