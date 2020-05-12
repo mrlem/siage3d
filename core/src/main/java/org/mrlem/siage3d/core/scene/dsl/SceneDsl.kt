@@ -7,14 +7,20 @@ import org.mrlem.siage3d.core.R
 import org.mrlem.siage3d.core.common.io.AssetManager.texture2D
 import org.mrlem.siage3d.core.common.io.AssetManager.textureCubemap
 import org.mrlem.siage3d.core.common.io.loaders.HeightMapLoader
-import org.mrlem.siage3d.core.scene.*
-import org.mrlem.siage3d.core.scene.lights.DirectionLight
-import org.mrlem.siage3d.core.scene.lights.PointLight
-import org.mrlem.siage3d.core.scene.materials.Material
-import org.mrlem.siage3d.core.scene.materials.MultiTextureMaterial
-import org.mrlem.siage3d.core.scene.materials.TextureMaterial
-import org.mrlem.siage3d.core.scene.shapes.*
-import org.mrlem.siage3d.core.scene.sky.Sky
+import org.mrlem.siage3d.core.scene.graph.*
+import org.mrlem.siage3d.core.scene.graph.nodes.*
+import org.mrlem.siage3d.core.scene.graph.nodes.lights.DirectionLightNode
+import org.mrlem.siage3d.core.scene.graph.nodes.lights.PointLightNode
+import org.mrlem.siage3d.core.scene.graph.resources.materials.Material
+import org.mrlem.siage3d.core.scene.graph.resources.materials.MultiTextureMaterial
+import org.mrlem.siage3d.core.scene.graph.resources.materials.TextureMaterial
+import org.mrlem.siage3d.core.scene.graph.resources.shapes.*
+import org.mrlem.siage3d.core.scene.graph.nodes.skies.SkyNode
+import org.mrlem.siage3d.core.scene.graph.nodes.cameras.CameraNode
+import org.mrlem.siage3d.core.scene.graph.nodes.skies.BoxSkyNode
+import org.mrlem.siage3d.core.scene.graph.nodes.skies.ColorSkyNode
+import org.mrlem.siage3d.core.scene.graph.nodes.terrains.TerrainNode
+import org.mrlem.siage3d.core.scene.graph.resources.materials.CubemapMaterial
 
 /**
  * Used to mark builders as part of a DSL definition, and thus prevent some badly scoped calls.
@@ -31,27 +37,27 @@ fun scene(init: SceneBuilder.() -> Unit) = SceneBuilder().apply(init)
 class SceneBuilder(
     private val materials: MutableList<Material> = mutableListOf(TextureMaterial("default", texture2D(R.drawable.white)))
 ) : GroupNodeBuilder(materials, "scene") {
-    private var camera: Camera? = null
-    private var sky: Sky? = null
-    private val pointLights = mutableListOf<PointLight>()
-    private val directionLights = mutableListOf<DirectionLight>()
+    private var camera: CameraNode? = null
+    private var sky: SkyNode? = null
+    private val pointLights = mutableListOf<PointLightNode>()
+    private val directionLights = mutableListOf<DirectionLightNode>()
 
-    fun camera(name: String = "camera", init: CameraBuilder.() -> Unit): Camera {
+    fun camera(name: String = "camera", init: CameraBuilder.() -> Unit): CameraNode {
         return CameraBuilder(name).apply(init).build()
             .also { camera = it }
     }
 
-    fun sky(name: String = "sky", init: SkyBuilder.() -> Unit): Sky {
+    fun sky(name: String = "sky", init: SkyBuilder.() -> Unit): SkyNode {
         return SkyBuilder(name).apply(init).build()
             .also { sky = it }
     }
 
-    fun pointLight(name: String = "point-light", init: PointLightBuilder.() -> Unit): PointLight {
+    fun pointLight(name: String = "point-light", init: PointLightBuilder.() -> Unit): PointLightNode {
         return PointLightBuilder(name).apply(init).build()
             .also { pointLights.add(it) }
     }
 
-    fun directionLight(name: String = "direction-light", init: DirectionLightBuilder.() -> Unit): DirectionLight {
+    fun directionLight(name: String = "direction-light", init: DirectionLightBuilder.() -> Unit): DirectionLightNode {
         return DirectionLightBuilder(name).apply(init).build()
             .also { directionLights.add(it) }
     }
@@ -62,11 +68,11 @@ class SceneBuilder(
     }
 
     override fun build() = Scene(name).apply {
-        this@SceneBuilder.camera?.let { camera = it }
-        this@SceneBuilder.sky?.let { sky = it }
+        this@SceneBuilder.camera?.let { add(it) }
+        this@SceneBuilder.sky?.let { add(it) }
         materials.addAll(this@SceneBuilder.materials)
-        lights.addAll(pointLights)
-        lights.addAll(directionLights)
+        add(*pointLights.toTypedArray())
+        add(*directionLights.toTypedArray())
         this@SceneBuilder.children.forEach { add(it) }
     }
 }
@@ -108,7 +114,7 @@ abstract class SpatialNodeBuilder(name: String) : NodeBuilder(name) {
 
 @SceneDsl
 class CameraBuilder(name: String) : SpatialNodeBuilder(name) {
-    fun build() = Camera(name).apply {
+    fun build() = CameraNode(name).apply {
         applyTransformsTo(this)
     }
 }
@@ -126,9 +132,9 @@ class SkyBuilder(name: String) : NodeBuilder(name) {
         color.set(r, g, b)
     }
 
-    fun build() = cubemap
-        ?.let { Sky.Skybox(textureCubemap(it), color) }
-        ?: Sky.SkyColor(color)
+    fun build(): SkyNode = (cubemap
+        ?.let { BoxSkyNode(CubemapMaterial("sky", textureCubemap(it)), color) }
+        ?: ColorSkyNode(color = color))
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -166,7 +172,7 @@ class PointLightBuilder(name: String) : LightBuilder(name) {
         quadratic = value
     }
 
-    fun build() = PointLight(name, ambient, diffuse).apply {
+    fun build() = PointLightNode(name, ambient, diffuse).apply {
         this@PointLightBuilder.constant?.let { constant = it }
         this@PointLightBuilder.linear?.let { linear = it }
         this@PointLightBuilder.quadratic?.let { quadratic = it }
@@ -176,7 +182,7 @@ class PointLightBuilder(name: String) : LightBuilder(name) {
 
 @SceneDsl
 class DirectionLightBuilder(name: String) : LightBuilder(name) {
-    fun build() = DirectionLight(name, ambient, diffuse).apply {
+    fun build() = DirectionLightNode(name, ambient, diffuse).apply {
         applyTransformsTo(this)
     }
 }
@@ -233,11 +239,15 @@ open class ObjectNodeBuilder(private val materials: List<Material>, name: String
 class TerrainNodeBuilder(
     materials: List<Material>,
     name: String,
-    heightMap: Terrain.HeightMap,
+    heightMap: TerrainShape.HeightMap,
     maxHeight: Float
-) : ObjectNodeBuilder(materials, name, Terrain(heightMap, maxHeight)) {
+) : ObjectNodeBuilder(materials, name, TerrainShape(heightMap, maxHeight)) {
 
-    override fun build() = TerrainNode(shape as Terrain, material, name).apply {
+    override fun build() = TerrainNode(
+        shape as TerrainShape,
+        material,
+        name
+    ).apply {
         applyTransformsTo(this)
     }
 }

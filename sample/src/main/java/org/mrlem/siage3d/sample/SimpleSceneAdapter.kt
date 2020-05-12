@@ -1,9 +1,8 @@
 package org.mrlem.siage3d.sample
 
-import org.mrlem.siage3d.core.scene.ObjectNode
+import org.mrlem.siage3d.core.scene.graph.nodes.ObjectNode
 import org.mrlem.siage3d.core.scene.dsl.*
-import org.mrlem.siage3d.core.scene.rotate
-import org.mrlem.siage3d.core.scene.shapes.Box
+import org.mrlem.siage3d.core.scene.graph.resources.shapes.BoxShape
 import org.mrlem.siage3d.core.view.SceneAdapter
 
 /**
@@ -28,7 +27,7 @@ class SimpleSceneAdapter : SceneAdapter() {
             rotation(0f, 60f, 0f)
         }
 
-        objectNode("my-cube", Box()) {
+        objectNode("my-cube", BoxShape()) {
             material { texture(R.drawable.crate1_diffuse) }
             position(0f, 1f, -2f)
         }

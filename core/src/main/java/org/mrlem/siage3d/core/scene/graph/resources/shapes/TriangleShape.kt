@@ -1,6 +1,6 @@
-package org.mrlem.siage3d.core.scene.shapes
+package org.mrlem.siage3d.core.scene.graph.resources.shapes
 
-class Triangle : Shape(Data(positions, texCoords, indices, normals)) {
+class TriangleShape : Shape(Data(positions, texCoords, indices, normals)) {
 
     companion object {
 

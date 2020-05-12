@@ -2,7 +2,7 @@ package org.mrlem.siage3d.core.common.io.loaders
 
 import org.joml.Vector2f
 import org.joml.Vector3f
-import org.mrlem.siage3d.core.scene.shapes.Shape
+import org.mrlem.siage3d.core.scene.graph.resources.shapes.Shape
 
 class ObjLoader {
 

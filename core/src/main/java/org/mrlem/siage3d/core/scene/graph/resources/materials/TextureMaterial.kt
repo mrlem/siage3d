@@ -1,8 +1,8 @@
-package org.mrlem.siage3d.core.scene.materials
+package org.mrlem.siage3d.core.scene.graph.resources.materials
 
 import org.mrlem.siage3d.core.common.gl.Texture2D
-import org.mrlem.siage3d.core.scene.shaders.DefaultShader
-import org.mrlem.siage3d.core.scene.shaders.Shader
+import org.mrlem.siage3d.core.scene.graph.resources.shaders.DefaultShader
+import org.mrlem.siage3d.core.scene.graph.resources.shaders.Shader
 
 class TextureMaterial(
     name: String,

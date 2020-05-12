@@ -1,6 +1,6 @@
 package org.mrlem.siage3d.core.render
 
-import org.mrlem.siage3d.core.scene.Scene
+import org.mrlem.siage3d.core.scene.graph.Scene
 
 class ShadowSceneRenderer(scene: Scene) : SceneRenderer(scene) {
 

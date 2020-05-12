@@ -1,9 +1,9 @@
 package org.mrlem.siage3d.core.render
 
-import org.mrlem.siage3d.core.scene.GroupNode
-import org.mrlem.siage3d.core.scene.Node
-import org.mrlem.siage3d.core.scene.ObjectNode
-import org.mrlem.siage3d.core.scene.Scene
+import org.mrlem.siage3d.core.scene.graph.nodes.GroupNode
+import org.mrlem.siage3d.core.scene.graph.nodes.Node
+import org.mrlem.siage3d.core.scene.graph.nodes.ObjectNode
+import org.mrlem.siage3d.core.scene.graph.Scene
 
 abstract class SceneRenderer(var scene: Scene) {
 

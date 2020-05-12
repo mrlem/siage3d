@@ -1,13 +1,13 @@
-package org.mrlem.siage3d.core.scene.shapes
+package org.mrlem.siage3d.core.scene.graph.resources.shapes
 
 import org.joml.Vector3f
 import kotlin.math.max
 import kotlin.math.min
 
-class Terrain(
+class TerrainShape(
     private val heightMap: HeightMap = HeightMap(32) { 0f },
     private val maxHeight: Float = 0.1f
-) : Shape(Grid.generateGrid(1f, heightMap.size).applyHeights(heightMap, maxHeight)) {
+) : Shape(GridShape.generateGrid(1f, heightMap.size).applyHeights(heightMap, maxHeight)) {
 
     fun heightAt(x: Float, z: Float): Float {
         // TODO - optional - barycenter

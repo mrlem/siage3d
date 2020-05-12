@@ -3,12 +3,11 @@ package org.mrlem.siage3d.sample
 import org.mrlem.siage3d.core.common.io.AssetManager.shape
 import org.mrlem.siage3d.core.common.math.randomFloat
 import org.mrlem.siage3d.core.common.math.toRadians
-import org.mrlem.siage3d.core.scene.ObjectNode
-import org.mrlem.siage3d.core.scene.TerrainNode
+import org.mrlem.siage3d.core.scene.graph.nodes.ObjectNode
+import org.mrlem.siage3d.core.scene.graph.nodes.terrains.TerrainNode
 import org.mrlem.siage3d.core.scene.dsl.*
-import org.mrlem.siage3d.core.scene.lights.PointLight
-import org.mrlem.siage3d.core.scene.position
-import org.mrlem.siage3d.core.scene.shapes.Box
+import org.mrlem.siage3d.core.scene.graph.nodes.lights.PointLightNode
+import org.mrlem.siage3d.core.scene.graph.resources.shapes.BoxShape
 import org.mrlem.siage3d.core.view.SceneAdapter
 import kotlin.math.cos
 import kotlin.math.sin
@@ -19,8 +18,8 @@ import kotlin.math.sin
 class AdvancedSceneAdapter : SceneAdapter() {
 
     // scene objects refs
-    private val light0 get() = scene.get<PointLight>("light0")!!
-    private val light1 get() = scene.get<PointLight>("light1")!!
+    private val light0 get() = scene.get<PointLightNode>("light0")!!
+    private val light1 get() = scene.get<PointLightNode>("light1")!!
     private val lightCube0 get() = scene.get<ObjectNode>("light-cube0")!!
     private val lightCube1 get() = scene.get<ObjectNode>("light-cube1")!!
 
@@ -134,7 +133,7 @@ class AdvancedSceneAdapter : SceneAdapter() {
         for (i in 0..200) {
             val x = randomFloat() * 150f - 75f
             val z = randomFloat() * 150f - 75f
-            objectNode("crate$i", Box()) {
+            objectNode("crate$i", BoxShape()) {
                 material("crate")
                 position(x, 0.5f + (terrain?.heightAt(x, z) ?: 0f), z)
                 rotation(randomFloat() * 360, 0f, 0f)
@@ -148,12 +147,12 @@ class AdvancedSceneAdapter : SceneAdapter() {
             ambient(100f)
         }
 
-        objectNode("light-cube0", Box()) {
+        objectNode("light-cube0", BoxShape()) {
             material("white")
             scale(0.5f)
         }
 
-        objectNode("light-cube1", Box()) {
+        objectNode("light-cube1", BoxShape()) {
             material("white")
             scale(0.5f)
         }

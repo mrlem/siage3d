@@ -2,7 +2,7 @@ package org.mrlem.siage3d.core.view
 
 import org.mrlem.siage3d.core.render.MainSceneRenderer
 import org.mrlem.siage3d.core.render.ShadowSceneRenderer
-import org.mrlem.siage3d.core.scene.Scene
+import org.mrlem.siage3d.core.scene.graph.Scene
 import org.mrlem.siage3d.core.scene.dsl.SceneBuilder
 
 /**
@@ -10,7 +10,8 @@ import org.mrlem.siage3d.core.scene.dsl.SceneBuilder
  */
 abstract class SceneAdapter {
 
-    var scene: Scene = Scene("default")
+    var scene: Scene =
+        Scene("default")
         private set(value) {
             field = value
             renderers.forEach { it.scene = scene }

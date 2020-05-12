@@ -1,10 +1,10 @@
-package org.mrlem.siage3d.core.scene.shaders
+package org.mrlem.siage3d.core.scene.graph.resources.shaders
 
 import android.opengl.GLES30.*
 import org.joml.Matrix4f
 import org.joml.Vector3f
-import org.mrlem.siage3d.core.scene.lights.DirectionLight
-import org.mrlem.siage3d.core.scene.lights.PointLight
+import org.mrlem.siage3d.core.scene.graph.nodes.lights.DirectionLightNode
+import org.mrlem.siage3d.core.scene.graph.nodes.lights.PointLightNode
 import java.nio.FloatBuffer
 import kotlin.system.exitProcess
 
@@ -70,7 +70,9 @@ abstract class Shader(
 
     protected fun loadMatrix(uniform: UniformDefinition, matrix: Matrix4f) {
         matrix.get(matrixBuffer)
-        glUniformMatrix4fv(uniform.location, 1, false, matrixBuffer)
+        glUniformMatrix4fv(uniform.location, 1, false,
+            matrixBuffer
+        )
     }
 
     private fun bindAttributes(attributes: List<AttributeDefinition>) {
@@ -112,8 +114,8 @@ abstract class Shader(
     }
 
     interface LightAware {
-        fun loadPointLight(light: PointLight, index: Int)
-        fun loadDirectionLight(light: DirectionLight)
+        fun loadPointLight(light: PointLightNode, index: Int)
+        fun loadDirectionLight(light: DirectionLightNode)
     }
 
     interface FogAware {
@@ -194,7 +196,7 @@ abstract class Shader(
             }
         }
 
-        fun notifyPointLight(light: PointLight, index: Int) {
+        fun notifyPointLight(light: PointLightNode, index: Int) {
             shaders.forEach {
                 if (it is LightAware) {
                     it.use()
@@ -203,7 +205,7 @@ abstract class Shader(
             }
         }
 
-        fun notifyDirectionLight(light: DirectionLight) {
+        fun notifyDirectionLight(light: DirectionLightNode) {
             shaders.forEach {
                 if (it is LightAware) {
                     it.use()

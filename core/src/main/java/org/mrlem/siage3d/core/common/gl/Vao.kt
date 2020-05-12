@@ -2,8 +2,8 @@ package org.mrlem.siage3d.core.common.gl
 
 import android.opengl.GLES30.*
 import org.mrlem.siage3d.core.common.io.toBuffer
-import org.mrlem.siage3d.core.scene.shaders.Shader
-import org.mrlem.siage3d.core.scene.shapes.Shape
+import org.mrlem.siage3d.core.scene.graph.resources.shaders.Shader
+import org.mrlem.siage3d.core.scene.graph.resources.shapes.Shape
 import java.nio.IntBuffer
 
 class Vao private constructor(val indicesCount: Int) {

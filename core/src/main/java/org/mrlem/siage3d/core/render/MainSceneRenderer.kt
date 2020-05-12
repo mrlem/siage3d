@@ -1,11 +1,12 @@
 package org.mrlem.siage3d.core.render
 
-import org.mrlem.siage3d.core.scene.ObjectNode
-import org.mrlem.siage3d.core.scene.Scene
-import org.mrlem.siage3d.core.scene.lights.DirectionLight
-import org.mrlem.siage3d.core.scene.lights.PointLight
-import org.mrlem.siage3d.core.scene.materials.Material
-import org.mrlem.siage3d.core.scene.shaders.Shader
+import org.mrlem.siage3d.core.scene.graph.nodes.ObjectNode
+import org.mrlem.siage3d.core.scene.graph.Scene
+import org.mrlem.siage3d.core.scene.graph.nodes.lights.DirectionLightNode
+import org.mrlem.siage3d.core.scene.graph.nodes.lights.PointLightNode
+import org.mrlem.siage3d.core.scene.graph.nodes.skies.SkyNode
+import org.mrlem.siage3d.core.scene.graph.resources.materials.Material
+import org.mrlem.siage3d.core.scene.graph.resources.shaders.Shader
 
 class MainSceneRenderer(scene: Scene) : SceneRenderer(scene) {
 
@@ -13,18 +14,15 @@ class MainSceneRenderer(scene: Scene) : SceneRenderer(scene) {
         // apply camera
         scene.camera.use()
 
-        // render sky
-        scene.sky.render()
-
         // draw scene
-        prepareDraw()
 
         // .. lights
-        scene.lights
-            .filterIsInstance<PointLight>()
+        val lights = scene.lights
+        lights
+            .filterIsInstance<PointLightNode>()
             .forEachIndexed { index, light -> Shader.notifyPointLight(light, index) }
-        scene.lights
-            .filterIsInstance<DirectionLight>()
+        lights
+            .filterIsInstance<DirectionLightNode>()
             .firstOrNull()
             ?.let { Shader.notifyDirectionLight(it) }
 
@@ -32,18 +30,20 @@ class MainSceneRenderer(scene: Scene) : SceneRenderer(scene) {
         Shader.notifyFog(scene.sky.color, 3f, 0.007f)
 
         // .. objects
+        Material.activeMaterial = null
         gatherObjects(scene, mutableListOf()).also { objects ->
             objects
-                .sortWith(compareBy<ObjectNode> { it.material.shader }.thenBy { it.material })
+                .sortWith(
+                    compareBy<ObjectNode> { it !is SkyNode }    // render sky first
+                        .thenBy { it.material?.shader }         // then objects sorted by shader & material
+                        .thenBy { it.material }
+                )
+
             objects.forEach {
-                it.material.use()
+                it.material?.use()
                 it.render()
             }
         }
-    }
-
-    private fun prepareDraw() {
-        Material.activeMaterial = null
     }
 
 }

@@ -1,4 +1,4 @@
-package org.mrlem.siage3d.core.scene.shaders
+package org.mrlem.siage3d.core.scene.graph.resources.shaders
 
 import org.joml.Matrix4f
 import org.joml.Vector3f

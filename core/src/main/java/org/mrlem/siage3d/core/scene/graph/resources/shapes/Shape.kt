@@ -1,4 +1,4 @@
-package org.mrlem.siage3d.core.scene.shapes
+package org.mrlem.siage3d.core.scene.graph.resources.shapes
 
 import android.opengl.GLES30.*
 import org.mrlem.siage3d.core.common.gl.Vao

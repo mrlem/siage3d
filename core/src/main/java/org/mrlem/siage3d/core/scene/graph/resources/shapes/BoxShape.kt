@@ -1,6 +1,6 @@
-package org.mrlem.siage3d.core.scene.shapes
+package org.mrlem.siage3d.core.scene.graph.resources.shapes
 
-class Box : Shape(Data(positions, texCoords, indices, normals)) {
+class BoxShape : Shape(Data(positions, texCoords, indices, normals)) {
 
     companion object {
 

@@ -1,11 +1,12 @@
-package org.mrlem.siage3d.core.scene
+package org.mrlem.siage3d.core.scene.graph.nodes.cameras
 
 import android.opengl.GLES30.*
 import org.joml.Matrix4f
-import org.mrlem.siage3d.core.scene.shaders.Shader
+import org.mrlem.siage3d.core.scene.graph.resources.shaders.Shader
 import org.mrlem.siage3d.core.common.math.fromCamera
+import org.mrlem.siage3d.core.scene.graph.nodes.SpatialNode
 
-class Camera(
+class CameraNode(
     name: String? = null,
     // TODO - handle those using node rotation
     var yaw: Float = 0f,

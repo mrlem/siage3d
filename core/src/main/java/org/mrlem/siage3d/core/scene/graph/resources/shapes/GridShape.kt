@@ -1,6 +1,6 @@
-package org.mrlem.siage3d.core.scene.shapes
+package org.mrlem.siage3d.core.scene.graph.resources.shapes
 
-class Grid(size: Float, vertexCount: Int) : Shape(generateGrid(size, vertexCount)) {
+class GridShape(size: Float, vertexCount: Int) : Shape(generateGrid(size, vertexCount)) {
 
     companion object {
 
