@@ -53,7 +53,7 @@ Create the scene adapter, that's where you can describe & manipulate the scene:
 ```kotlin
 class SimpleSceneAdapter : SceneAdapter() {
 
-    private val cube by lazy { scene.get<ObjectNode>("my-cube")!! }
+    private val cube: ObjectNode get() = scene["my-cube"]!!
     private var time = 0f
 
     override fun onSceneCreate() = scene {
@@ -70,7 +70,7 @@ class SimpleSceneAdapter : SceneAdapter() {
             rotation(0f, 60f, 0f)
         }
 
-        objectNode("my-cube", Box()) {
+        objectNode("my-cube", BoxShape()) {
             material { texture(R.drawable.crate1_diffuse) }
             position(0f, 1f, -2f)
         }

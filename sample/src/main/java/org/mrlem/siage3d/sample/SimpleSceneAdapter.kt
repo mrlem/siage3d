@@ -10,7 +10,7 @@ import org.mrlem.siage3d.core.view.SceneAdapter
  */
 class SimpleSceneAdapter : SceneAdapter() {
 
-    private val cube get() = scene.get<ObjectNode>("my-cube")!!
+    private val cube: ObjectNode get() = scene["my-cube"]!!
     private var time = 0f
 
     override fun onSceneCreate() = scene {
