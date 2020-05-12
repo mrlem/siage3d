@@ -10,15 +10,16 @@ import org.mrlem.siage3d.core.scene.dsl.SceneBuilder
  */
 abstract class SceneAdapter {
 
-    private val renderers by lazy {
-        listOf(
-            ShadowSceneRenderer(scene),
-            MainSceneRenderer(scene)
-        )
-    }
+    var scene: Scene = Scene("default")
+        private set(value) {
+            field = value
+            renderers.forEach { it.scene = scene }
+        }
 
-    lateinit var scene: Scene
-        private set
+    private val renderers = listOf(
+        ShadowSceneRenderer(scene),
+        MainSceneRenderer(scene)
+    )
 
     internal fun init() {
         scene = onSceneCreate().build()

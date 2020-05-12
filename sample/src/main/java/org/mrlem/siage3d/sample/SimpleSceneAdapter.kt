@@ -11,7 +11,7 @@ import org.mrlem.siage3d.core.view.SceneAdapter
  */
 class SimpleSceneAdapter : SceneAdapter() {
 
-    private lateinit var cube: ObjectNode
+    private val cube get() = scene.get<ObjectNode>("my-cube")!!
     private var time = 0f
 
     override fun onSceneCreate() = scene {
@@ -32,10 +32,6 @@ class SimpleSceneAdapter : SceneAdapter() {
             material { texture(R.drawable.crate1_diffuse) }
             position(0f, 1f, -2f)
         }
-    }
-
-    override fun onSceneCreated() {
-        cube = scene.get<ObjectNode>("my-cube")!!
     }
 
     override fun onUpdate(delta: Float) {
