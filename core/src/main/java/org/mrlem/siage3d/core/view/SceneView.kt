@@ -6,7 +6,10 @@ import android.opengl.GLSurfaceView
 import android.util.AttributeSet
 import android.view.SurfaceHolder
 import org.mrlem.siage3d.core.common.io.*
-import org.mrlem.siage3d.core.scene.graph.resources.shaders.Shader
+import org.mrlem.siage3d.core.common.gl.shaders.Shader
+import org.mrlem.siage3d.core.common.io.caches.ShapeCache
+import org.mrlem.siage3d.core.common.io.caches.Texture2DCache
+import org.mrlem.siage3d.core.common.io.caches.TextureCubemapCache
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 

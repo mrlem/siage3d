@@ -1,20 +1,20 @@
-package org.mrlem.siage3d.core.common.io
+package org.mrlem.siage3d.core.common.io.caches
 
 import android.annotation.SuppressLint
 import android.content.res.Resources
 import android.graphics.Bitmap
 import androidx.annotation.ArrayRes
-import org.mrlem.siage3d.core.common.gl.TextureCubemap
-import org.mrlem.siage3d.core.common.gl.TextureFactory
+import org.mrlem.siage3d.core.common.gl.texture.CubemapTexture
+import org.mrlem.siage3d.core.common.gl.texture.TextureFactory
 import org.mrlem.siage3d.core.common.io.AssetManager.bitmap
 
-object TextureCubemapCache : AbstractCache<TextureCubemap>() {
+object TextureCubemapCache : AbstractCache<CubemapTexture>() {
 
     @SuppressLint("ResourceType")
-    override fun create(resources: Resources, @ArrayRes resId: Int): TextureCubemap {
+    override fun create(resources: Resources, @ArrayRes resId: Int): CubemapTexture {
         val faceResIds = resources.obtainTypedArray(resId)
         val bitmaps = mutableListOf<Bitmap>()
-        return TextureFactory.load(
+        return TextureFactory.createCubemapTexture(
             bitmap(faceResIds.getResourceId(0, 0)).also { bitmaps.add(it) },
             bitmap(faceResIds.getResourceId(1, 0)).also { bitmaps.add(it) },
             bitmap(faceResIds.getResourceId(2, 0)).also { bitmaps.add(it) },
@@ -29,7 +29,7 @@ object TextureCubemapCache : AbstractCache<TextureCubemap>() {
 
     fun clear(destroy: Boolean = false) {
         if (destroy) {
-            objects.values.forEach(TextureCubemap::destroy)
+            objects.values.forEach(TextureFactory::destroyTexture)
         }
         super.clear()
     }

@@ -1,17 +1,21 @@
-package org.mrlem.siage3d.core.common.gl
+package org.mrlem.siage3d.core.common.gl.texture
 
 import android.graphics.Bitmap
 import android.opengl.GLES30.*
 import android.opengl.GLUtils.*
+import org.mrlem.siage3d.core.common.gl.Fbo
 import java.nio.IntBuffer
 
+/**
+ * Factory class to create [Texture] resources on the GPU.
+ */
 object TextureFactory {
 
     private val arrays = intArrayOf(0)
 
-    fun load(
-        bitmap: Bitmap
-    ): Texture2D = Texture2D(createTexture()).apply {
+    fun createTexture2D(bitmap: Bitmap): Texture2D = Texture2D(
+        createTexture()
+    ).apply {
         use()
 
         // load texture on gpu
@@ -25,14 +29,16 @@ object TextureFactory {
         glTexParameterf(GL_TEXTURE_2D, GL_MAX_TEXTURE_LOD_BIAS, -1f)
     }
 
-    fun load(
+    fun createCubemapTexture(
         leftBitmap: Bitmap,
         rightBitmap: Bitmap,
         bottomBitmap: Bitmap,
         topBitmap: Bitmap,
         backBitmap: Bitmap,
         frontBitmap: Bitmap
-    ): TextureCubemap = TextureCubemap(createTexture()).apply {
+    ): CubemapTexture = CubemapTexture(
+        createTexture()
+    ).apply {
         use()
         glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
         glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
@@ -48,7 +54,9 @@ object TextureFactory {
         texImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Z, 0, frontBitmap, 0)
     }
 
-    fun createDepthMap(fbo: Fbo, width: Int, height: Int): Texture2D = Texture2D(createTexture()).apply {
+    fun createDepthMap(fbo: Fbo, width: Int, height: Int): Texture2D = Texture2D(
+        createTexture()
+    ).apply {
         use()
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST)
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST)
@@ -62,6 +70,14 @@ object TextureFactory {
             glReadBuffer(GL_NONE)
         }
     }
+
+    fun destroyTexture(texture: Texture) {
+        destroyTexture(texture.id)
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Internal
+    ///////////////////////////////////////////////////////////////////////////
 
     private fun createTexture(): Int {
         glGenTextures(1, arrays, 0)

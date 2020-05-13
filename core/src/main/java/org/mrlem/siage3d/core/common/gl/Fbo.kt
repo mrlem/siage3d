@@ -25,7 +25,6 @@ class Fbo {
         glDeleteFramebuffers(1, arrays, 0)
     }
 
-
     companion object {
 
         private val arrays = intArrayOf(0)

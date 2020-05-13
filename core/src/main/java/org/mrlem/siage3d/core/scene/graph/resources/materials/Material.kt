@@ -1,7 +1,7 @@
 package org.mrlem.siage3d.core.scene.graph.resources.materials
 
 import android.opengl.GLES30.*
-import org.mrlem.siage3d.core.scene.graph.resources.shaders.Shader
+import org.mrlem.siage3d.core.common.gl.shaders.Shader
 
 abstract class Material(val name: String) : Comparable<Material> {
 

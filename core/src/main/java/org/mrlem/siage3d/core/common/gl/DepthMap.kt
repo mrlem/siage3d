@@ -1,6 +1,7 @@
 package org.mrlem.siage3d.core.common.gl
 
 import android.opengl.GLES30.*
+import org.mrlem.siage3d.core.common.gl.texture.TextureFactory
 
 class DepthMap(private val size: Int) {
 
@@ -18,7 +19,7 @@ class DepthMap(private val size: Int) {
 
     fun destroy() {
         fbo.destroy()
-        texture.destroy()
+        TextureFactory.destroyTexture(texture)
     }
 
 }

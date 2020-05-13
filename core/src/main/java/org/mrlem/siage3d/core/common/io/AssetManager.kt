@@ -4,6 +4,9 @@ import android.content.Context
 import android.content.res.AssetManager
 import android.content.res.Resources
 import android.graphics.BitmapFactory
+import org.mrlem.siage3d.core.common.io.caches.ShapeCache
+import org.mrlem.siage3d.core.common.io.caches.Texture2DCache
+import org.mrlem.siage3d.core.common.io.caches.TextureCubemapCache
 
 object AssetManager {
 

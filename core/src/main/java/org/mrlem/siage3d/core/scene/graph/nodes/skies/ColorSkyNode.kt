@@ -2,7 +2,7 @@ package org.mrlem.siage3d.core.scene.graph.nodes.skies
 
 import android.opengl.GLES30.*
 import org.joml.Vector3f
-import org.mrlem.siage3d.core.scene.graph.resources.shaders.Shader
+import org.mrlem.siage3d.core.common.gl.shaders.Shader
 
 class ColorSkyNode(
     color: Vector3f = Vector3f(.6f, .8f, 1f),

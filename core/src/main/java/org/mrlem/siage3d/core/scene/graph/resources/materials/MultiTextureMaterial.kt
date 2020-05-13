@@ -1,9 +1,9 @@
 package org.mrlem.siage3d.core.scene.graph.resources.materials
 
 import android.opengl.GLES30.*
-import org.mrlem.siage3d.core.common.gl.Texture2D
-import org.mrlem.siage3d.core.scene.graph.resources.shaders.MultiTextureShader
-import org.mrlem.siage3d.core.scene.graph.resources.shaders.Shader
+import org.mrlem.siage3d.core.common.gl.texture.Texture2D
+import org.mrlem.siage3d.core.common.gl.shaders.MultiTextureShader
+import org.mrlem.siage3d.core.common.gl.shaders.Shader
 
 class MultiTextureMaterial(
     name: String,

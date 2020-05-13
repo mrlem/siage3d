@@ -1,4 +1,4 @@
-package org.mrlem.siage3d.core.scene.graph.resources.shaders
+package org.mrlem.siage3d.core.common.gl.shaders
 
 import org.joml.Matrix4f
 import org.joml.Vector3f
@@ -8,8 +8,8 @@ import org.mrlem.siage3d.core.common.math.directionUp
 import org.mrlem.siage3d.core.scene.graph.nodes.lights.DirectionLightNode
 import org.mrlem.siage3d.core.scene.graph.nodes.lights.PointLightNode
 
-class MultiTextureShader : Shader(
-    text(R.raw.shader_default_v), text(R.raw.shader_multitexture_f),
+open class TextureShader: Shader(
+    text(R.raw.shader_default_v), text(R.raw.shader_default_f),
     Attribute.values().asList(), Uniform.values().asList()
 ), Shader.ProjectionAware, Shader.ViewAware, Shader.TransformationAware, Shader.LightAware, Shader.FogAware {
 
@@ -72,14 +72,6 @@ class MultiTextureShader : Shader(
     // Material
     ///////////////////////////////////////////////////////////////////////////
 
-    fun loadSamplers() {
-        loadInt(Uniform.MATERIAL_DIFFUSE_BLEND_MAP, 0)
-        loadInt(Uniform.MATERIAL_DIFFUSE_BACKGROUND, 1)
-        loadInt(Uniform.MATERIAL_DIFFUSE_RED, 2)
-        loadInt(Uniform.MATERIAL_DIFFUSE_GREEN, 3)
-        loadInt(Uniform.MATERIAL_DIFFUSE_BLUE, 4)
-    }
-
     fun loadAmbient(ambient: Float) {
         loadFloat(Uniform.MATERIAL_AMBIENT, ambient)
     }
@@ -129,53 +121,52 @@ class MultiTextureShader : Shader(
         MATERIAL_AMBIENT("material.ambient"),
         MATERIAL_REFLECTIVITY("material.reflectivity"),
         MATERIAL_SHINE_DAMPER("material.shineDamper"),
-        MATERIAL_DIFFUSE_BLEND_MAP("material.diffuse.blendMap"),
-        MATERIAL_DIFFUSE_BACKGROUND("material.diffuse.backgroundTexture"),
-        MATERIAL_DIFFUSE_RED("material.diffuse.rTexture"),
-        MATERIAL_DIFFUSE_GREEN("material.diffuse.gTexture"),
-        MATERIAL_DIFFUSE_BLUE("material.diffuse.bTexture"),
         MATERIAL_SCALE("material.scale"),
         USE_FAKE_LIGHTING("useFakeLighting"),
         FOG_COLOR("fog.color"),
         FOG_GRADIENT("fog.gradient"),
-        FOG_DENSITY("fog.density"),
+        FOG_DENSITY("fog.density")
 
     }
 
-    private val lightPosition = arrayOf(
-        Uniform.POINTLIGHT0_POSITION,
-        Uniform.POINTLIGHT1_POSITION,
-        Uniform.POINTLIGHT2_POSITION
-    )
+    companion object {
 
-    private val lightConstant = arrayOf(
-        Uniform.POINTLIGHT0_CONSTANT,
-        Uniform.POINTLIGHT1_CONSTANT,
-        Uniform.POINTLIGHT2_CONSTANT
-    )
+        private val lightPosition = arrayOf(
+            Uniform.POINTLIGHT0_POSITION,
+            Uniform.POINTLIGHT1_POSITION,
+            Uniform.POINTLIGHT2_POSITION
+        )
 
-    private val lightLinear = arrayOf(
-        Uniform.POINTLIGHT0_LINEAR,
-        Uniform.POINTLIGHT1_LINEAR,
-        Uniform.POINTLIGHT2_LINEAR
-    )
+        private val lightConstant = arrayOf(
+            Uniform.POINTLIGHT0_CONSTANT,
+            Uniform.POINTLIGHT1_CONSTANT,
+            Uniform.POINTLIGHT2_CONSTANT
+        )
 
-    private val lightQuadratic = arrayOf(
-        Uniform.POINTLIGHT0_QUADRATIC,
-        Uniform.POINTLIGHT1_QUADRATIC,
-        Uniform.POINTLIGHT2_QUADRATIC
-    )
+        private val lightLinear = arrayOf(
+            Uniform.POINTLIGHT0_LINEAR,
+            Uniform.POINTLIGHT1_LINEAR,
+            Uniform.POINTLIGHT2_LINEAR
+        )
 
-    private val lightAmbient = arrayOf(
-        Uniform.POINTLIGHT0_AMBIENT,
-        Uniform.POINTLIGHT1_AMBIENT,
-        Uniform.POINTLIGHT2_AMBIENT
-    )
+        private val lightQuadratic = arrayOf(
+            Uniform.POINTLIGHT0_QUADRATIC,
+            Uniform.POINTLIGHT1_QUADRATIC,
+            Uniform.POINTLIGHT2_QUADRATIC
+        )
 
-    private val lightDiffuse = arrayOf(
-        Uniform.POINTLIGHT0_DIFFUSE,
-        Uniform.POINTLIGHT1_DIFFUSE,
-        Uniform.POINTLIGHT2_DIFFUSE
-    )
+        private val lightAmbient = arrayOf(
+            Uniform.POINTLIGHT0_AMBIENT,
+            Uniform.POINTLIGHT1_AMBIENT,
+            Uniform.POINTLIGHT2_AMBIENT
+        )
+
+        private val lightDiffuse = arrayOf(
+            Uniform.POINTLIGHT0_DIFFUSE,
+            Uniform.POINTLIGHT1_DIFFUSE,
+            Uniform.POINTLIGHT2_DIFFUSE
+        )
+
+    }
 
 }

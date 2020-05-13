@@ -2,7 +2,7 @@ package org.mrlem.siage3d.core.scene.graph.nodes.cameras
 
 import android.opengl.GLES30.*
 import org.joml.Matrix4f
-import org.mrlem.siage3d.core.scene.graph.resources.shaders.Shader
+import org.mrlem.siage3d.core.common.gl.shaders.Shader
 import org.mrlem.siage3d.core.common.math.fromCamera
 import org.mrlem.siage3d.core.scene.graph.nodes.SpatialNode
 

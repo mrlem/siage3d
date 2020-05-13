@@ -1,4 +1,4 @@
-package org.mrlem.siage3d.core.common.io
+package org.mrlem.siage3d.core.common.io.caches
 
 import android.content.res.Resources
 import org.mrlem.siage3d.core.common.io.AssetManager.text

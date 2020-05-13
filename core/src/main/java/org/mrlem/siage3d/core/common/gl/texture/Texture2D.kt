@@ -1,6 +1,7 @@
-package org.mrlem.siage3d.core.common.gl
+package org.mrlem.siage3d.core.common.gl.texture
 
 import android.opengl.GLES30.*
+import org.mrlem.siage3d.core.common.gl.texture.Texture
 
 class Texture2D(id: Int) : Texture(id) {
 

@@ -1,4 +1,4 @@
-package org.mrlem.siage3d.core.scene.graph.resources.shaders
+package org.mrlem.siage3d.core.common.gl.shaders
 
 import android.opengl.GLES30.*
 import org.joml.Matrix4f
