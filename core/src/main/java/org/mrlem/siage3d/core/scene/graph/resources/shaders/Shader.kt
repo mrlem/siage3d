@@ -163,14 +163,14 @@ abstract class Shader(
 
         private val shaders = mutableListOf<Shader>()
 
-        lateinit var defaultShader: DefaultShader
+        lateinit var defaultShader: TextureShader
         lateinit var multiTextureShader: MultiTextureShader
         lateinit var skyboxShader: SkyboxShader
 
         private var activeProgramId = 0
 
         fun init() {
-            defaultShader = DefaultShader()
+            defaultShader = TextureShader()
                 .also { shaders.add(it) }
             multiTextureShader = MultiTextureShader()
                 .also { shaders.add(it) }

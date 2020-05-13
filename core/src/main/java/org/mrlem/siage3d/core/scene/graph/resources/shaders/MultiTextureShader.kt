@@ -11,11 +11,7 @@ import org.mrlem.siage3d.core.scene.graph.nodes.lights.PointLightNode
 class MultiTextureShader : Shader(
     text(R.raw.shader_default_v), text(R.raw.shader_multitexture_f),
     Attribute.values().asList(), Uniform.values().asList()
-), Shader.ProjectionAware,
-    Shader.ViewAware,
-    Shader.TransformationAware,
-    Shader.LightAware,
-    Shader.FogAware {
+), Shader.ProjectionAware, Shader.ViewAware, Shader.TransformationAware, Shader.LightAware, Shader.FogAware {
 
     ///////////////////////////////////////////////////////////////////////////
     // Matrices

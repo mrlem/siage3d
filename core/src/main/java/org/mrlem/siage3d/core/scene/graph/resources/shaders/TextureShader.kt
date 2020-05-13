@@ -8,14 +8,10 @@ import org.mrlem.siage3d.core.common.math.directionUp
 import org.mrlem.siage3d.core.scene.graph.nodes.lights.DirectionLightNode
 import org.mrlem.siage3d.core.scene.graph.nodes.lights.PointLightNode
 
-open class DefaultShader: Shader(
+open class TextureShader: Shader(
     text(R.raw.shader_default_v), text(R.raw.shader_default_f),
     Attribute.values().asList(), Uniform.values().asList()
-), Shader.ProjectionAware,
-    Shader.ViewAware,
-    Shader.TransformationAware,
-    Shader.LightAware,
-    Shader.FogAware {
+), Shader.ProjectionAware, Shader.ViewAware, Shader.TransformationAware, Shader.LightAware, Shader.FogAware {
 
     ///////////////////////////////////////////////////////////////////////////
     // Matrices
