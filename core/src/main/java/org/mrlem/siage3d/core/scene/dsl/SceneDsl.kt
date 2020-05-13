@@ -20,7 +20,7 @@ import org.mrlem.siage3d.core.scene.graph.nodes.cameras.CameraNode
 import org.mrlem.siage3d.core.scene.graph.nodes.skies.BoxSkyNode
 import org.mrlem.siage3d.core.scene.graph.nodes.skies.ColorSkyNode
 import org.mrlem.siage3d.core.scene.graph.nodes.terrains.TerrainNode
-import org.mrlem.siage3d.core.scene.graph.resources.materials.CubemapMaterial
+import org.mrlem.siage3d.core.scene.graph.resources.materials.CubemapTextureMaterial
 
 /**
  * Used to mark builders as part of a DSL definition, and thus prevent some badly scoped calls.
@@ -133,7 +133,7 @@ class SkyBuilder(name: String) : NodeBuilder(name) {
     }
 
     fun build(): SkyNode = (cubemap
-        ?.let { BoxSkyNode(CubemapMaterial("sky", textureCubemap(it)), color) }
+        ?.let { BoxSkyNode(CubemapTextureMaterial("sky", textureCubemap(it)), color) }
         ?: ColorSkyNode(color = color))
 }
 

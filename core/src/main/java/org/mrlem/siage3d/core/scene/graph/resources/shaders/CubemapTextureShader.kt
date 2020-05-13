@@ -5,7 +5,7 @@ import org.joml.Vector3f
 import org.mrlem.siage3d.core.R
 import org.mrlem.siage3d.core.common.io.AssetManager.text
 
-class SkyboxShader : Shader(
+class CubemapTextureShader : Shader(
     text(R.raw.shader_skybox_v), text(R.raw.shader_skybox_f),
     Attribute.values().asList(), Uniform.values().asList()
 ), Shader.ProjectionAware, Shader.ViewAware, Shader.FogAware {

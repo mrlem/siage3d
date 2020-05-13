@@ -165,7 +165,7 @@ abstract class Shader(
 
         lateinit var defaultShader: TextureShader
         lateinit var multiTextureShader: MultiTextureShader
-        lateinit var skyboxShader: SkyboxShader
+        lateinit var skyboxShader: CubemapTextureShader
 
         private var activeProgramId = 0
 
@@ -174,7 +174,7 @@ abstract class Shader(
                 .also { shaders.add(it) }
             multiTextureShader = MultiTextureShader()
                 .also { shaders.add(it) }
-            skyboxShader = SkyboxShader()
+            skyboxShader = CubemapTextureShader()
                 .also { shaders.add(it) }
         }
 
