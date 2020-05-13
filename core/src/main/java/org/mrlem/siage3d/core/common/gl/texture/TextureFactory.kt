@@ -84,7 +84,7 @@ object TextureFactory {
         return arrays[0]
     }
 
-    internal fun destroyTexture(id: Int) {
+    private fun destroyTexture(id: Int) {
         arrays[0] = id
         glDeleteTextures(1, arrays, 0)
     }
