@@ -1,6 +1,8 @@
 package org.mrlem.siage3d.core.scene.graph.resources.shapes
 
-class SquareShape : Shape(Data(positions, texCoords, indices, normals)) {
+import org.mrlem.siage3d.core.common.io.caches.VaoCache
+
+class SquareShape : Shape(VaoCache.get("square") { data }) {
 
     companion object {
 
@@ -26,6 +28,8 @@ class SquareShape : Shape(Data(positions, texCoords, indices, normals)) {
             0f, 0f, 1f,
             0f, 0f, 1f
         )
+
+        private val data = Shape.Data(positions, texCoords, indices, normals)
 
     }
 

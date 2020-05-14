@@ -1,6 +1,11 @@
 package org.mrlem.siage3d.core.scene.graph.resources.shapes
 
-class GridShape(size: Float, vertexCount: Int) : Shape(generateGrid(size, vertexCount)) {
+import org.mrlem.siage3d.core.common.io.caches.VaoCache
+
+class GridShape(
+    size: Float,
+    vertexCount: Int
+) : Shape(VaoCache.get("grid?size=$size&vertexCount=$vertexCount") { generateGrid(size, vertexCount) }) {
 
     companion object {
 

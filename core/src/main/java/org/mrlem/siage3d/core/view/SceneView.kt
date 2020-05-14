@@ -7,7 +7,7 @@ import android.util.AttributeSet
 import android.view.SurfaceHolder
 import org.mrlem.siage3d.core.common.io.*
 import org.mrlem.siage3d.core.common.gl.shaders.Shader
-import org.mrlem.siage3d.core.common.io.caches.ShapeCache
+import org.mrlem.siage3d.core.common.io.caches.VaoCache
 import org.mrlem.siage3d.core.common.io.caches.Texture2DCache
 import org.mrlem.siage3d.core.common.io.caches.TextureCubemapCache
 import javax.microedition.khronos.egl.EGLConfig
@@ -50,7 +50,7 @@ class SceneView(context: Context, attributes: AttributeSet) : GLSurfaceView(cont
     }
 
     override fun surfaceDestroyed(holder: SurfaceHolder?) {
-        ShapeCache.clear(true)
+        VaoCache.clear(true)
         Texture2DCache.clear(true)
         TextureCubemapCache.clear(true)
         super.surfaceDestroyed(holder)

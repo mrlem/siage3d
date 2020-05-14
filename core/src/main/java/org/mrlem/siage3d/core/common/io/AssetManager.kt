@@ -4,9 +4,10 @@ import android.content.Context
 import android.content.res.AssetManager
 import android.content.res.Resources
 import android.graphics.BitmapFactory
-import org.mrlem.siage3d.core.common.io.caches.ShapeCache
+import org.mrlem.siage3d.core.common.io.caches.VaoCache
 import org.mrlem.siage3d.core.common.io.caches.Texture2DCache
 import org.mrlem.siage3d.core.common.io.caches.TextureCubemapCache
+import org.mrlem.siage3d.core.scene.graph.resources.shapes.Shape
 
 object AssetManager {
 
@@ -24,7 +25,7 @@ object AssetManager {
         inScaled = false
     })
 
-    fun shape(resId: Int) = ShapeCache.get(res, resId)
+    fun shape(resId: Int) = Shape(VaoCache.get(res, resId))
 
     fun text(resId: Int) = res.openRawResource(resId).bufferedReader().use { it.readText() }
 

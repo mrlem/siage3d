@@ -1,6 +1,8 @@
 package org.mrlem.siage3d.core.scene.graph.resources.shapes
 
-class TriangleShape : Shape(Data(positions, texCoords, indices, normals)) {
+import org.mrlem.siage3d.core.common.io.caches.VaoCache
+
+class TriangleShape : Shape(VaoCache.get("triangle") { data }) {
 
     companion object {
 
@@ -23,6 +25,8 @@ class TriangleShape : Shape(Data(positions, texCoords, indices, normals)) {
             0f, 0f, -1f,
             0f, 0f, -1f
         )
+
+        private val data = Data(positions, texCoords, indices, normals)
 
     }
 

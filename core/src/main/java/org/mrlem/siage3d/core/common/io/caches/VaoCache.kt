@@ -1,0 +1,27 @@
+package org.mrlem.siage3d.core.common.io.caches
+
+import android.content.res.Resources
+import org.mrlem.siage3d.core.common.gl.arrays.Vao
+import org.mrlem.siage3d.core.common.gl.arrays.VaoFactory
+import org.mrlem.siage3d.core.common.io.AssetManager.text
+import org.mrlem.siage3d.core.common.io.loaders.ObjLoader
+import org.mrlem.siage3d.core.scene.graph.resources.shapes.Shape
+
+object VaoCache : AbstractCache<Vao>() {
+
+    override fun create(resources: Resources, resId: Int): Vao {
+        return VaoFactory.createVao(ObjLoader().load(text(resId)))
+    }
+
+    fun get(key: String, creator: () -> Shape.Data): Vao = getOrCreate("$INTERNAL_SCHEME:$key") {
+        VaoFactory.createVao(creator())
+    }
+
+    fun clear(destroy: Boolean = false) {
+        if (destroy) {
+            objects.values.forEach(VaoFactory::destroyVao)
+        }
+        super.clear()
+    }
+
+}

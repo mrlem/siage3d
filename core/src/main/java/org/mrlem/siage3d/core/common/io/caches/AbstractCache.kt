@@ -14,7 +14,7 @@ abstract class AbstractCache<T> {
         objects.clear()
     }
 
-    private fun getOrCreate(key: String, creator: () -> T): T {
+    protected fun getOrCreate(key: String, creator: () -> T): T {
         // in cache?
         objects[key]?.also { cache -> return cache }
 
@@ -27,7 +27,9 @@ abstract class AbstractCache<T> {
     protected abstract fun create(resources: Resources, resId: Int): T
 
     companion object {
-        private const val RESOURCE_SCHEME = "res"
+        protected const val RESOURCE_SCHEME = "res"
+        @JvmStatic
+        protected val INTERNAL_SCHEME = "internal"
     }
 
 }

@@ -1,13 +1,16 @@
 package org.mrlem.siage3d.core.scene.graph.resources.shapes
 
 import org.joml.Vector3f
+import org.mrlem.siage3d.core.common.io.caches.VaoCache
 import kotlin.math.max
 import kotlin.math.min
 
 class TerrainShape(
+    // FIXME - heightMap should be passed as a resource, or terrain should be handled differently
     private val heightMap: HeightMap = HeightMap(32) { 0f },
     private val maxHeight: Float = 0.1f
-) : Shape(GridShape.generateGrid(1f, heightMap.size).applyHeights(heightMap, maxHeight)) {
+) : Shape(VaoCache.get("terrain") { GridShape.generateGrid(1f, heightMap.size).applyHeights(heightMap, maxHeight) }) {
+    // FIXME - cache key should be based on heightmap resource
 
     fun heightAt(x: Float, z: Float): Float {
         // TODO - optional - barycenter

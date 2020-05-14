@@ -3,18 +3,14 @@ package org.mrlem.siage3d.core.scene.graph.resources.shapes
 import android.opengl.GLES30.*
 import org.mrlem.siage3d.core.common.gl.arrays.Vao
 
-open class Shape(data: Data) {
-
-    private val vao = Vao.load(data)
+open class Shape(
+    private val vao: Vao
+) {
 
     fun draw() {
         vao.use {
             glDrawElements(GL_TRIANGLES, indicesCount, GL_UNSIGNED_SHORT, 0)
         }
-    }
-
-    fun destroy() {
-        vao.destroy()
     }
 
     data class Data(
