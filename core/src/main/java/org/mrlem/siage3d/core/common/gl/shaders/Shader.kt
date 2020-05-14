@@ -41,7 +41,7 @@ abstract class Shader(
         }
     }
 
-    fun clear() {
+    fun destroy() {
         glUseProgram(0)
         glDetachShader(programId, vertexShaderId)
         glDetachShader(programId, fragmentShaderId)
