@@ -1,4 +1,4 @@
-package org.mrlem.siage3d.core.common.gl
+package org.mrlem.siage3d.core.common.gl.arrays
 
 import android.opengl.GLES30.*
 import java.nio.FloatBuffer

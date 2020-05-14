@@ -1,4 +1,4 @@
-package org.mrlem.siage3d.core.common.gl
+package org.mrlem.siage3d.core.common.gl.arrays
 
 import android.opengl.GLES30.*
 import org.mrlem.siage3d.core.common.gl.shaders.Shader
@@ -30,25 +30,22 @@ class Vao private constructor(val indicesCount: Int) {
         glDeleteVertexArrays(1, arrays)
     }
 
-    private fun addVbo(block: Vbo.() -> Unit) = Vbo().also {
-        vbos.add(it)
-        it.block()
-    }
+    private fun addVbo(block: Vbo.() -> Unit) = Vbo()
+        .also { vbos.add(it) }
+        .apply { block() }
 
     companion object {
         private val arrays = IntBuffer.allocate(1)
 
-        fun load(data: Shape.Data): Vao {
-            return Vao(data.indices.size).apply {
-                use {
-                    addVbo { toAttribute(Shader.Attribute.POSITIONS.index, 3, data.positions.toBuffer()) }
-                    addVbo { toAttribute(Shader.Attribute.TEXCOORDS.index, 2, data.texCoords.toBuffer()) }
-                    addVbo { toAttribute(Shader.Attribute.NORMALS.index, 3, data.normals.toBuffer()) }
-                    addVbo { toIndexBuffer(data.indices.toBuffer()) }
-                }
-                glBindBuffer(GL_ARRAY_BUFFER, 0)
-                glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0)
+        fun load(data: Shape.Data) = Vao(data.indices.size).apply {
+            use {
+                addVbo { toAttribute(Shader.Attribute.POSITIONS.index, 3, data.positions.toBuffer()) }
+                addVbo { toAttribute(Shader.Attribute.TEXCOORDS.index, 2, data.texCoords.toBuffer()) }
+                addVbo { toAttribute(Shader.Attribute.NORMALS.index, 3, data.normals.toBuffer()) }
+                addVbo { toIndexBuffer(data.indices.toBuffer()) }
             }
+            glBindBuffer(GL_ARRAY_BUFFER, 0)
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0)
         }
     }
 
