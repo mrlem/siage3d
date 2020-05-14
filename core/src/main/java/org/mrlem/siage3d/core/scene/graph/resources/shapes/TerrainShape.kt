@@ -9,7 +9,7 @@ class TerrainShape(
     // FIXME - heightMap should be passed as a resource, or terrain should be handled differently
     private val heightMap: HeightMap = HeightMap(32) { 0f },
     private val maxHeight: Float = 0.1f
-) : Shape(VaoCache.get("terrain") { GridShape.generateGrid(1f, heightMap.size).applyHeights(heightMap, maxHeight) }) {
+) : Shape(VaoCache.ref("terrain") { GridShape.generateGrid(1f, heightMap.size).applyHeights(heightMap, maxHeight) }) {
     // FIXME - cache key should be based on heightmap resource
 
     fun heightAt(x: Float, z: Float): Float {

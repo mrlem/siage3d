@@ -5,7 +5,7 @@ import org.mrlem.siage3d.core.common.io.caches.VaoCache
 class GridShape(
     size: Float,
     vertexCount: Int
-) : Shape(VaoCache.get("grid?size=$size&vertexCount=$vertexCount") { generateGrid(size, vertexCount) }) {
+) : Shape(VaoCache.ref("grid?size=$size&vertexCount=$vertexCount") { generateGrid(size, vertexCount) }) {
 
     companion object {
 

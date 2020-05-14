@@ -25,12 +25,12 @@ object AssetManager {
         inScaled = false
     })
 
-    fun shape(resId: Int) = Shape(VaoCache.get(res, resId))
+    fun shape(resId: Int) = Shape(VaoCache.ref(res, resId))
 
     fun text(resId: Int) = res.openRawResource(resId).bufferedReader().use { it.readText() }
 
-    fun texture2D(resId: Int) = Texture2DCache.get(res, resId)
+    fun texture2D(resId: Int) = Texture2DCache.ref(res, resId)
 
-    fun textureCubemap(resId: Int) = TextureCubemapCache.get(res, resId)
+    fun textureCubemap(resId: Int) = TextureCubemapCache.ref(res, resId)
 
 }

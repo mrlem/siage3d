@@ -2,7 +2,7 @@ package org.mrlem.siage3d.core.scene.graph.resources.shapes
 
 import org.mrlem.siage3d.core.common.io.caches.VaoCache
 
-class TriangleShape : Shape(VaoCache.get("triangle") { data }) {
+class TriangleShape : Shape(VaoCache.ref("triangle") { data }) {
 
     companion object {
 

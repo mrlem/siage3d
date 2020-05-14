@@ -6,12 +6,12 @@ abstract class AbstractCache<T> {
 
     protected val objects = mutableMapOf<String, T>()
 
-    fun get(resources: Resources, resId: Int): T {
-        return getOrCreate("$RESOURCE_SCHEME:$resId") { create(resources, resId)}
-    }
-
     fun clear() {
         objects.clear()
+    }
+
+    protected fun get(resources: Resources, resId: Int): T {
+        return getOrCreate("$RESOURCE_SCHEME:$resId") { create(resources, resId)}
     }
 
     protected fun getOrCreate(key: String, creator: () -> T): T {
@@ -24,6 +24,7 @@ abstract class AbstractCache<T> {
         }
     }
 
+    abstract fun ref(resources: Resources, resId: Int): Ref<T>
     protected abstract fun create(resources: Resources, resId: Int): T
 
     companion object {

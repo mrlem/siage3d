@@ -2,7 +2,7 @@ package org.mrlem.siage3d.core.scene.graph.resources.shapes
 
 import org.mrlem.siage3d.core.common.io.caches.VaoCache
 
-class BoxShape : Shape(VaoCache.get("box") { data }) {
+class BoxShape : Shape(VaoCache.ref("box") { data }) {
 
     companion object {
 

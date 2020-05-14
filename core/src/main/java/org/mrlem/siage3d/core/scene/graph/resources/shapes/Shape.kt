@@ -2,13 +2,14 @@ package org.mrlem.siage3d.core.scene.graph.resources.shapes
 
 import android.opengl.GLES30.*
 import org.mrlem.siage3d.core.common.gl.arrays.Vao
+import org.mrlem.siage3d.core.common.io.caches.Ref
 
 open class Shape(
-    private val vao: Vao
+    private val vaoRef: Ref<Vao>
 ) {
 
     fun draw() {
-        vao.use {
+        vaoRef.get().use {
             glDrawElements(GL_TRIANGLES, indicesCount, GL_UNSIGNED_SHORT, 0)
         }
     }

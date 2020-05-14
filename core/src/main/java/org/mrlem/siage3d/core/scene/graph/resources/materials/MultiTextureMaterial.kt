@@ -4,14 +4,15 @@ import android.opengl.GLES30.*
 import org.mrlem.siage3d.core.common.gl.texture.Texture2D
 import org.mrlem.siage3d.core.common.gl.shaders.MultiTextureShader
 import org.mrlem.siage3d.core.common.gl.shaders.Shader
+import org.mrlem.siage3d.core.common.io.caches.Ref
 
 class MultiTextureMaterial(
     name: String,
-    private val blendMap: Texture2D,
-    private val backgroundTexture: Texture2D,
-    private val redTexture: Texture2D,
-    private val greenTexture: Texture2D,
-    private val blueTexture: Texture2D,
+    private val blendMapRef: Ref<Texture2D>,
+    private val backgroundTextureRef: Ref<Texture2D>,
+    private val redTextureRef: Ref<Texture2D>,
+    private val greenTextureRef: Ref<Texture2D>,
+    private val blueTextureRef: Ref<Texture2D>,
     private val scale: Float = 1f,
     private val ambient: Float = 1f,
     private var shineDamper: Float = 1f,
@@ -31,11 +32,11 @@ class MultiTextureMaterial(
         shader.loadScale(scale)
         shader.loadSamplers()
 
-        blendMap.use(GL_TEXTURE0)
-        backgroundTexture.use(GL_TEXTURE1)
-        redTexture.use(GL_TEXTURE2)
-        greenTexture.use(GL_TEXTURE3)
-        blueTexture.use(GL_TEXTURE4)
+        blendMapRef.get().use(GL_TEXTURE0)
+        backgroundTextureRef.get().use(GL_TEXTURE1)
+        redTextureRef.get().use(GL_TEXTURE2)
+        greenTextureRef.get().use(GL_TEXTURE3)
+        blueTextureRef.get().use(GL_TEXTURE4)
     }
 
 }

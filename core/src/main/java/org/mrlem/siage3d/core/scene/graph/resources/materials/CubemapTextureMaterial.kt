@@ -3,10 +3,11 @@ package org.mrlem.siage3d.core.scene.graph.resources.materials
 import org.mrlem.siage3d.core.common.gl.texture.CubemapTexture
 import org.mrlem.siage3d.core.common.gl.shaders.Shader
 import org.mrlem.siage3d.core.common.gl.shaders.CubemapTextureShader
+import org.mrlem.siage3d.core.common.io.caches.Ref
 
 class CubemapTextureMaterial(
     name: String,
-    var texture: CubemapTexture
+    var textureRef: Ref<CubemapTexture>
 ) : Material(name) {
 
     override val shader: CubemapTextureShader = Shader.skyboxShader
@@ -14,7 +15,7 @@ class CubemapTextureMaterial(
     override fun setup() {
         disableCulling()
 
-        texture.use()
+        textureRef.get().use()
     }
 
 }

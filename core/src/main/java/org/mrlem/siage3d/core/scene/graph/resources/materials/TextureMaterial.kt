@@ -3,10 +3,11 @@ package org.mrlem.siage3d.core.scene.graph.resources.materials
 import org.mrlem.siage3d.core.common.gl.texture.Texture2D
 import org.mrlem.siage3d.core.common.gl.shaders.TextureShader
 import org.mrlem.siage3d.core.common.gl.shaders.Shader
+import org.mrlem.siage3d.core.common.io.caches.Ref
 
 class TextureMaterial(
     name: String,
-    var texture: Texture2D,
+    var textureRef: Ref<Texture2D>,
     var scale: Float = 1f,
     var ambient: Float = 1f,
     var shineDamper: Float = 1f,
@@ -25,7 +26,7 @@ class TextureMaterial(
         shader.loadShine(shineDamper, reflectvity)
         shader.loadScale(scale)
 
-        texture.use()
+        textureRef.get().use()
     }
 
 }

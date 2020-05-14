@@ -10,6 +10,8 @@ import org.mrlem.siage3d.core.common.io.AssetManager.bitmap
 
 object TextureCubemapCache : AbstractCache<CubemapTexture>() {
 
+    override fun ref(resources: Resources, resId: Int): Ref<CubemapTexture> = TextureCubemapRef(resources, resId)
+
     @SuppressLint("ResourceType")
     override fun create(resources: Resources, @ArrayRes resId: Int): CubemapTexture {
         val faceResIds = resources.obtainTypedArray(resId)
@@ -32,6 +34,15 @@ object TextureCubemapCache : AbstractCache<CubemapTexture>() {
             objects.values.forEach(TextureFactory::destroyTexture)
         }
         super.clear()
+    }
+
+    private class TextureCubemapRef(
+        private val resources: Resources,
+        @ArrayRes private val resId: Int
+    ) : Ref<CubemapTexture>() {
+
+        override fun get(): CubemapTexture = TextureCubemapCache.get(resources, resId)
+
     }
 
 }

@@ -1,6 +1,7 @@
 package org.mrlem.siage3d.core.common.io.caches
 
 import android.content.res.Resources
+import androidx.annotation.RawRes
 import org.mrlem.siage3d.core.common.gl.arrays.Vao
 import org.mrlem.siage3d.core.common.gl.arrays.VaoFactory
 import org.mrlem.siage3d.core.common.io.AssetManager.text
@@ -8,6 +9,10 @@ import org.mrlem.siage3d.core.common.io.loaders.ObjLoader
 import org.mrlem.siage3d.core.scene.graph.resources.shapes.Shape
 
 object VaoCache : AbstractCache<Vao>() {
+
+    override fun ref(resources: Resources, resId: Int): Ref<Vao> = VaoRef(resources, resId)
+
+    fun ref(key: String, creator: () -> Shape.Data): Ref<Vao> = PredefinedVaoRef(key, creator)
 
     override fun create(resources: Resources, resId: Int): Vao {
         return VaoFactory.createVao(ObjLoader().load(text(resId)))
@@ -22,6 +27,24 @@ object VaoCache : AbstractCache<Vao>() {
             objects.values.forEach(VaoFactory::destroyVao)
         }
         super.clear()
+    }
+
+    private class VaoRef(
+        private val resources: Resources,
+        @RawRes private val resId: Int
+    ) : Ref<Vao>() {
+
+        override fun get(): Vao = VaoCache.get(resources, resId)
+
+    }
+
+    private class PredefinedVaoRef(
+        private val key: String,
+        private val creator: () -> Shape.Data
+    ) : Ref<Vao>() {
+
+        override fun get(): Vao = VaoCache.get(key, creator)
+
     }
 
 }
