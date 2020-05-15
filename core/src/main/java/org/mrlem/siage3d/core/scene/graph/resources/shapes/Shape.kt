@@ -2,7 +2,7 @@ package org.mrlem.siage3d.core.scene.graph.resources.shapes
 
 import android.opengl.GLES30.*
 import org.mrlem.siage3d.core.common.gl.arrays.Vao
-import org.mrlem.siage3d.core.common.io.caches.Ref
+import org.mrlem.siage3d.core.common.io.caches.AbstractCache.Ref
 
 open class Shape(
     private val vaoRef: Ref<Vao>

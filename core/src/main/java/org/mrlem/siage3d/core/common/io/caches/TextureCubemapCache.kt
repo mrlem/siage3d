@@ -39,9 +39,11 @@ object TextureCubemapCache : AbstractCache<CubemapTexture>() {
     private class TextureCubemapRef(
         private val resources: Resources,
         @ArrayRes private val resId: Int
-    ) : Ref<CubemapTexture>() {
+    ) : AbstractCache.Ref<CubemapTexture>() {
 
-        override fun get(): CubemapTexture = TextureCubemapCache.get(resources, resId)
+        override var value: CubemapTexture? = create()
+
+        override fun create(): CubemapTexture = TextureCubemapCache.get(resources, resId)
 
     }
 

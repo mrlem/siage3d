@@ -32,18 +32,22 @@ object VaoCache : AbstractCache<Vao>() {
     private class VaoRef(
         private val resources: Resources,
         @RawRes private val resId: Int
-    ) : Ref<Vao>() {
+    ) : AbstractCache.Ref<Vao>() {
 
-        override fun get(): Vao = VaoCache.get(resources, resId)
+        override var value: Vao? = create()
+
+        override fun create(): Vao = VaoCache.get(resources, resId)
 
     }
 
     private class PredefinedVaoRef(
         private val key: String,
         private val creator: () -> Shape.Data
-    ) : Ref<Vao>() {
+    ) : AbstractCache.Ref<Vao>() {
 
-        override fun get(): Vao = VaoCache.get(key, creator)
+        override var value: Vao? = create()
+
+        override fun create(): Vao = VaoCache.get(key, creator)
 
     }
 

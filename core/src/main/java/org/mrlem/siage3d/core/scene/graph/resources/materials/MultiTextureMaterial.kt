@@ -4,7 +4,7 @@ import android.opengl.GLES30.*
 import org.mrlem.siage3d.core.common.gl.texture.Texture2D
 import org.mrlem.siage3d.core.common.gl.shaders.MultiTextureShader
 import org.mrlem.siage3d.core.common.gl.shaders.Shader
-import org.mrlem.siage3d.core.common.io.caches.Ref
+import org.mrlem.siage3d.core.common.io.caches.AbstractCache.Ref
 
 class MultiTextureMaterial(
     name: String,
