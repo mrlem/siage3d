@@ -6,7 +6,7 @@ import android.opengl.GLSurfaceView
 import android.util.AttributeSet
 import android.view.SurfaceHolder
 import org.mrlem.siage3d.core.common.io.*
-import org.mrlem.siage3d.core.common.gl.shaders.Shader
+import org.mrlem.siage3d.core.common.io.caches.ShaderCache
 import org.mrlem.siage3d.core.common.io.caches.VaoCache
 import org.mrlem.siage3d.core.common.io.caches.Texture2DCache
 import org.mrlem.siage3d.core.common.io.caches.TextureCubemapCache
@@ -22,7 +22,6 @@ class SceneView(context: Context, attributes: AttributeSet) : GLSurfaceView(cont
 
         override fun onSurfaceCreated(gl: GL10, config: EGLConfig) {
             AssetManager.init(context)
-            Shader.init()
 
             glEnable(GL_DEPTH_TEST)
             adapter?.init()
@@ -53,6 +52,7 @@ class SceneView(context: Context, attributes: AttributeSet) : GLSurfaceView(cont
         VaoCache.clear(true)
         Texture2DCache.clear(true)
         TextureCubemapCache.clear(true)
+        ShaderCache.clear()
         super.surfaceDestroyed(holder)
     }
 

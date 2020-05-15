@@ -3,6 +3,7 @@ package org.mrlem.siage3d.core.common.gl.shaders
 import android.opengl.GLES30.*
 import org.joml.Matrix4f
 import org.joml.Vector3f
+import org.mrlem.siage3d.core.common.io.caches.ShaderCache
 import org.mrlem.siage3d.core.scene.graph.nodes.lights.DirectionLightNode
 import org.mrlem.siage3d.core.scene.graph.nodes.lights.PointLightNode
 import java.nio.FloatBuffer
@@ -161,25 +162,10 @@ abstract class Shader(
 
         private val matrixBuffer = FloatBuffer.allocate(16)
 
-        private val shaders = mutableListOf<Shader>()
-
-        lateinit var defaultShader: TextureShader
-        lateinit var multiTextureShader: MultiTextureShader
-        lateinit var skyboxShader: CubemapTextureShader
-
         private var activeProgramId = 0
 
-        fun init() {
-            defaultShader = TextureShader()
-                .also { shaders.add(it) }
-            multiTextureShader = MultiTextureShader()
-                .also { shaders.add(it) }
-            skyboxShader = CubemapTextureShader()
-                .also { shaders.add(it) }
-        }
-
         fun notifyProjectionMatrix(matrix: Matrix4f) {
-            shaders.forEach {
+            ShaderCache.shaders.forEach {
                 if (it is ProjectionAware) {
                     it.use()
                     it.loadProjectionMatrix(matrix)
@@ -188,7 +174,7 @@ abstract class Shader(
         }
 
         fun notifyViewMatrix(matrix: Matrix4f) {
-            shaders.forEach {
+            ShaderCache.shaders.forEach {
                 if (it is ViewAware) {
                     it.use()
                     it.loadViewMatrix(matrix)
@@ -197,7 +183,7 @@ abstract class Shader(
         }
 
         fun notifyPointLight(light: PointLightNode, index: Int) {
-            shaders.forEach {
+            ShaderCache.shaders.forEach {
                 if (it is LightAware) {
                     it.use()
                     it.loadPointLight(light, index)
@@ -206,7 +192,7 @@ abstract class Shader(
         }
 
         fun notifyDirectionLight(light: DirectionLightNode) {
-            shaders.forEach {
+            ShaderCache.shaders.forEach {
                 if (it is LightAware) {
                     it.use()
                     it.loadDirectionLight(light)
@@ -215,7 +201,7 @@ abstract class Shader(
         }
 
         fun notifyFog(color: Vector3f, gradient: Float, density: Float) {
-            shaders.forEach {
+            ShaderCache.shaders.forEach {
                 if (it is FogAware) {
                     it.use()
                     it.loadFogColor(color)

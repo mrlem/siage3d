@@ -2,6 +2,7 @@ package org.mrlem.siage3d.core.scene.graph.nodes
 
 import org.mrlem.siage3d.core.scene.graph.resources.materials.Material
 import org.mrlem.siage3d.core.common.gl.shaders.Shader
+import org.mrlem.siage3d.core.common.io.caches.ShaderCache
 import org.mrlem.siage3d.core.scene.graph.resources.shapes.Shape
 
 open class ObjectNode(
@@ -10,7 +11,7 @@ open class ObjectNode(
     name: String? = null
 ) : SpatialNode(name ?: "Object #${counter++}") {
 
-    open fun render(shader: Shader = material?.shader ?: Shader.defaultShader) {
+    open fun render(shader: Shader = material?.shader ?: ShaderCache.textureShader) {
         (shader as? Shader.TransformationAware)?.loadTransformationMatrix(globalTransform)
 
         // draw the shape: material is handled at scene-level
