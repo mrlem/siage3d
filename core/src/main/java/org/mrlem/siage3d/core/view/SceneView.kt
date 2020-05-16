@@ -16,7 +16,7 @@ import javax.microedition.khronos.opengles.GL10
 class SceneView(context: Context, attributes: AttributeSet) : GLSurfaceView(context, attributes) {
 
     var adapter: SceneAdapter? = null
-    private var lastTime = System.nanoTime()
+    private var lastTime: Long = 0L
 
     private val renderer  = object : Renderer {
 
@@ -25,6 +25,8 @@ class SceneView(context: Context, attributes: AttributeSet) : GLSurfaceView(cont
 
             glEnable(GL_DEPTH_TEST)
             adapter?.init()
+
+            lastTime = System.nanoTime()
         }
 
         override fun onSurfaceChanged(gl: GL10?, width: Int, height: Int) {
