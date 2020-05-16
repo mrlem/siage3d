@@ -1,7 +1,6 @@
 package org.mrlem.siage3d.core.common.gl.texture
 
 import android.opengl.GLES30.*
-import org.mrlem.siage3d.core.common.gl.texture.Texture
 
 class CubemapTexture(id: Int) : Texture(id) {
 
