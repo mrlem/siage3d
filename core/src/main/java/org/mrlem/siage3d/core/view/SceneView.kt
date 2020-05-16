@@ -4,7 +4,6 @@ import android.content.Context
 import android.opengl.GLES30.*
 import android.opengl.GLSurfaceView
 import android.util.AttributeSet
-import android.view.SurfaceHolder
 import org.mrlem.siage3d.core.common.io.*
 import org.mrlem.siage3d.core.common.io.caches.ShaderCache
 import org.mrlem.siage3d.core.common.io.caches.VaoCache
@@ -21,6 +20,8 @@ class SceneView(context: Context, attributes: AttributeSet) : GLSurfaceView(cont
     private val renderer  = object : Renderer {
 
         override fun onSurfaceCreated(gl: GL10, config: EGLConfig) {
+            clearCaches()
+
             AssetManager.init(context)
 
             glEnable(GL_DEPTH_TEST)
@@ -50,12 +51,15 @@ class SceneView(context: Context, attributes: AttributeSet) : GLSurfaceView(cont
         renderMode = RENDERMODE_CONTINUOUSLY
     }
 
-    override fun surfaceDestroyed(holder: SurfaceHolder?) {
+    ///////////////////////////////////////////////////////////////////////////
+    // Internal
+    ///////////////////////////////////////////////////////////////////////////
+
+    private fun clearCaches() {
         VaoCache.clear(true)
         Texture2DCache.clear(true)
         TextureCubemapCache.clear(true)
         ShaderCache.clear()
-        super.surfaceDestroyed(holder)
     }
 
 }
