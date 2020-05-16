@@ -1,7 +1,7 @@
 package org.mrlem.siage3d.core.common.gl.arrays
 
 import android.opengl.GLES30.*
-import org.mrlem.siage3d.core.common.gl.shaders.Shader
+import org.mrlem.siage3d.core.common.gl.Program
 import org.mrlem.siage3d.core.common.io.toBuffer
 import org.mrlem.siage3d.core.scene.graph.resources.shapes.Shape
 import java.nio.FloatBuffer
@@ -18,9 +18,9 @@ object VaoFactory {
 
     fun createVao(data: Shape.Data) = Vao(createVao(), data.indices.size).apply {
         use {
-            createAttribVbo(Shader.Attribute.POSITIONS.index, 3, data.positions.toBuffer())
-            createAttribVbo(Shader.Attribute.TEXCOORDS.index, 2, data.texCoords.toBuffer())
-            createAttribVbo(Shader.Attribute.NORMALS.index, 3, data.normals.toBuffer())
+            createAttribVbo(Program.Attribute.POSITIONS.index, 3, data.positions.toBuffer())
+            createAttribVbo(Program.Attribute.TEXCOORDS.index, 2, data.texCoords.toBuffer())
+            createAttribVbo(Program.Attribute.NORMALS.index, 3, data.normals.toBuffer())
             createIndexBugfferVbo(data.indices.toBuffer())
         }
         glBindBuffer(GL_ARRAY_BUFFER, 0)

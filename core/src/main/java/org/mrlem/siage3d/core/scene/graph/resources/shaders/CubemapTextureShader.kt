@@ -1,12 +1,12 @@
-package org.mrlem.siage3d.core.common.gl.shaders
+package org.mrlem.siage3d.core.scene.graph.resources.shaders
 
 import org.joml.Matrix4f
 import org.joml.Vector3f
 import org.mrlem.siage3d.core.R
-import org.mrlem.siage3d.core.common.io.AssetManager.text
+import org.mrlem.siage3d.core.common.gl.Program
 
 class CubemapTextureShader : Shader(
-    text(R.raw.shader_skybox_v), text(R.raw.shader_skybox_f),
+    R.raw.shader_skybox_v, R.raw.shader_skybox_f,
     Attribute.values().asList(), Uniform.values().asList()
 ), Shader.ProjectionAware, Shader.ViewAware, Shader.FogAware {
 
@@ -17,14 +17,14 @@ class CubemapTextureShader : Shader(
     ///////////////////////////////////////////////////////////////////////////
 
     override fun loadProjectionMatrix(matrix: Matrix4f) {
-        loadMatrix(Uniform.PROJECTION_MATRIX, matrix)
+        program.loadMatrix(Uniform.PROJECTION_MATRIX, matrix)
     }
 
     override fun loadViewMatrix(matrix: Matrix4f) {
         rotationOnlyMatrix
             .set(matrix)
             .setTranslation(0f, 0f, 0f)
-        loadMatrix(Uniform.VIEW_MATRIX, rotationOnlyMatrix)
+        program.loadMatrix(Uniform.VIEW_MATRIX, rotationOnlyMatrix)
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -32,7 +32,7 @@ class CubemapTextureShader : Shader(
     ///////////////////////////////////////////////////////////////////////////
 
     override fun loadFogColor(color: Vector3f) {
-        loadVector(Uniform.FOG_COLOR, color)
+        program.loadVector(Uniform.FOG_COLOR, color)
     }
 
     override fun loadFogDensity(density: Float) {
@@ -50,7 +50,7 @@ class CubemapTextureShader : Shader(
     enum class Attribute(
         override val id: String,
         override val index: Int
-    ) : AttributeDefinition {
+    ) : Program.AttributeDefinition {
 
         POSITIONS("position", 0)
 
@@ -63,7 +63,7 @@ class CubemapTextureShader : Shader(
     enum class Uniform(
         override val id: String,
         override var location: Int = 0
-    ) : UniformDefinition {
+    ) : Program.UniformDefinition {
 
         PROJECTION_MATRIX("projectionMatrix"),
         VIEW_MATRIX("viewMatrix"),

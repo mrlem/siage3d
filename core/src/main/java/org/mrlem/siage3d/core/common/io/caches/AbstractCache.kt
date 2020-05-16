@@ -19,7 +19,7 @@ abstract class AbstractCache<T> {
     ///////////////////////////////////////////////////////////////////////////
 
     protected fun get(resources: Resources, resId: Int): T {
-        return getOrCreate("$RESOURCE_SCHEME:$resId") { create(resources, resId)}
+        return getOrCreate("$RESOURCE_SCHEME:$resId") { create(resources, resId) }
     }
 
     protected fun getOrCreate(key: String, creator: () -> T): T {

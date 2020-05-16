@@ -3,7 +3,7 @@ package org.mrlem.siage3d.core.scene.graph.nodes.skies
 import android.opengl.GLES30.*
 import org.joml.Vector3f
 import org.mrlem.siage3d.core.scene.graph.resources.materials.CubemapTextureMaterial
-import org.mrlem.siage3d.core.common.gl.shaders.Shader
+import org.mrlem.siage3d.core.scene.graph.resources.shaders.Shader
 import org.mrlem.siage3d.core.scene.graph.resources.shapes.BoxShape
 
 class BoxSkyNode(

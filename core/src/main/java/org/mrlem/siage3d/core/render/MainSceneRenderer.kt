@@ -5,7 +5,7 @@ import org.mrlem.siage3d.core.scene.graph.nodes.lights.DirectionLightNode
 import org.mrlem.siage3d.core.scene.graph.nodes.lights.PointLightNode
 import org.mrlem.siage3d.core.scene.graph.nodes.skies.SkyNode
 import org.mrlem.siage3d.core.scene.graph.resources.materials.Material
-import org.mrlem.siage3d.core.common.gl.shaders.Shader
+import org.mrlem.siage3d.core.scene.graph.resources.shaders.Shader
 
 class MainSceneRenderer : SceneRenderer() {
 

@@ -2,9 +2,9 @@ package org.mrlem.siage3d.core.scene.graph.resources.materials
 
 import android.opengl.GLES30.*
 import org.mrlem.siage3d.core.common.gl.texture.Texture2D
-import org.mrlem.siage3d.core.common.gl.shaders.MultiTextureShader
+import org.mrlem.siage3d.core.scene.graph.resources.shaders.MultiTextureShader
 import org.mrlem.siage3d.core.common.io.caches.AbstractCache.Ref
-import org.mrlem.siage3d.core.common.io.caches.ShaderCache
+import org.mrlem.siage3d.core.scene.graph.resources.shaders.Shader
 
 class MultiTextureMaterial(
     name: String,
@@ -21,7 +21,7 @@ class MultiTextureMaterial(
     private val fakeLighting: Boolean = false
 ) : Material(name) {
 
-    override val shader: MultiTextureShader = ShaderCache.multiTextureShader
+    override val shader: MultiTextureShader = Shader.multiTextureShader
 
     override fun setup() {
         if (hasTransparency) disableCulling() else enableCulling()

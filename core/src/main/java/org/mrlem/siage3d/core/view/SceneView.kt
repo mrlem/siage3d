@@ -5,7 +5,7 @@ import android.opengl.GLES30.*
 import android.opengl.GLSurfaceView
 import android.util.AttributeSet
 import org.mrlem.siage3d.core.common.io.*
-import org.mrlem.siage3d.core.common.io.caches.ShaderCache
+import org.mrlem.siage3d.core.common.io.caches.ProgramCache
 import org.mrlem.siage3d.core.common.io.caches.VaoCache
 import org.mrlem.siage3d.core.common.io.caches.Texture2DCache
 import org.mrlem.siage3d.core.common.io.caches.TextureCubemapCache
@@ -59,7 +59,7 @@ class SceneView(context: Context, attributes: AttributeSet) : GLSurfaceView(cont
         VaoCache.clear(true)
         Texture2DCache.clear(true)
         TextureCubemapCache.clear(true)
-        ShaderCache.clear()
+        ProgramCache.clear()
     }
 
 }

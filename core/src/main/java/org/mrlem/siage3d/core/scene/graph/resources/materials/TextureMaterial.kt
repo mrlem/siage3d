@@ -1,10 +1,9 @@
 package org.mrlem.siage3d.core.scene.graph.resources.materials
 
 import org.mrlem.siage3d.core.common.gl.texture.Texture2D
-import org.mrlem.siage3d.core.common.gl.shaders.TextureShader
-import org.mrlem.siage3d.core.common.gl.shaders.Shader
+import org.mrlem.siage3d.core.scene.graph.resources.shaders.TextureShader
 import org.mrlem.siage3d.core.common.io.caches.AbstractCache.Ref
-import org.mrlem.siage3d.core.common.io.caches.ShaderCache
+import org.mrlem.siage3d.core.scene.graph.resources.shaders.Shader
 
 class TextureMaterial(
     name: String,
@@ -17,7 +16,7 @@ class TextureMaterial(
     var fakeLighting: Boolean = false
 ) : Material(name) {
 
-    override val shader: TextureShader = ShaderCache.textureShader
+    override val shader: TextureShader = Shader.textureShader
 
     override fun setup() {
         if (hasTransparency) disableCulling() else enableCulling()
