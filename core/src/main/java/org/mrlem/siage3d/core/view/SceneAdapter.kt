@@ -1,7 +1,6 @@
 package org.mrlem.siage3d.core.view
 
 import org.mrlem.siage3d.core.render.MainSceneRenderer
-import org.mrlem.siage3d.core.render.SceneRenderer
 import org.mrlem.siage3d.core.render.ShadowSceneRenderer
 import org.mrlem.siage3d.core.scene.graph.Scene
 import org.mrlem.siage3d.core.scene.dsl.SceneBuilder
@@ -11,17 +10,17 @@ import org.mrlem.siage3d.core.scene.dsl.SceneBuilder
  */
 abstract class SceneAdapter {
 
-    lateinit var scene: Scene
+    private val renderers = listOf(
+        ShadowSceneRenderer(),
+        MainSceneRenderer()
+    )
 
-    private lateinit var renderers: List<SceneRenderer>
+    lateinit var scene: Scene
 
     internal fun init() {
         if (!::scene.isInitialized) {
             scene = onSceneCreate().build()
-            renderers = listOf(
-                ShadowSceneRenderer(scene),
-                MainSceneRenderer(scene)
-            )
+            renderers.forEach { it.scene = scene }
             onSceneCreated()
         }
     }
