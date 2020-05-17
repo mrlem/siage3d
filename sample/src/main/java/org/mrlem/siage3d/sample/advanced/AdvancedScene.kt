@@ -1,4 +1,4 @@
-package org.mrlem.siage3d.sample
+package org.mrlem.siage3d.sample.advanced
 
 import org.mrlem.siage3d.core.common.io.AssetManager
 import org.mrlem.siage3d.core.common.math.randomFloat
@@ -6,6 +6,7 @@ import org.mrlem.siage3d.core.scene.dsl.SceneBuilder
 import org.mrlem.siage3d.core.scene.dsl.scene
 import org.mrlem.siage3d.core.scene.graph.nodes.terrains.TerrainNode
 import org.mrlem.siage3d.core.scene.graph.resources.shapes.BoxShape
+import org.mrlem.siage3d.sample.R
 
 ///////////////////////////////////////////////////////////////////////////
 // The scene

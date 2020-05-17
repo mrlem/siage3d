@@ -1,4 +1,4 @@
-package org.mrlem.siage3d.sample
+package org.mrlem.siage3d.sample.advanced
 
 import org.mrlem.siage3d.core.common.math.toRadians
 import org.mrlem.siage3d.core.scene.graph.nodes.ObjectNode

@@ -1,9 +1,10 @@
-package org.mrlem.siage3d.sample
+package org.mrlem.siage3d.sample.advanced
 
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_advanced.*
 import org.mrlem.siage3d.core.SceneActivity
 import org.mrlem.siage3d.core.view.DirectionPadView
+import org.mrlem.siage3d.sample.R
 
 class AdvancedActivity : SceneActivity() {
 

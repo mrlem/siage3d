@@ -1,7 +1,8 @@
-package org.mrlem.siage3d.sample
+package org.mrlem.siage3d.sample.simple
 
 import org.mrlem.siage3d.core.scene.dsl.scene
 import org.mrlem.siage3d.core.scene.graph.resources.shapes.BoxShape
+import org.mrlem.siage3d.sample.R
 
 ///////////////////////////////////////////////////////////////////////////
 // Scene
