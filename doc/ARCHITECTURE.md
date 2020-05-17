@@ -23,9 +23,9 @@ A picture (huhu) apparently being worth a thousand words, which I'd rather not w
                     |       |           |             | | --> | . caches  |
                     |       | . object  | . materials | |     | . loaders |
   ----------------> |       | . group   | . shapes    | |     +-----------+ 
-                    | Scene | . light   |             | |     | GL        |
+                    | Scene | . light   | . shaders   | |     | GL        |
       +-------+     |  API  | . camera  |             | |     |           |
-  --> | Scene | --> |       | . sky     |             | |     | . shader  |
+  --> | Scene | --> |       | . sky     |             | |     | . program |
       |  DSL  |     |       | . terrain |             | |     | . vao/vbo |
       +-------+     |       |           |             | |     | . texture |
                     |       +-----------+-------------+ |     | . fbo     |

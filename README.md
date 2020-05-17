@@ -2,7 +2,7 @@
 
 **Siage3D** stands for **SI**mple **A**ndroid **G**ame **E**ngine.
 
-![Screenshot](doc/screenshot.png)
+![Screenshot](doc/readme-screenshot.png)
 
 So it's a game engine that is:
 
@@ -91,7 +91,7 @@ class SimpleSceneAdapter : SceneAdapter() {
 
 And voilà!
 
-Want to know more? checkout the slightly more [advanced sample](sample/src/main/java/org/mrlem/siage3d/sample/AdvancedSceneAdapter.kt)!
+Want to know more? checkout the slightly more [advanced sample](sample/src/main/java/org/mrlem/siage3d/sample/advanced/SceneAdapter.kt)!
 
 ## Features
 
