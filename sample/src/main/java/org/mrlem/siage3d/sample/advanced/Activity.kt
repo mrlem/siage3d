@@ -6,11 +6,11 @@ import org.mrlem.siage3d.core.SceneActivity
 import org.mrlem.siage3d.core.view.DirectionPadView
 import org.mrlem.siage3d.sample.R
 
-class AdvancedActivity : SceneActivity() {
+class Activity : SceneActivity() {
 
     override val layoutId: Int = R.layout.activity_advanced
     override val sceneId: Int = R.id.sceneView
-    override val sceneAdapter = AdvancedSceneAdapter()
+    override val sceneAdapter = SceneAdapter()
 
     private val padListener = object : DirectionPadView.OnDirectionPadListener {
         override fun onDirectionChanged(direction: DirectionPadView.Direction?, active: Boolean) {

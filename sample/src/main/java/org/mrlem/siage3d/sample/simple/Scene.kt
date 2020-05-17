@@ -8,7 +8,7 @@ import org.mrlem.siage3d.sample.R
 // Scene
 ///////////////////////////////////////////////////////////////////////////
 
-val simpleScene = scene {
+val initialScene = scene {
     camera {
         position(0f, 1.75f, 5f)
     }

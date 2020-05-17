@@ -10,7 +10,7 @@ import kotlin.math.sin
 /**
  * This is a slightly more advanced sample, with terrain, skybox & multiple animated light sources & camera control.
  */
-class AdvancedSceneAdapter : SceneAdapter() {
+class SceneAdapter : SceneAdapter() {
 
     // scene objects to manipulate
     private val light0 by lazy { scene.get<PointLightNode>("light0")!! }
@@ -23,7 +23,7 @@ class AdvancedSceneAdapter : SceneAdapter() {
     var linearVelocity = 0f
     var angularVelocity = 0f
 
-    override fun onSceneCreate() = advancedScene
+    override fun onSceneCreate() = initialScene
 
     override fun onUpdate(delta: Float) {
         time += delta

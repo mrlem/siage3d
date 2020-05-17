@@ -12,7 +12,7 @@ import org.mrlem.siage3d.sample.R
 // The scene
 ///////////////////////////////////////////////////////////////////////////
 
-val advancedScene = scene {
+val initialScene = scene {
     camera {
         position(0f, 40f, 5f)
     }
