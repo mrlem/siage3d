@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".advanced.Activity">
+    tools:context=".advanced.Game">
 
     <org.mrlem.siage3d.core.view.SceneView
         android:id="@+id/sceneView"

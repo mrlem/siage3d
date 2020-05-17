@@ -1,5 +1,6 @@
 package org.mrlem.siage3d.core.render
 
+import org.mrlem.siage3d.core.scene.graph.Scene
 import org.mrlem.siage3d.core.scene.graph.nodes.ObjectNode
 import org.mrlem.siage3d.core.scene.graph.nodes.lights.DirectionLightNode
 import org.mrlem.siage3d.core.scene.graph.nodes.lights.PointLightNode
@@ -7,7 +8,7 @@ import org.mrlem.siage3d.core.scene.graph.nodes.skies.SkyNode
 import org.mrlem.siage3d.core.scene.graph.resources.materials.Material
 import org.mrlem.siage3d.core.scene.graph.resources.shaders.Shader
 
-class MainSceneRenderer : SceneRenderer() {
+class MainSceneRenderer(scene: Scene) : SceneRenderer(scene) {
 
     override fun render() {
         // apply camera

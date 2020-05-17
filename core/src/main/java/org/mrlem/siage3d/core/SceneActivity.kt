@@ -8,18 +8,22 @@ import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_scene.*
+import org.mrlem.siage3d.core.common.io.AssetManager
 import org.mrlem.siage3d.core.view.SceneAdapter
 import org.mrlem.siage3d.core.view.SceneView
 
-abstract class SceneActivity : AppCompatActivity() {
+abstract class SceneActivity<A : SceneAdapter> : AppCompatActivity() {
 
     @LayoutRes open val layoutId: Int = R.layout.activity_scene
     @IdRes open val sceneId: Int = R.id.sceneView
 
-    abstract val sceneAdapter: SceneAdapter
+    protected val sceneAdapter: A by lazy { createSceneAdapter() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AssetManager.init(applicationContext)
+
+        // setup scene view
         setupFullscreen()
         setContentView(layoutId)
         findViewById<SceneView>(sceneId).adapter = sceneAdapter
@@ -41,6 +45,8 @@ abstract class SceneActivity : AppCompatActivity() {
             setupFullscreen()
         }
     }
+
+    abstract fun createSceneAdapter(): A
 
 }
 

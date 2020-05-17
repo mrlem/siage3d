@@ -31,7 +31,9 @@ import org.mrlem.siage3d.core.scene.graph.resources.materials.CubemapTextureMate
 // Scene
 ///////////////////////////////////////////////////////////////////////////
 
-fun scene(init: SceneBuilder.() -> Unit) = SceneBuilder().apply(init)
+fun scene(init: SceneBuilder.() -> Unit) = SceneBuilder()
+    .apply(init)
+    .build()
 
 @SceneDsl
 class SceneBuilder(

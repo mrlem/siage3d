@@ -28,7 +28,7 @@ object ProgramCache {
         private val uniforms: List<Program.UniformDefinition>
     ) : Ref<Program>() {
 
-        override var value: Program = create()
+        override lateinit var value: Program
 
         override fun create() = Program(text(vertexShaderResId), text(fragmentShaderResId), attributes, uniforms)
 

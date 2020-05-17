@@ -29,7 +29,7 @@ object VaoCache : AbstractCache<Vao>() {
         @RawRes private val resId: Int
     ) : AbstractCache.Ref<Vao>() {
 
-        override var value: Vao = create()
+        override lateinit var value: Vao
 
         override fun create(): Vao = VaoCache.get(resources, resId)
 
@@ -40,7 +40,7 @@ object VaoCache : AbstractCache<Vao>() {
         private val creator: () -> Shape.Data
     ) : AbstractCache.Ref<Vao>() {
 
-        override var value: Vao = create()
+        override lateinit var value: Vao
 
         override fun create(): Vao = VaoCache.get(key, creator)
 

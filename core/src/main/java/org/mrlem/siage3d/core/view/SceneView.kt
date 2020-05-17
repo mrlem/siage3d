@@ -31,7 +31,6 @@ class SceneView(context: Context, attributes: AttributeSet) : GLSurfaceView(cont
 
             // init adapter
             glEnable(GL_DEPTH_TEST)
-            adapter?.init()
 
             lastTime = System.nanoTime()
         }

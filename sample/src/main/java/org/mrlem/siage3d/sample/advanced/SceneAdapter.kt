@@ -1,6 +1,7 @@
 package org.mrlem.siage3d.sample.advanced
 
 import org.mrlem.siage3d.core.common.math.toRadians
+import org.mrlem.siage3d.core.scene.graph.Scene
 import org.mrlem.siage3d.core.scene.graph.nodes.ObjectNode
 import org.mrlem.siage3d.core.scene.graph.nodes.lights.PointLightNode
 import org.mrlem.siage3d.core.view.SceneAdapter
@@ -10,7 +11,7 @@ import kotlin.math.sin
 /**
  * This is a slightly more advanced sample, with terrain, skybox & multiple animated light sources & camera control.
  */
-class SceneAdapter : SceneAdapter() {
+class SceneAdapter(scene: Scene) : SceneAdapter(scene) {
 
     // scene objects to manipulate
     private val light0 by lazy { scene.get<PointLightNode>("light0")!! }
@@ -22,8 +23,6 @@ class SceneAdapter : SceneAdapter() {
     private var time = 0f
     var linearVelocity = 0f
     var angularVelocity = 0f
-
-    override fun onSceneCreate() = initialScene
 
     override fun onUpdate(delta: Float) {
         time += delta
@@ -46,4 +45,5 @@ class SceneAdapter : SceneAdapter() {
             )
         }
     }
+
 }

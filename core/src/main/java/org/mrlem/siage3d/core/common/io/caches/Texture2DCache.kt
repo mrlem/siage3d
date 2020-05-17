@@ -23,7 +23,7 @@ object Texture2DCache : AbstractCache<Texture2D>() {
         @DrawableRes private val resId: Int
     ) : AbstractCache.Ref<Texture2D>() {
 
-        override var value: Texture2D = create()
+        override lateinit var value: Texture2D
 
         override fun create(): Texture2D = Texture2DCache.get(resources, resId)
 
