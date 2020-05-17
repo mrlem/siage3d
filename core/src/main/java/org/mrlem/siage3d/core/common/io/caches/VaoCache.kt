@@ -11,8 +11,10 @@ import org.mrlem.siage3d.core.scene.graph.resources.shapes.Shape
 object VaoCache : AbstractCache<Vao>() {
 
     override fun ref(resources: Resources, resId: Int): Ref<Vao> = VaoRef(resources, resId)
+        .also { references.add(it) }
 
     fun ref(key: String, creator: () -> Shape.Data): Ref<Vao> = PredefinedVaoRef(key, creator)
+        .also { references.add(it) }
 
     override fun create(resources: Resources, resId: Int): Vao {
         return VaoFactory.createVao(ObjLoader().load(text(resId)))
@@ -22,19 +24,12 @@ object VaoCache : AbstractCache<Vao>() {
         VaoFactory.createVao(creator())
     }
 
-    fun clear(destroy: Boolean = false) {
-        if (destroy) {
-            objects.values.forEach(VaoFactory::destroyVao)
-        }
-        super.clear()
-    }
-
     private class VaoRef(
         private val resources: Resources,
         @RawRes private val resId: Int
     ) : AbstractCache.Ref<Vao>() {
 
-        override var value: Vao? = create()
+        override var value: Vao = create()
 
         override fun create(): Vao = VaoCache.get(resources, resId)
 
@@ -45,7 +40,7 @@ object VaoCache : AbstractCache<Vao>() {
         private val creator: () -> Shape.Data
     ) : AbstractCache.Ref<Vao>() {
 
-        override var value: Vao? = create()
+        override var value: Vao = create()
 
         override fun create(): Vao = VaoCache.get(key, creator)
 

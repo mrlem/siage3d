@@ -15,7 +15,7 @@ class CubemapTextureMaterial(
     override fun setup() {
         disableCulling()
 
-        textureRef.get().use()
+        textureRef.value.use()
     }
 
 }

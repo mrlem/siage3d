@@ -9,7 +9,7 @@ open class Shape(
 ) {
 
     fun draw() {
-        vaoRef.get().use {
+        vaoRef.value.use {
             glDrawElements(GL_TRIANGLES, indicesCount, GL_UNSIGNED_SHORT, 0)
         }
     }

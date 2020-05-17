@@ -9,6 +9,7 @@ import org.mrlem.siage3d.core.common.io.AssetManager.bitmap
 object Texture2DCache : AbstractCache<Texture2D>() {
 
     override fun ref(resources: Resources, resId: Int): Ref<Texture2D> = Texture2DRef(resources, resId)
+        .also { references.add(it) }
 
     override fun create(resources: Resources, resId: Int): Texture2D {
         val bitmap = bitmap(resId)
@@ -17,19 +18,12 @@ object Texture2DCache : AbstractCache<Texture2D>() {
         }
     }
 
-    fun clear(destroy: Boolean = false) {
-        if (destroy) {
-            objects.values.forEach(TextureFactory::destroyTexture)
-        }
-        super.clear()
-    }
-
     private class Texture2DRef(
         private val resources: Resources,
         @DrawableRes private val resId: Int
     ) : AbstractCache.Ref<Texture2D>() {
 
-        override var value: Texture2D? = create()
+        override var value: Texture2D = create()
 
         override fun create(): Texture2D = Texture2DCache.get(resources, resId)
 

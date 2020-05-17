@@ -18,15 +18,15 @@ class MultiTextureShader : Shader(
     ///////////////////////////////////////////////////////////////////////////
 
     override fun loadProjectionMatrix(matrix: Matrix4f) {
-        program.loadMatrix(Uniform.PROJECTION_MATRIX, matrix)
+        programRef.value.loadMatrix(Uniform.PROJECTION_MATRIX, matrix)
     }
 
     override fun loadViewMatrix(matrix: Matrix4f) {
-        program.loadMatrix(Uniform.VIEW_MATRIX, matrix)
+        programRef.value.loadMatrix(Uniform.VIEW_MATRIX, matrix)
     }
 
     override fun loadTransformationMatrix(matrix: Matrix4f) {
-        program.loadMatrix(Uniform.TRANSFORMATION_MATRIX, matrix)
+        programRef.value.loadMatrix(Uniform.TRANSFORMATION_MATRIX, matrix)
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -34,22 +34,22 @@ class MultiTextureShader : Shader(
     ///////////////////////////////////////////////////////////////////////////
 
     override fun loadPointLight(light: PointLightNode, index: Int) {
-        program.loadVector(lightPosition[index], light.position())
-        program.loadFloat(lightConstant[index], light.constant)
-        program.loadFloat(lightLinear[index], light.linear)
-        program.loadFloat(lightQuadratic[index], light.quadratic)
-        program.loadVector(lightAmbient[index], light.ambient)
-        program.loadVector(lightDiffuse[index], light.diffuse)
+        programRef.value.loadVector(lightPosition[index], light.position())
+        programRef.value.loadFloat(lightConstant[index], light.constant)
+        programRef.value.loadFloat(lightLinear[index], light.linear)
+        programRef.value.loadFloat(lightQuadratic[index], light.quadratic)
+        programRef.value.loadVector(lightAmbient[index], light.ambient)
+        programRef.value.loadVector(lightDiffuse[index], light.diffuse)
     }
 
     override fun loadDirectionLight(light: DirectionLightNode) {
-        program.loadVector(Uniform.DIRECTIONLIGHT_DIRECTION, light.localTransform.directionUp().negate())
-        program.loadVector(Uniform.DIRECTIONLIGHT_AMBIENT, light.ambient)
-        program.loadVector(Uniform.DIRECTIONLIGHT_DIFFUSE, light.diffuse)
+        programRef.value.loadVector(Uniform.DIRECTIONLIGHT_DIRECTION, light.localTransform.directionUp().negate())
+        programRef.value.loadVector(Uniform.DIRECTIONLIGHT_AMBIENT, light.ambient)
+        programRef.value.loadVector(Uniform.DIRECTIONLIGHT_DIFFUSE, light.diffuse)
     }
 
     fun loadFakeLighting(useFakeLighting: Boolean) {
-        program.loadFloat(Uniform.USE_FAKE_LIGHTING, if (useFakeLighting) 1f else 0f)
+        programRef.value.loadFloat(Uniform.USE_FAKE_LIGHTING, if (useFakeLighting) 1f else 0f)
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -57,15 +57,15 @@ class MultiTextureShader : Shader(
     ///////////////////////////////////////////////////////////////////////////
 
     override fun loadFogColor(color: Vector3f) {
-        program.loadVector(Uniform.FOG_COLOR, color)
+        programRef.value.loadVector(Uniform.FOG_COLOR, color)
     }
 
     override fun loadFogGradient(gradient: Float) {
-        program.loadFloat(Uniform.FOG_GRADIENT, gradient)
+        programRef.value.loadFloat(Uniform.FOG_GRADIENT, gradient)
     }
 
     override fun loadFogDensity(density: Float) {
-        program.loadFloat(Uniform.FOG_DENSITY, density)
+        programRef.value.loadFloat(Uniform.FOG_DENSITY, density)
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -73,24 +73,24 @@ class MultiTextureShader : Shader(
     ///////////////////////////////////////////////////////////////////////////
 
     fun loadSamplers() {
-        program.loadInt(Uniform.MATERIAL_DIFFUSE_BLEND_MAP, 0)
-        program.loadInt(Uniform.MATERIAL_DIFFUSE_BACKGROUND, 1)
-        program.loadInt(Uniform.MATERIAL_DIFFUSE_RED, 2)
-        program.loadInt(Uniform.MATERIAL_DIFFUSE_GREEN, 3)
-        program.loadInt(Uniform.MATERIAL_DIFFUSE_BLUE, 4)
+        programRef.value.loadInt(Uniform.MATERIAL_DIFFUSE_BLEND_MAP, 0)
+        programRef.value.loadInt(Uniform.MATERIAL_DIFFUSE_BACKGROUND, 1)
+        programRef.value.loadInt(Uniform.MATERIAL_DIFFUSE_RED, 2)
+        programRef.value.loadInt(Uniform.MATERIAL_DIFFUSE_GREEN, 3)
+        programRef.value.loadInt(Uniform.MATERIAL_DIFFUSE_BLUE, 4)
     }
 
     fun loadAmbient(ambient: Float) {
-        program.loadFloat(Uniform.MATERIAL_AMBIENT, ambient)
+        programRef.value.loadFloat(Uniform.MATERIAL_AMBIENT, ambient)
     }
 
     fun loadShine(shineDamper: Float, reflectivity: Float) {
-        program.loadFloat(Uniform.MATERIAL_SHINE_DAMPER, shineDamper)
-        program.loadFloat(Uniform.MATERIAL_REFLECTIVITY, reflectivity)
+        programRef.value.loadFloat(Uniform.MATERIAL_SHINE_DAMPER, shineDamper)
+        programRef.value.loadFloat(Uniform.MATERIAL_REFLECTIVITY, reflectivity)
     }
 
     fun loadScale(scale: Float) {
-        program.loadFloat(Uniform.MATERIAL_SCALE, scale)
+        programRef.value.loadFloat(Uniform.MATERIAL_SCALE, scale)
     }
 
     ///////////////////////////////////////////////////////////////////////////

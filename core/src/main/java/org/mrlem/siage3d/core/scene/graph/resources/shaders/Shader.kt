@@ -3,7 +3,8 @@ package org.mrlem.siage3d.core.scene.graph.resources.shaders
 import org.joml.Matrix4f
 import org.joml.Vector3f
 import org.mrlem.siage3d.core.common.gl.Program
-import org.mrlem.siage3d.core.common.io.AssetManager.text
+import org.mrlem.siage3d.core.common.io.caches.AbstractCache.Ref
+import org.mrlem.siage3d.core.common.io.caches.ProgramCache
 import org.mrlem.siage3d.core.scene.graph.nodes.lights.DirectionLightNode
 import org.mrlem.siage3d.core.scene.graph.nodes.lights.PointLightNode
 
@@ -14,12 +15,12 @@ abstract class Shader(
     uniforms: List<Program.UniformDefinition>
 ) : Comparable<Shader> {
 
-    protected var program: Program = Program(text(vertexSourceResId), text(fragmentSourceResId), attributes, uniforms)
+    protected var programRef: Ref<Program> = ProgramCache.ref(vertexSourceResId, fragmentSourceResId, attributes, uniforms)
 
-    override fun compareTo(other: Shader) = program.id.compareTo(other.program.id)
+    override fun compareTo(other: Shader) = programRef.value.id.compareTo(other.programRef.value.id)
 
     fun use() {
-        program.use()
+        programRef.value.use()
     }
 
     interface ProjectionAware {

@@ -32,11 +32,11 @@ class MultiTextureMaterial(
         shader.loadScale(scale)
         shader.loadSamplers()
 
-        blendMapRef.get().use(GL_TEXTURE0)
-        backgroundTextureRef.get().use(GL_TEXTURE1)
-        redTextureRef.get().use(GL_TEXTURE2)
-        greenTextureRef.get().use(GL_TEXTURE3)
-        blueTextureRef.get().use(GL_TEXTURE4)
+        blendMapRef.value.use(GL_TEXTURE0)
+        backgroundTextureRef.value.use(GL_TEXTURE1)
+        redTextureRef.value.use(GL_TEXTURE2)
+        greenTextureRef.value.use(GL_TEXTURE3)
+        blueTextureRef.value.use(GL_TEXTURE4)
     }
 
 }

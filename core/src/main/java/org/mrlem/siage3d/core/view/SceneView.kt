@@ -9,6 +9,7 @@ import org.mrlem.siage3d.core.common.io.caches.ProgramCache
 import org.mrlem.siage3d.core.common.io.caches.VaoCache
 import org.mrlem.siage3d.core.common.io.caches.Texture2DCache
 import org.mrlem.siage3d.core.common.io.caches.TextureCubemapCache
+import org.mrlem.siage3d.core.scene.graph.resources.shaders.Shader
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
@@ -20,10 +21,15 @@ class SceneView(context: Context, attributes: AttributeSet) : GLSurfaceView(cont
     private val renderer  = object : Renderer {
 
         override fun onSurfaceCreated(gl: GL10, config: EGLConfig) {
-            clearCaches()
-
             AssetManager.init(context)
 
+            // purge old gl refs from caches
+            VaoCache.init()
+            Texture2DCache.init()
+            TextureCubemapCache.init()
+            ProgramCache.init()
+
+            // init adapter
             glEnable(GL_DEPTH_TEST)
             adapter?.init()
 
@@ -49,17 +55,6 @@ class SceneView(context: Context, attributes: AttributeSet) : GLSurfaceView(cont
         setEGLContextClientVersion(3)
         setRenderer(renderer)
         renderMode = RENDERMODE_CONTINUOUSLY
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    // Internal
-    ///////////////////////////////////////////////////////////////////////////
-
-    private fun clearCaches() {
-        VaoCache.clear(true)
-        Texture2DCache.clear(true)
-        TextureCubemapCache.clear(true)
-        ProgramCache.clear()
     }
 
 }

@@ -2,17 +2,17 @@ package org.mrlem.siage3d.core.common.io.caches
 
 import android.content.res.Resources
 
-abstract class AbstractCache<T> {
+abstract class AbstractCache<T : Any> {
 
-    protected val objects = mutableMapOf<String, T>()
-    private val references = mutableListOf<Ref<T>>()
+    private val objects = mutableMapOf<String, T>()
+    protected val references = mutableListOf<Ref<T>>()
+
+    fun init() {
+        objects.clear()
+        references.forEach { it.renew() }
+    }
 
     abstract fun ref(resources: Resources, resId: Int): Ref<T>
-
-    fun clear() {
-        references.forEach { it.clear() }
-        objects.clear()
-    }
 
     ///////////////////////////////////////////////////////////////////////////
     // Internal
@@ -34,16 +34,14 @@ abstract class AbstractCache<T> {
 
     protected abstract fun create(resources: Resources, resId: Int): T
 
-    abstract class Ref<T> {
+    abstract class Ref<T : Any> {
 
-        abstract var value: T?
+        abstract var value: T
 
-        abstract fun create(): T
+        protected abstract fun create(): T
 
-        fun get(): T = value ?: create().also { value = it }
-
-        fun clear() {
-            value = null
+        fun renew() {
+            value = create()
         }
 
     }

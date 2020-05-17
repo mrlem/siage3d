@@ -17,14 +17,14 @@ class CubemapTextureShader : Shader(
     ///////////////////////////////////////////////////////////////////////////
 
     override fun loadProjectionMatrix(matrix: Matrix4f) {
-        program.loadMatrix(Uniform.PROJECTION_MATRIX, matrix)
+        programRef.value.loadMatrix(Uniform.PROJECTION_MATRIX, matrix)
     }
 
     override fun loadViewMatrix(matrix: Matrix4f) {
         rotationOnlyMatrix
             .set(matrix)
             .setTranslation(0f, 0f, 0f)
-        program.loadMatrix(Uniform.VIEW_MATRIX, rotationOnlyMatrix)
+        programRef.value.loadMatrix(Uniform.VIEW_MATRIX, rotationOnlyMatrix)
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -32,7 +32,7 @@ class CubemapTextureShader : Shader(
     ///////////////////////////////////////////////////////////////////////////
 
     override fun loadFogColor(color: Vector3f) {
-        program.loadVector(Uniform.FOG_COLOR, color)
+        programRef.value.loadVector(Uniform.FOG_COLOR, color)
     }
 
     override fun loadFogDensity(density: Float) {

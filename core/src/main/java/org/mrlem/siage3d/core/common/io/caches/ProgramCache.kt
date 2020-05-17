@@ -10,24 +10,25 @@ object ProgramCache {
     private val objects = mutableMapOf<String, Program>()
     private val references = mutableListOf<Ref<Program>>()
 
+    fun init() {
+        objects.clear()
+        references.forEach { it.renew() }
+    }
+
     fun ref(
         vertexShaderResId: Int, fragmentShaderResId: Int,
         attributes: List<Program.AttributeDefinition>, uniforms: List<Program.UniformDefinition>
     ): Ref<Program> = ProgramRef(vertexShaderResId, fragmentShaderResId, attributes, uniforms)
-
-    fun clear() {
-        references.forEach { it.clear() }
-        objects.clear()
-    }
+        .also { references.add(it) }
 
     private class ProgramRef(
         @RawRes private val vertexShaderResId: Int,
         @RawRes private val fragmentShaderResId: Int,
         private val attributes: List<Program.AttributeDefinition>,
         private val uniforms: List<Program.UniformDefinition>
-    ) : AbstractCache.Ref<Program>() {
+    ) : Ref<Program>() {
 
-        override var value: Program? = create()
+        override var value: Program = create()
 
         override fun create() = Program(text(vertexShaderResId), text(fragmentShaderResId), attributes, uniforms)
 

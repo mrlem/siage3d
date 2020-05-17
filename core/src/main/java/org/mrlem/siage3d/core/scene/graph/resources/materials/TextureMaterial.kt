@@ -26,7 +26,7 @@ class TextureMaterial(
         shader.loadShine(shineDamper, reflectvity)
         shader.loadScale(scale)
 
-        textureRef.get().use()
+        textureRef.value.use()
     }
 
 }
