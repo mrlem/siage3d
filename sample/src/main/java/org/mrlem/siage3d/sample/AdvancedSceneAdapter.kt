@@ -12,13 +12,13 @@ import kotlin.math.sin
  */
 class AdvancedSceneAdapter : SceneAdapter() {
 
-    // scene objects refs
-    private val light0 get() = scene.get<PointLightNode>("light0")!!
-    private val light1 get() = scene.get<PointLightNode>("light1")!!
-    private val lightCube0 get() = scene.get<ObjectNode>("light-cube0")!!
-    private val lightCube1 get() = scene.get<ObjectNode>("light-cube1")!!
+    // scene objects to manipulate
+    private val light0 by lazy { scene.get<PointLightNode>("light0")!! }
+    private val light1 by lazy { scene.get<PointLightNode>("light1")!! }
+    private val lightCube0 by lazy { scene.get<ObjectNode>("light-cube0")!! }
+    private val lightCube1 by lazy { scene.get<ObjectNode>("light-cube1")!! }
 
-    // time-bound variables
+    // time-bound variables: in a real game, this goes in your model
     private var time = 0f
     var linearVelocity = 0f
     var angularVelocity = 0f
