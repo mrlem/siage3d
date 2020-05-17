@@ -76,7 +76,7 @@ And finally: create the scene adapter, that's where you set & manipulate the sce
 ```kotlin
 class SimpleSceneAdapter : SceneAdapter() {
 
-    private val cube: ObjectNode get() = scene["my-cube"]!!
+    private val cube by lazy{ scene.get<ObjectNode>("my-cube")!! }
     private var time = 0f
 
     override fun onSceneCreate() = simpleScene
