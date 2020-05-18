@@ -13,9 +13,7 @@ import org.mrlem.siage3d.sample.R
 ///////////////////////////////////////////////////////////////////////////
 
 val initialScene = scene {
-    camera {
-        position(0f, 40f, 5f)
-    }
+    camera {}
 
     sky {
         color(.6f, .8f, 1f)
@@ -23,18 +21,15 @@ val initialScene = scene {
     }
 
     pointLight("light0") {
-        ambient(0f, 0f, 0f)
         diffuse(1f, 1f, .8f)
-        position(0f, 25f, 0f)
     }
 
     pointLight("light1") {
         diffuse(1f, 1f, .8f)
-        position(0f, 25f, 0f)
     }
 
     directionLight("sun") {
-        ambient(.1f, .1f, .1f)
+        ambient(.2f, .2f, .2f)
         diffuse(1f, 1f, 1f)
         rotation(180f, 75f, 0f)
     }

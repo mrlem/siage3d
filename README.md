@@ -30,9 +30,9 @@ implementation "org.mrlem.siage3d:core:1.0.0"
 Create an activity for your game:
 
 ```Kotlin
-class SimpleActivity : SceneActivity() {
+class Game : SceneActivity<World>() {
 
-    override val sceneAdapter = SimpleSceneAdapter()
+    override fun createSceneAdapter() = SceneAdapter(initialScene)
 
 }
 ```
@@ -40,7 +40,7 @@ class SimpleActivity : SceneActivity() {
 Declare it in your manifest:
 
 ```xml
-        <activity android:name=".SimpleActivity">
+        <activity android:name=".Game">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -50,7 +50,7 @@ Declare it in your manifest:
 
 Create the scene:
 ```kotlin
-val simpleScene = scene {
+val initialScene = scene {
     camera {
         position(0f, 1.75f, 5f)
     }
@@ -71,19 +71,30 @@ val simpleScene = scene {
 }
 ```
 
-And finally: create the scene adapter, that's where you set & manipulate the scene:
+Create the world representation:
+```kotlin
+class World : World {
+
+    var time = 0f
+
+    override fun update(delta: Float) {
+        time += delta
+    }
+
+}
+
+val world = World()
+```
+
+And finally: create the scene adapter, that's where you adapt the scene based on the world:
 
 ```kotlin
-class SimpleSceneAdapter : SceneAdapter() {
+class SceneAdapter(scene: Scene) : SceneAdapter<World>(scene, world) {
 
     private val cube by lazy{ scene.get<ObjectNode>("my-cube")!! }
-    private var time = 0f
 
-    override fun onSceneCreate() = simpleScene
-
-    override fun onUpdate(delta: Float) {
-        time += delta
-        cube.rotate(0f, time * 50f, 0f)
+    override fun onSceneUpdate() {
+        cube.rotate(0f, world.time * 50f, 0f)
     }
 
 }

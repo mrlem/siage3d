@@ -3,12 +3,14 @@ package org.mrlem.siage3d.core.view
 import org.mrlem.siage3d.core.render.MainSceneRenderer
 import org.mrlem.siage3d.core.render.ShadowSceneRenderer
 import org.mrlem.siage3d.core.scene.graph.Scene
+import org.mrlem.siage3d.core.world.World
 
 /**
  * Scene adapter: this is where we describe what we want to display, and how it changes through time.
  */
-abstract class SceneAdapter(
-    protected val scene: Scene
+abstract class SceneAdapter<W : World>(
+    protected val scene: Scene,
+    protected val world: W
 ) {
 
     private val renderers = listOf(
@@ -22,12 +24,13 @@ abstract class SceneAdapter(
     }
 
     internal fun update(delta: Float) {
-        onUpdate(delta)
+        world.update(delta)
+        onSceneUpdate()
         scene.update()
         renderers.forEach { it.render() }
     }
 
     open fun onResize(width: Int, height: Int) {}
-    open fun onUpdate(delta: Float) {}
+    open fun onSceneUpdate() {}
 
 }
