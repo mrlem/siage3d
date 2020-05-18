@@ -9,7 +9,6 @@ import org.mrlem.siage3d.core.common.io.caches.ProgramCache
 import org.mrlem.siage3d.core.common.io.caches.VaoCache
 import org.mrlem.siage3d.core.common.io.caches.Texture2DCache
 import org.mrlem.siage3d.core.common.io.caches.TextureCubemapCache
-import org.mrlem.siage3d.core.scene.graph.resources.shaders.Shader
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
