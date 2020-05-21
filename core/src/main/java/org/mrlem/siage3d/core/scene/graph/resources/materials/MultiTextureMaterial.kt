@@ -10,7 +10,7 @@ import org.mrlem.siage3d.core.scene.graph.resources.shaders.Shader
  * Texture map based material consisting in several textures, and map to say which part should contain which texture &
  * various properties.
  *
- * @property name see [Material.name].
+ * @param name see [Material.name].
  * @property blendMapRef reference to the texture map for selecting the textures.
  * @property backgroundTextureRef reference to the texture when no other is drawn..
  * @property redTextureRef reference to the texture drawn for texture map's red component.

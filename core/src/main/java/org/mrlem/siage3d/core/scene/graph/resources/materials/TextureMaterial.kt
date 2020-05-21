@@ -8,7 +8,7 @@ import org.mrlem.siage3d.core.scene.graph.resources.shaders.Shader
 /**
  * Texture-based material consisting in an image & various properties.
  *
- * @property name see [Material.name].
+ * @param name see [Material.name].
  * @property textureRef reference to the texture to be drawn.
  * @property scale scale to apply the texture.
  * @property ambient amount of ambient light produced by the material.

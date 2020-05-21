@@ -7,7 +7,7 @@ import org.joml.Vector3f
 /**
  * A scene graph node that is spatially positioned.
  *
- * @property name see [Node.name].
+ * @param name see [Node.name].
  */
 abstract class SpatialNode(name: String) : Node(name) {
 

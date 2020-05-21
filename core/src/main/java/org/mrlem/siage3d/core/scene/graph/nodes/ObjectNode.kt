@@ -4,6 +4,13 @@ import org.mrlem.siage3d.core.scene.graph.resources.materials.Material
 import org.mrlem.siage3d.core.scene.graph.resources.shaders.Shader
 import org.mrlem.siage3d.core.scene.graph.resources.shapes.Shape
 
+/**
+ * A scene-graph spatial node that renders something.
+ *
+ * @property shape shape to render.
+ * @property material material with which to render the shape.
+ * @param name see [Node.name].
+ */
 open class ObjectNode(
     val shape: Shape?,
     val material: Material?,

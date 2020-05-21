@@ -1,5 +1,12 @@
 package org.mrlem.siage3d.core.scene.graph.nodes
 
+/**
+ * A scene-graph spatial node that just contains other nodes.
+ *
+ * It renders nothing, but its transform will be applied to all children nodes.
+ *
+ * @param name see [Node.name].
+ */
 open class GroupNode(
     name: String? = null
 ) : SpatialNode(name ?: "Group #${counter++}") {
