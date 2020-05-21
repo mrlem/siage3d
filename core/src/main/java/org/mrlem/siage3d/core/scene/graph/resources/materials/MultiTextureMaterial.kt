@@ -6,6 +6,23 @@ import org.mrlem.siage3d.core.scene.graph.resources.shaders.MultiTextureShader
 import org.mrlem.siage3d.core.common.io.caches.AbstractCache.Ref
 import org.mrlem.siage3d.core.scene.graph.resources.shaders.Shader
 
+/**
+ * Texture map based material consisting in several textures, and map to say which part should contain which texture &
+ * various properties.
+ *
+ * @property name see [Material.name].
+ * @property blendMapRef reference to the texture map for selecting the textures.
+ * @property backgroundTextureRef reference to the texture when no other is drawn..
+ * @property redTextureRef reference to the texture drawn for texture map's red component.
+ * @property greenTextureRef reference to the texture drawn for texture map's green component.
+ * @property blueTextureRef reference to the texture drawn for texture map's blue component.
+ * @property scale scale to apply the texture.
+ * @property ambient amount of ambient light produced by the material.
+ * @property shineDamper how does reflectivity induced shininess spread on the surface.
+ * @property reflectvity how shiny is the surface?
+ * @property hasTransparency whether the material texture will allows to see what's behind it.
+ * @property fakeLighting whether the material needs fake lighting (when faking a more complex shape with a texture).
+ */
 class MultiTextureMaterial(
     name: String,
     private val blendMapRef: Ref<Texture2D>,
