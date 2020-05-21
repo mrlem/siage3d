@@ -26,7 +26,7 @@ abstract class SceneAdapter<W : World>(
     internal fun update(delta: Float) {
         world.update(delta)
         onSceneUpdate()
-        scene.update()
+        scene.applyTransforms()
         renderers.forEach { it.render() }
     }
 

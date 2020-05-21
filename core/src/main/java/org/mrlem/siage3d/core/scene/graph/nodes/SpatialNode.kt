@@ -4,13 +4,18 @@ import androidx.annotation.CallSuper
 import org.joml.Matrix4f
 import org.joml.Vector3f
 
+/**
+ * A scene graph node that is spatially positioned.
+ *
+ * @property name see [Node.name].
+ */
 abstract class SpatialNode(name: String) : Node(name) {
 
     val localTransform: Matrix4f = Matrix4f()
     protected val globalTransform = Matrix4f()
 
     @CallSuper
-    open fun update() {
+    open fun applyTransforms() {
         val parent = parent
         if (parent != null) {
             globalTransform

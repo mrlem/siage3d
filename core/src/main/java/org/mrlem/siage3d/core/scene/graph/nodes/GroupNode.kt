@@ -7,11 +7,11 @@ open class GroupNode(
     private val _children: MutableList<Node> = mutableListOf()
     val children: List<Node> get() = _children
 
-    override fun update() {
-        super.update()
+    override fun applyTransforms() {
+        super.applyTransforms()
         children
             .filterIsInstance<SpatialNode>()
-            .forEach(SpatialNode::update)
+            .forEach(SpatialNode::applyTransforms)
     }
 
     fun add(vararg nodes: Node) {
