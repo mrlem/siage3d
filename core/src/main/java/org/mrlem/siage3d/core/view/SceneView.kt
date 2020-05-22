@@ -1,17 +1,24 @@
 package org.mrlem.siage3d.core.view
 
 import android.content.Context
-import android.opengl.GLES30.*
+import android.opengl.GLES30.GL_DEPTH_TEST
+import android.opengl.GLES30.glEnable
 import android.opengl.GLSurfaceView
 import android.util.AttributeSet
 import org.mrlem.siage3d.core.common.io.caches.ProgramCache
-import org.mrlem.siage3d.core.common.io.caches.VaoCache
 import org.mrlem.siage3d.core.common.io.caches.Texture2DCache
 import org.mrlem.siage3d.core.common.io.caches.TextureCubemapCache
+import org.mrlem.siage3d.core.common.io.caches.VaoCache
+import org.mrlem.siage3d.core.scene.graph.Scene
 import org.mrlem.siage3d.core.scene.graph.resources.shaders.Shader
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
+/**
+ * View that displays a 3D [Scene].
+ *
+ * Internally, this is a [GLSurfaceView], so the same limitations apply.
+ */
 class SceneView(context: Context, attributes: AttributeSet) : GLSurfaceView(context, attributes) {
 
     var adapter: SceneAdapter? = null
@@ -44,6 +51,7 @@ class SceneView(context: Context, attributes: AttributeSet) : GLSurfaceView(cont
             val delta = (time - lastTime) / 1000000000f
             lastTime = time
 
+            // update adapter
             adapter?.update(delta)
         }
 
