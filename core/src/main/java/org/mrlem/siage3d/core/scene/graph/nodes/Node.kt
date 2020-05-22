@@ -19,7 +19,7 @@ abstract class Node(val name: String) {
     /**
      * Behaviours to be performed by this node.
      */
-    val behaviours: Collection<Behaviour> = _behaviours.values
+    val behaviours: Collection<Behaviour> get() = _behaviours.values
 
     /**
      * Add a behaviour to the node.
@@ -27,8 +27,8 @@ abstract class Node(val name: String) {
      * @param behaviour behaviour to add.
      */
     fun add(behaviour: Behaviour) {
-        _behaviours[behaviour::class.java] = behaviour
-        behaviour.node = this
+        _behaviours.putIfAbsent(behaviour::class.java, behaviour)
+            ?.node = this
     }
 
     /**
@@ -38,7 +38,7 @@ abstract class Node(val name: String) {
      */
     fun remove(behaviour: Behaviour) {
         _behaviours.remove(behaviour::class.java)
-        behaviour.node = null
+            ?.node = null
     }
 
 }

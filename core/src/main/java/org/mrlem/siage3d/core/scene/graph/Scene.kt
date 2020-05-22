@@ -19,7 +19,26 @@ class Scene(name: String?) : GroupNode(name) {
 
     val materials: MutableList<Material> = mutableListOf()
 
-    val states: MutableList<State> = mutableListOf()
+    private val _states: MutableMap<Class<out State>, State> = mutableMapOf()
+    val states: Collection<State> get() = _states.values
+
+    /**
+     * Add a state to the scene.
+     *
+     * @param state state to add.
+     */
+    fun add(state: State) {
+        _states.putIfAbsent(state::class.java, state)
+    }
+
+    /**
+     * Remove a state from the scene.
+     *
+     * @param state state to remove.
+     */
+    fun remove(state: State) {
+        _states.remove(state::class.java)
+    }
 
     ///////////////////////////////////////////////////////////////////////////
     // Node accessors, for convenience.

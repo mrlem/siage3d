@@ -17,7 +17,7 @@ class SceneAdapter(scene: Scene) : SceneAdapter(scene) {
     private val lightCube1 = scene.get<ObjectNode>("light-cube1")!!
 
     init {
-        scene.states += state
+        scene.add(state)
     }
 
     override fun onSceneUpdate() {
