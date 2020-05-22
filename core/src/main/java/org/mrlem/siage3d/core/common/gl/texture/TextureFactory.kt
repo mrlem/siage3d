@@ -13,6 +13,13 @@ object TextureFactory {
 
     private val arrays = intArrayOf(0)
 
+    /**
+     * Create a [Texture2D] from a [Bitmap] image.
+     *
+     * @param bitmap image to bind to set for the texture.
+     *
+     * @return the resulting [Texture2D].
+     */
     fun createTexture2D(bitmap: Bitmap): Texture2D = Texture2D(
         createTexture()
     ).apply {
@@ -29,6 +36,18 @@ object TextureFactory {
         glTexParameterf(GL_TEXTURE_2D, GL_MAX_TEXTURE_LOD_BIAS, -1f)
     }
 
+    /**
+     * Create a [CubemapTexture] from 6 [Bitmap] images.
+     *
+     * @param leftBitmap left cube image.
+     * @param rightBitmap right cube image.
+     * @param bottomBitmap bottom cube image.
+     * @param topBitmap top cube image.
+     * @param backBitmap back cube image.
+     * @param frontBitmap front cube image.
+     *
+     * @return the resulting [CubemapTexture].
+     */
     fun createCubemapTexture(
         leftBitmap: Bitmap,
         rightBitmap: Bitmap,
@@ -54,6 +73,15 @@ object TextureFactory {
         texImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Z, 0, frontBitmap, 0)
     }
 
+    /**
+     * Create a depth-map: a [Texture2D] that is bound to the provided FBO, and only deals with depth values.
+     *
+     * @param fbo FBO to bind the texture to.
+     * @param width texture width.
+     * @param height texture height.
+     *
+     * @return the resulting [Texture2D].
+     */
     fun createDepthMap(fbo: Fbo, width: Int, height: Int): Texture2D = Texture2D(
         createTexture()
     ).apply {
@@ -71,6 +99,11 @@ object TextureFactory {
         }
     }
 
+    /**
+     * Destroy a OpenGL texture.
+     *
+     * @param texture the OpenGL texture reference.
+     */
     fun destroyTexture(texture: Texture) {
         destroyTexture(texture.id)
     }
