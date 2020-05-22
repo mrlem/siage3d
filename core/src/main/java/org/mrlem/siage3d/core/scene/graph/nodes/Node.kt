@@ -27,8 +27,8 @@ abstract class Node(val name: String) {
      * @param behaviour behaviour to add.
      */
     fun add(behaviour: Behaviour) {
+        behaviour.node = this
         _behaviours.putIfAbsent(behaviour::class.java, behaviour)
-            ?.node = this
     }
 
     /**
@@ -37,8 +37,8 @@ abstract class Node(val name: String) {
      * @param behaviour behaviour to remove.
      */
     fun remove(behaviour: Behaviour) {
+        behaviour.node = null
         _behaviours.remove(behaviour::class.java)
-            ?.node = null
     }
 
 }
