@@ -9,10 +9,12 @@ A game using Siage3D is structured as follows:
 ![Anatomy of a game](doc/archi-game-anatomy.png)
 
 The 3D elements you need to display are all present in the **scene**.
-All data that is specific to the state of your game constitutes the **world**.
+Your game data can be stored in one or more global **state** instances, which will impact the scene via a mechanism of **behaviour**
+(note: you can have behaviours without a global state, though).
 
-Binding together the scene and the world, is the **scene-adapter**. It cares about how your world affects your scene-graph at every frame.
-And finally, the app entry point is an **activity**. For convenience, a base activity named SceneActivity is provided to save your all the details like setting up fullscreen, defining an XML layout & such.
+The **scene-adapter** is where you will attach the states to the scene, and behaviours to objects in your scene.
+And finally, the app entry point is an **activity**. For convenience, a base activity named SceneActivity is provided to
+save your all the pain like setting up fullscreen, defining an XML layout & such.
 
 ## Scene
 
@@ -69,18 +71,20 @@ TODO
 Some stats:
 
 ```
-cloc $( find -name src )
-      84 text files.
-      83 unique files.
+seb@nimrodel:~/Projects/siage3d$ cloc $( find -name src )
+      93 text files.
+      92 unique files.                              
        2 files ignored.
+
+github.com/AlDanial/cloc v 1.82  T=0.02 s (3992.3 files/s, 182197.0 lines/s)
 -------------------------------------------------------------------------------
 Language                     files          blank        comment           code
 -------------------------------------------------------------------------------
-Kotlin                          59            585            141           2291
+Kotlin                          68            670            261           2438
 XML                             18             20              3            404
 GLSL                             5             85             25            247
 -------------------------------------------------------------------------------
-SUM:                            82            690            169           2942
+SUM:                            91            775            289           3089
 -------------------------------------------------------------------------------
 ```
 

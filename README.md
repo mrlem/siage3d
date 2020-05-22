@@ -11,7 +11,8 @@ So it's a game engine that is:
 * Dedicated to **Android**
 * Coded in **Kotlin** using OpenGL ES
 
-_Please note that this engine is a **work in progress**. Though feedback is always welcome, it is neither feature-complete nor production ready yet (and it might never be)._
+_Please note that this engine is a **work in progress**. Though feedback is always welcome, it is neither
+feature-complete nor production ready yet (and it might never be)._
 
 ## Getting started
 
@@ -30,7 +31,7 @@ implementation "org.mrlem.siage3d:core:1.0.0"
 Create an activity for your game:
 
 ```Kotlin
-class Game : SceneActivity<World>() {
+class Game : SceneActivity() {
 
     override fun createSceneAdapter() = SceneAdapter(initialScene)
 
@@ -71,30 +72,31 @@ val initialScene = scene {
 }
 ```
 
-Create the world representation:
+Create the behaviour for our cube:
 ```kotlin
-class World : World {
+class RotatingBehaviour : Behaviour() {
 
-    var time = 0f
+    private val spatialNode get() = node as? SpatialNode
+    private var time = 0f
 
     override fun update(delta: Float) {
         time += delta
+        spatialNode?.rotate(0f, time * 50f, 0f)
     }
 
 }
-
-val world = World()
 ```
 
-And finally: create the scene adapter, that's where you adapt the scene based on the world:
+And finally: create the scene adapter, that's where you bind the scene to the view, and where we will assign the cube
+its behaviour in this simple example:
 
 ```kotlin
-class SceneAdapter(scene: Scene) : SceneAdapter<World>(scene, world) {
+class SceneAdapter(scene: Scene) : SceneAdapter(scene) {
 
-    private val cube by lazy{ scene.get<ObjectNode>("my-cube")!! }
+    private val cube = scene.get<ObjectNode>("my-cube")!!
 
-    override fun onSceneUpdate() {
-        cube.rotate(0f, world.time * 50f, 0f)
+    init {
+        cube.add(RotatingBehaviour())
     }
 
 }
@@ -102,7 +104,8 @@ class SceneAdapter(scene: Scene) : SceneAdapter<World>(scene, world) {
 
 And voilà!
 
-Want to know more? checkout the slightly more [advanced sample](sample/src/main/java/org/mrlem/siage3d/sample/advanced/SceneAdapter.kt)!
+Want to know more? checkout the slightly more
+[advanced sample](sample/src/main/java/org/mrlem/siage3d/sample/advanced/SceneAdapter.kt)!
 
 ## Features
 
