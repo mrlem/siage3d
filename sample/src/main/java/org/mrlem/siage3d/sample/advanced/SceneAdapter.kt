@@ -11,10 +11,10 @@ import org.mrlem.siage3d.core.view.SceneAdapter
 class SceneAdapter(scene: Scene) : SceneAdapter(scene) {
 
     // scene objects to manipulate
-    private val light0 by lazy { scene.get<PointLightNode>("light0")!! }
-    private val light1 by lazy { scene.get<PointLightNode>("light1")!! }
-    private val lightCube0 by lazy { scene.get<ObjectNode>("light-cube0")!! }
-    private val lightCube1 by lazy { scene.get<ObjectNode>("light-cube1")!! }
+    private val light0 = scene.get<PointLightNode>("light0")!!
+    private val light1 = scene.get<PointLightNode>("light1")!!
+    private val lightCube0 = scene.get<ObjectNode>("light-cube0")!!
+    private val lightCube1 = scene.get<ObjectNode>("light-cube1")!!
 
     init {
         scene.states += state
