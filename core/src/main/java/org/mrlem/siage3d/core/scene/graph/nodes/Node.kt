@@ -9,7 +9,7 @@ import org.mrlem.siage3d.core.state.Behaviour
  */
 abstract class Node(val name: String) {
 
-    private val _behaviours: MutableMap<Class<out Behaviour>, Behaviour> = mutableMapOf()
+    private val _behaviours: MutableList<Behaviour> = mutableListOf()
 
     /**
      * Parent of this node.
@@ -19,7 +19,7 @@ abstract class Node(val name: String) {
     /**
      * Behaviours to be performed by this node.
      */
-    val behaviours: Collection<Behaviour> get() = _behaviours.values
+    val behaviours: List<Behaviour> get() = _behaviours
 
     /**
      * Add a behaviour to the node.
@@ -28,7 +28,9 @@ abstract class Node(val name: String) {
      */
     fun add(behaviour: Behaviour) {
         behaviour.node = this
-        _behaviours.putIfAbsent(behaviour::class.java, behaviour)
+        _behaviours
+            .takeUnless { _behaviours.any { it::class.java == behaviour::class.java } }
+            ?.add(behaviour)
     }
 
     /**
@@ -38,7 +40,7 @@ abstract class Node(val name: String) {
      */
     fun remove(behaviour: Behaviour) {
         behaviour.node = null
-        _behaviours.remove(behaviour::class.java)
+        _behaviours.remove(behaviour)
     }
 
 }

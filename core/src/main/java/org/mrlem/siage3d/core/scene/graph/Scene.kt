@@ -19,8 +19,8 @@ class Scene(name: String?) : GroupNode(name) {
 
     val materials: MutableList<Material> = mutableListOf()
 
-    private val _states: MutableMap<Class<out State>, State> = mutableMapOf()
-    val states: Collection<State> get() = _states.values
+    private val _states: MutableList<State> = mutableListOf()
+    val states: List<State> get() = _states
 
     /**
      * Add a state to the scene.
@@ -28,7 +28,9 @@ class Scene(name: String?) : GroupNode(name) {
      * @param state state to add.
      */
     fun add(state: State) {
-        _states.putIfAbsent(state::class.java, state)
+        _states
+            .takeUnless { _states.any { it::class.java == state::class.java } }
+            ?.add(state)
     }
 
     /**
@@ -37,7 +39,7 @@ class Scene(name: String?) : GroupNode(name) {
      * @param state state to remove.
      */
     fun remove(state: State) {
-        _states.remove(state::class.java)
+        _states.remove(state)
     }
 
     ///////////////////////////////////////////////////////////////////////////
