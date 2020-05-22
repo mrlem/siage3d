@@ -15,16 +15,16 @@ class Game : SceneActivity() {
         override fun onDirectionChanged(direction: DirectionPadView.Direction?, active: Boolean) {
             when (direction) {
                 DirectionPadView.Direction.UP ->
-                    state.linearVelocity = if (active) 20f else 0f
+                    state.upDown = if (active) 1f else 0f
                 DirectionPadView.Direction.DOWN ->
-                    state.linearVelocity = if (active) -20f else 0f
+                    state.upDown = if (active) -1f else 0f
                 DirectionPadView.Direction.LEFT ->
-                    state.angularVelocity = if (active) -80f else 0f
+                    state.leftRight = if (active) -1f else 0f
                 DirectionPadView.Direction.RIGHT ->
-                    state.angularVelocity = if (active) 80f else 0f
+                    state.leftRight = if (active) 1f else 0f
                 else -> {
-                    state.linearVelocity = 0f
-                    state.angularVelocity = 0f
+                    state.upDown = 0f
+                    state.leftRight = 0f
                 }
             }
         }

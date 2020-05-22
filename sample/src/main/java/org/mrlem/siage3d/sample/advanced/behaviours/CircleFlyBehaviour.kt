@@ -19,11 +19,14 @@ data class CircleFlyBehaviour(
     private val position = Vector3f()
 
     override fun update(delta: Float) {
+        // calculate
         position.set(
             center.x + sin(state.time * speed) * radius,
             center.y,
             center.z + cos(state.time * speed) * radius
         )
+
+        // impact scene graph
         spatialNode?.position(position)
     }
 

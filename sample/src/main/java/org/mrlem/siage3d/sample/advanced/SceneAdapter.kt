@@ -6,6 +6,7 @@ import org.mrlem.siage3d.core.scene.graph.nodes.ObjectNode
 import org.mrlem.siage3d.core.scene.graph.nodes.lights.PointLightNode
 import org.mrlem.siage3d.core.view.SceneAdapter
 import org.mrlem.siage3d.sample.advanced.behaviours.CircleFlyBehaviour
+import org.mrlem.siage3d.sample.advanced.behaviours.PuppetBehaviour
 
 /**
  * This is a slightly more advanced sample, with terrain, skybox & multiple animated light sources & camera control.
@@ -25,18 +26,13 @@ class SceneAdapter(scene: Scene) : SceneAdapter(scene) {
             light0.add(fastCircling)
             lightCube0.add(fastCircling.copy())
         }
+
         CircleFlyBehaviour(state, Vector3f(5f, 25f, 0f), 10f, 1f).let { slowCircling ->
             light1.add(slowCircling)
             lightCube1.add(slowCircling.copy())
         }
-    }
 
-    override fun onSceneUpdate() {
-        // animate camera
-        scene.camera.apply {
-            yaw = state.orientation
-            position(state.position)
-        }
+        scene.camera.add(PuppetBehaviour(state, 80f, 20f))
     }
 
 }

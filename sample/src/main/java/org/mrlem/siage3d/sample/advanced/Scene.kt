@@ -13,7 +13,9 @@ import org.mrlem.siage3d.sample.R
 ///////////////////////////////////////////////////////////////////////////
 
 val initialScene = scene {
-    camera {}
+    camera {
+        position(0f, 40f, 5f)
+    }
 
     sky {
         color(.6f, .8f, 1f)
