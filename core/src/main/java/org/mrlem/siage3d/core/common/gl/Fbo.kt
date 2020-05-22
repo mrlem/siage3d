@@ -3,7 +3,7 @@ package org.mrlem.siage3d.core.common.gl
 import android.opengl.GLES30.*
 
 /**
- * Frame buffer object: used for off-screen rendering.
+ * OpenGL frame-buffer object reference: used for off-screen rendering.
  */
 class Fbo {
 

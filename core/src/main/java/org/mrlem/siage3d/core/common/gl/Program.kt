@@ -6,6 +6,14 @@ import org.joml.Vector3f
 import java.nio.FloatBuffer
 import kotlin.system.exitProcess
 
+/**
+ * OpenGL program reference: used to perform rendering.
+ *
+ * @param vertexSource vertex source code string.
+ * @param fragmentSource fragment source code string.
+ * @param attributes list of all program attributes.
+ * @param uniforms list of all program uniforms.
+ */
 open class Program(
     vertexSource: String,
     fragmentSource: String,
