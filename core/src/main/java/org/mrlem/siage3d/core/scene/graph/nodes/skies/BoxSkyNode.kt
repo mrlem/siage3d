@@ -13,8 +13,7 @@ class BoxSkyNode(
 ) : SkyNode(BoxShape(), material, color, name ?: "sky box") {
 
     override fun render(shader: Shader) {
-        glClearColor(color.x, color.y, color.z, 1f)
-        glClear(GL_COLOR_BUFFER_BIT or GL_DEPTH_BUFFER_BIT)
+        glClear(GL_DEPTH_BUFFER_BIT)
 
         glDepthMask(false)
         super.render(shader)
