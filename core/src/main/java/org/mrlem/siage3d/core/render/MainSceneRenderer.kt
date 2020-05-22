@@ -31,19 +31,20 @@ class MainSceneRenderer(scene: Scene) : SceneRenderer(scene) {
 
         // .. objects
         Material.activeMaterial = null
-        gatherObjects(scene, mutableListOf()).also { objects ->
-            objects
-                .sortWith(
-                    compareBy<ObjectNode> { it !is SkyNode }    // render sky first
-                        .thenBy { it.material?.shader }         // then objects sorted by shader & material
-                        .thenBy { it.material }
-                )
+        gatherObjects(scene)
+            .also { objects ->
+                objects
+                    .sortWith(
+                        compareBy<ObjectNode> { it !is SkyNode }    // render sky first
+                            .thenBy { it.material?.shader }         // then objects sorted by shader & material
+                            .thenBy { it.material }
+                    )
 
-            objects.forEach {
-                it.material?.use()
-                it.render()
+                objects.forEach {
+                    it.material?.use()
+                    it.render()
+                }
             }
-        }
     }
 
 }

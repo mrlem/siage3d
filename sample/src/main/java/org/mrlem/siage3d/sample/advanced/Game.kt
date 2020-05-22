@@ -6,7 +6,7 @@ import org.mrlem.siage3d.core.SceneActivity
 import org.mrlem.siage3d.core.view.DirectionPadView
 import org.mrlem.siage3d.sample.R
 
-class Game : SceneActivity<World>() {
+class Game : SceneActivity() {
 
     override val layoutId: Int = R.layout.activity_advanced
     override val sceneId: Int = R.id.sceneView
@@ -15,16 +15,16 @@ class Game : SceneActivity<World>() {
         override fun onDirectionChanged(direction: DirectionPadView.Direction?, active: Boolean) {
             when (direction) {
                 DirectionPadView.Direction.UP ->
-                    world.linearVelocity = if (active) 20f else 0f
+                    state.linearVelocity = if (active) 20f else 0f
                 DirectionPadView.Direction.DOWN ->
-                    world.linearVelocity = if (active) -20f else 0f
+                    state.linearVelocity = if (active) -20f else 0f
                 DirectionPadView.Direction.LEFT ->
-                    world.angularVelocity = if (active) -80f else 0f
+                    state.angularVelocity = if (active) -80f else 0f
                 DirectionPadView.Direction.RIGHT ->
-                    world.angularVelocity = if (active) 80f else 0f
+                    state.angularVelocity = if (active) 80f else 0f
                 else -> {
-                    world.linearVelocity = 0f
-                    world.angularVelocity = 0f
+                    state.linearVelocity = 0f
+                    state.angularVelocity = 0f
                 }
             }
         }

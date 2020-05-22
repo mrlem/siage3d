@@ -8,7 +8,7 @@ import org.mrlem.siage3d.core.view.SceneAdapter
 /**
  * This is a slightly more advanced sample, with terrain, skybox & multiple animated light sources & camera control.
  */
-class SceneAdapter(scene: Scene) : SceneAdapter<World>(scene, world) {
+class SceneAdapter(scene: Scene) : SceneAdapter(scene) {
 
     // scene objects to manipulate
     private val light0 by lazy { scene.get<PointLightNode>("light0")!! }
@@ -16,18 +16,22 @@ class SceneAdapter(scene: Scene) : SceneAdapter<World>(scene, world) {
     private val lightCube0 by lazy { scene.get<ObjectNode>("light-cube0")!! }
     private val lightCube1 by lazy { scene.get<ObjectNode>("light-cube1")!! }
 
+    init {
+        scene.states += state
+    }
+
     override fun onSceneUpdate() {
         // animate lights
-        light0.position(world.spot1Position)
-        lightCube0.position(world.spot1Position)
+        light0.position(state.spot1Position)
+        lightCube0.position(state.spot1Position)
 
-        light1.position(world.spot2Position)
-        lightCube1.position(world.spot2Position)
+        light1.position(state.spot2Position)
+        lightCube1.position(state.spot2Position)
 
         // animate camera
         scene.camera.apply {
-            yaw = world.orientation
-            position(world.position)
+            yaw = state.orientation
+            position(state.position)
         }
     }
 

@@ -2,11 +2,11 @@ package org.mrlem.siage3d.sample.advanced
 
 import org.joml.Vector3f
 import org.mrlem.siage3d.core.common.math.toRadians
-import org.mrlem.siage3d.core.world.World
+import org.mrlem.siage3d.core.state.State
 import kotlin.math.cos
 import kotlin.math.sin
 
-class World : World {
+class GameState : State {
 
     private var time = 0f
 
@@ -39,4 +39,4 @@ class World : World {
 
 }
 
-val world = World()
+val state = GameState()

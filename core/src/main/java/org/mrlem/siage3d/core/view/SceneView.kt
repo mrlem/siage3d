@@ -14,7 +14,7 @@ import javax.microedition.khronos.opengles.GL10
 
 class SceneView(context: Context, attributes: AttributeSet) : GLSurfaceView(context, attributes) {
 
-    var adapter: SceneAdapter<*>? = null
+    var adapter: SceneAdapter? = null
     private var lastTime: Long = 0L
 
     private val renderer  = object : Renderer {

@@ -7,12 +7,12 @@ import org.mrlem.siage3d.core.view.SceneAdapter
 /**
  * This is a simple sample: just a rotating cube in front of us.
  */
-class SceneAdapter(scene: Scene) : SceneAdapter<World>(scene, world) {
+class SceneAdapter(scene: Scene) : SceneAdapter(scene) {
 
     private val cube by lazy { scene.get<ObjectNode>("my-cube")!! }
 
-    override fun onSceneUpdate() {
-        cube.rotate(0f, world.time * 50f, 0f)
+    init {
+        cube.add(RotatingBehaviour())
     }
 
 }

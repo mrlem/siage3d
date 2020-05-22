@@ -1,7 +1,6 @@
 package org.mrlem.siage3d.core.render
 
 import org.mrlem.siage3d.core.scene.graph.nodes.GroupNode
-import org.mrlem.siage3d.core.scene.graph.nodes.Node
 import org.mrlem.siage3d.core.scene.graph.nodes.ObjectNode
 import org.mrlem.siage3d.core.scene.graph.Scene
 
@@ -11,10 +10,10 @@ abstract class SceneRenderer(
 
     abstract fun render()
 
-    protected fun gatherObjects(rootNode: Node, objectNodes: MutableList<ObjectNode>): MutableList<ObjectNode> {
-        when (rootNode) {
-            is GroupNode -> rootNode.children.forEach { child -> gatherObjects(child, objectNodes) }
-            is ObjectNode -> objectNodes.add(rootNode)
+    protected fun gatherObjects(rootNode: GroupNode): MutableList<ObjectNode> {
+        val objectNodes = mutableListOf<ObjectNode>()
+        rootNode.browse {
+            if (it is ObjectNode) objectNodes.add(it)
         }
         return objectNodes
     }

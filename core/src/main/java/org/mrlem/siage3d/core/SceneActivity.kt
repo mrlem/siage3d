@@ -11,14 +11,13 @@ import kotlinx.android.synthetic.main.activity_scene.*
 import org.mrlem.siage3d.core.common.io.AssetManager
 import org.mrlem.siage3d.core.view.SceneAdapter
 import org.mrlem.siage3d.core.view.SceneView
-import org.mrlem.siage3d.core.world.World
 
-abstract class SceneActivity<W : World> : AppCompatActivity() {
+abstract class SceneActivity : AppCompatActivity() {
 
     @LayoutRes open val layoutId: Int = R.layout.activity_scene
     @IdRes open val sceneId: Int = R.id.sceneView
 
-    private val sceneAdapter: SceneAdapter<W> by lazy { createSceneAdapter() }
+    private val sceneAdapter: SceneAdapter by lazy { createSceneAdapter() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +46,7 @@ abstract class SceneActivity<W : World> : AppCompatActivity() {
         }
     }
 
-    abstract fun createSceneAdapter(): SceneAdapter<W>
+    abstract fun createSceneAdapter(): SceneAdapter
 
 }
 

@@ -40,6 +40,16 @@ open class GroupNode(
         }
     }
 
+    fun browse(depthFirst: Boolean = false, callback: (Node) -> Unit) {
+        children.forEach { child ->
+            if (depthFirst) callback(child)
+            if (child is GroupNode) {
+                child.browse(depthFirst, callback)
+            }
+            if (!depthFirst) callback(child)
+        }
+    }
+
     @Suppress("UNCHECKED_CAST")
     open operator fun <T> get(name: String): T? {
         if (this@GroupNode.name == name) return this as T
