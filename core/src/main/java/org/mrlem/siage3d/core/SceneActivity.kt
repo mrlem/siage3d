@@ -17,8 +17,6 @@ abstract class SceneActivity : AppCompatActivity() {
     @LayoutRes open val layoutId: Int = R.layout.activity_scene
     @IdRes open val sceneId: Int = R.id.sceneView
 
-    private val sceneAdapter: SceneAdapter by lazy { createSceneAdapter() }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AssetManager.init(applicationContext)
@@ -26,7 +24,9 @@ abstract class SceneActivity : AppCompatActivity() {
         // setup scene view
         setupFullscreen()
         setContentView(layoutId)
-        findViewById<SceneView>(sceneId).adapter = sceneAdapter
+        findViewById<SceneView>(sceneId).apply {
+            adapter = createSceneAdapter()
+        }
     }
 
     override fun onStart() {
