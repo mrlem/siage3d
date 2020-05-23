@@ -1,40 +1,16 @@
 package org.mrlem.siage3d.sample.advanced
 
-import android.os.Bundle
-import kotlinx.android.synthetic.main.activity_advanced.*
 import org.mrlem.siage3d.core.SceneActivity
-import org.mrlem.siage3d.core.view.DirectionPadView
-import org.mrlem.siage3d.sample.R
 
+/**
+ * Game entry-point:
+ *
+ * - sets the scene & scene adapter
+ * - sets the gesture listener to interact with the scene
+ */
 class Game : SceneActivity() {
 
-    override val layoutId: Int = R.layout.activity_advanced
-    override val sceneId: Int = R.id.sceneView
-
-    private val padListener = object : DirectionPadView.OnDirectionPadListener {
-        override fun onDirectionChanged(direction: DirectionPadView.Direction?, active: Boolean) {
-            when (direction) {
-                DirectionPadView.Direction.UP ->
-                    state.upDown = if (active) 1f else 0f
-                DirectionPadView.Direction.DOWN ->
-                    state.upDown = if (active) -1f else 0f
-                DirectionPadView.Direction.LEFT ->
-                    state.leftRight = if (active) -1f else 0f
-                DirectionPadView.Direction.RIGHT ->
-                    state.leftRight = if (active) 1f else 0f
-                else -> {
-                    state.upDown = 0f
-                    state.leftRight = 0f
-                }
-            }
-        }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        pad.onDirectionPadListener = padListener
-    }
+    override val sceneGestureListener = GestureListener()
 
     override fun createSceneAdapter() = SceneAdapter(initialScene)
 

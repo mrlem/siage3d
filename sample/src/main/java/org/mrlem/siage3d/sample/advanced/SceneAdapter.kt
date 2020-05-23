@@ -32,7 +32,7 @@ class SceneAdapter(scene: Scene) : SceneAdapter(scene) {
             lightCube1.add(slowCircling.copy())
         }
 
-        scene.camera.add(PuppetBehaviour(state, 80f, 20f))
+        scene.camera.add(PuppetBehaviour(state, 40f, 20f))
     }
 
 }

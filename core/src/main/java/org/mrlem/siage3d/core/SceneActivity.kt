@@ -1,21 +1,26 @@
 package org.mrlem.siage3d.core
 
 import android.os.Bundle
+import android.view.MotionEvent
 import android.view.View
 import android.view.WindowManager
 import androidx.annotation.CallSuper
 import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GestureDetectorCompat
 import kotlinx.android.synthetic.main.activity_scene.*
 import org.mrlem.siage3d.core.common.io.AssetManager
 import org.mrlem.siage3d.core.view.SceneAdapter
+import org.mrlem.siage3d.core.view.SceneGestureListener
 import org.mrlem.siage3d.core.view.SceneView
 
 abstract class SceneActivity : AppCompatActivity() {
 
     @LayoutRes open val layoutId: Int = R.layout.activity_scene
     @IdRes open val sceneId: Int = R.id.sceneView
+
+    open val sceneGestureListener: SceneGestureListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +31,18 @@ abstract class SceneActivity : AppCompatActivity() {
         setContentView(layoutId)
         findViewById<SceneView>(sceneId).apply {
             adapter = createSceneAdapter()
+
+            sceneGestureListener?.let {
+                val gestureDetector = GestureDetectorCompat(this@SceneActivity, it)
+                setOnTouchListener { _, event ->
+                    gestureDetector.onTouchEvent(event)
+                    if (event.action == MotionEvent.ACTION_UP && it.isScrolling) {
+                        it.isScrolling = false
+                        it.onScrollEnd(event)
+                    }
+                    true
+                }
+            }
         }
     }
 
