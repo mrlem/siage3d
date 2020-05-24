@@ -16,12 +16,13 @@ import javax.microedition.khronos.opengles.GL10
 
 /**
  * View that displays a 3D [Scene].
- *
  * Internally, this is a [GLSurfaceView], so the same limitations apply.
+ *
+ * @param context context to bind this view to.
+ * @param attributes attributes to configure the view with.
  */
 class SceneView(context: Context, attributes: AttributeSet) : GLSurfaceView(context, attributes) {
 
-    var adapter: SceneAdapter? = null
     private var lastTime: Long = 0L
 
     private val renderer  = object : Renderer {
@@ -56,6 +57,11 @@ class SceneView(context: Context, attributes: AttributeSet) : GLSurfaceView(cont
         }
 
     }
+
+    /**
+     * Adapter that prorives the 3D scene to be displayed.
+     */
+    var adapter: SceneAdapter? = null
 
     init {
         setEGLContextClientVersion(3)

@@ -28,12 +28,16 @@ abstract class SceneAdapter(protected val scene: Scene) {
             node.behaviours.forEach { it.update(delta) }
         }
 
-        onSceneUpdate() // FIXME - this should disappear at some point to discourage non-modular code
+        onSceneUpdate()
 
         // render nodes
         scene.applyTransforms()
         renderers.forEach { it.render() }
     }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Public API
+    ///////////////////////////////////////////////////////////////////////////
 
     open fun onResize(width: Int, height: Int) {}
     open fun onSceneUpdate() {}

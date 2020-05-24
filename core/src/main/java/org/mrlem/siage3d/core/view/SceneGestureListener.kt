@@ -4,6 +4,9 @@ import android.view.GestureDetector
 import android.view.MotionEvent
 import androidx.annotation.CallSuper
 
+/**
+ * Base listener class for gestures on the scene view.
+ */
 open class SceneGestureListener : GestureDetector.SimpleOnGestureListener() {
 
     internal var isScrolling = false

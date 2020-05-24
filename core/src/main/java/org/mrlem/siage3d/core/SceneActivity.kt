@@ -15,11 +15,17 @@ import org.mrlem.siage3d.core.view.SceneAdapter
 import org.mrlem.siage3d.core.view.SceneGestureListener
 import org.mrlem.siage3d.core.view.SceneView
 
+/**
+ * Base activity for displaying a 3D scene fullscreen.
+ */
 abstract class SceneActivity : AppCompatActivity() {
 
     @LayoutRes open val layoutId: Int = R.layout.activity_scene
     @IdRes open val sceneId: Int = R.id.sceneView
 
+    /**
+     * Listener for all gestures.
+     */
     open val sceneGestureListener: SceneGestureListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,10 +69,19 @@ abstract class SceneActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Creates tje scene adapter that will be plugged into the [SceneView].
+     *
+     * @return the resulting scene adapter.
+     */
     abstract fun createSceneAdapter(): SceneAdapter
 
 }
 
+/**
+ * Perform all operations required to have a fullscreen app.
+ * Just make sure you use the theme that inherits from a NoActionBar variant.
+ */
 fun AppCompatActivity.setupFullscreen() {
     val uiVisibility = window.decorView.systemUiVisibility
     window.decorView.systemUiVisibility = uiVisibility or
