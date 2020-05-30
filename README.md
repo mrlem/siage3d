@@ -1,4 +1,5 @@
 # Siage3D
+![build](https://github.com/mrlem/siage3d/workflows/build/badge.svg)
 
 **Siage3D** stands for **SI**mple **A**ndroid **G**ame **E**ngine.
 
