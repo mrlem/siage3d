@@ -61,3 +61,13 @@ The whole thing would bring:
 - runtime safety
 - easy creation custom shaders
 - less coupling between shaders & engine
+
+## Other links of interest
+
+- tutorials:
+  * https://github.com/lettier/3d-game-shaders-for-beginners
+  * https://thebookofshaders.com/
+- online editors:
+  * https://www.shadertoy.com/
+  * https://thebookofshaders.com/edit.php
+  * ... plenty others :)
