@@ -24,14 +24,14 @@ abstract class SceneAdapter(protected val scene: Scene) {
     internal fun update(delta: Float) {
         // update states
         scene.states.forEach { it.update(delta) }
-        scene.browse { node ->
+        scene.root.browse { node ->
             node.behaviours.forEach { it.update(delta) }
         }
 
         onSceneUpdate()
 
         // render nodes
-        scene.applyTransforms()
+        scene.root.applyTransforms()
         renderers.forEach { it.render() }
     }
 

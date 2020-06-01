@@ -33,7 +33,7 @@ import org.mrlem.siage3d.core.scene.graph.resources.materials.CubemapTextureMate
 
 fun scene(init: SceneBuilder.() -> Unit) = SceneBuilder()
     .apply(init)
-    .build()
+    .buildScene()
 
 @SceneDsl
 class SceneBuilder(
@@ -69,13 +69,15 @@ class SceneBuilder(
             .also { materials.add(it) }
     }
 
-    override fun build() = Scene(name).apply {
-        this@SceneBuilder.camera?.let { add(it) }
-        this@SceneBuilder.sky?.let { add(it) }
-        materials.addAll(this@SceneBuilder.materials)
-        add(*pointLights.toTypedArray())
-        add(*directionLights.toTypedArray())
-        this@SceneBuilder.children.forEach { add(it) }
+    fun buildScene() = Scene(name).apply {
+        root.apply {
+            materials.addAll(this@SceneBuilder.materials)
+            add(*pointLights.toTypedArray())
+            add(*directionLights.toTypedArray())
+            this@SceneBuilder.camera?.let { add(it) }
+            this@SceneBuilder.sky?.let { add(it) }
+            this@SceneBuilder.children.forEach { add(it) }
+        }
     }
 }
 

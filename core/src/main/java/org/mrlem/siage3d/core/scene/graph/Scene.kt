@@ -15,8 +15,9 @@ import org.mrlem.siage3d.core.state.State
  *
  * @param name see [Node.name].
  */
-class Scene(name: String?) : GroupNode(name) {
+class Scene(name: String?) {
 
+    val root = GroupNode(name)
     val materials: MutableList<Material> = mutableListOf()
 
     private val _states: MutableList<State> = mutableListOf()
@@ -46,8 +47,15 @@ class Scene(name: String?) : GroupNode(name) {
     // Node accessors, for convenience.
     ///////////////////////////////////////////////////////////////////////////
 
-    val camera: CameraNode get() = children.filterIsInstance(CameraNode::class.java).firstOrNull() ?: CameraNode("camera")
-    val sky: SkyNode get() = children.filterIsInstance(SkyNode::class.java).firstOrNull() ?: ColorSkyNode()
-    val lights get() = children.filterIsInstance(LightNode::class.java)
+    val camera: CameraNode get() = root.children
+        .filterIsInstance(CameraNode::class.java)
+        .firstOrNull()
+        ?: CameraNode("camera")
+    val sky: SkyNode get() = root.children
+        .filterIsInstance(SkyNode::class.java)
+        .firstOrNull()
+        ?: ColorSkyNode()
+    val lights get() = root.children
+        .filterIsInstance(LightNode::class.java)
 
 }

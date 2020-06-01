@@ -31,7 +31,7 @@ class MainSceneRenderer(scene: Scene) : SceneRenderer(scene) {
 
         // .. objects
         Material.activeMaterial = null
-        gatherObjects(scene)
+        gatherObjects(scene.root)
             .also { objects ->
                 objects
                     .sortWith(
