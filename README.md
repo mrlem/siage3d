@@ -19,13 +19,19 @@ feature-complete nor production ready yet (and it might never be)._
 
 ### Setup
 
-In your `build.gradle`, add the following dependency:
+In your `build.gradle`, add the following repository (if not already present):
 
 ```groovy
-implementation "org.mrlem.siage3d:core:1.0.0"
+repositories {
+    mavenCentral()
+}
 ```
 
-(once it gets published, until then: use the source :)
+And add the following dependency:
+
+```groovy
+implementation "org.mrlem.siage3d:siage3d-core:0.2.0"
+```
 
 ### Usage
 
