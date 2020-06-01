@@ -19,3 +19,27 @@ jobs:
         java-version: 1.8
     - name: Build with Gradle
       run: ./gradlew build
+
+  publish:
+    
+    runs-on: ubuntu-latest
+    
+    if: github.ref == 'refs/heads/master'
+
+    needs:
+    - build
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Configure JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+
+      - name: Upload Artifacts
+        run: ./gradlew uploadArchives
+        env:
+          ORG_GRADLE_PROJECT_SONATYPE_NEXUS_USERNAME: ${{ secrets.SONATYPE_NEXUS_USERNAME }}
+          ORG_GRADLE_PROJECT_SONATYPE_NEXUS_PASSWORD: ${{ secrets.SONATYPE_NEXUS_PASSWORD }}
