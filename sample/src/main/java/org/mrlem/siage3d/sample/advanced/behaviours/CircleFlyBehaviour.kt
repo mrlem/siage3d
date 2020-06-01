@@ -27,7 +27,7 @@ data class CircleFlyBehaviour(
         )
 
         // impact scene graph
-        spatialNode?.position(position)
+        spatialNode?.setTranslation(position)
     }
 
 }

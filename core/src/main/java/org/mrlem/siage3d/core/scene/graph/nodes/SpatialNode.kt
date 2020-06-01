@@ -12,7 +12,9 @@ import org.joml.Vector3f
 abstract class SpatialNode(name: String) : Node(name) {
 
     val localTransform: Matrix4f = Matrix4f()
-    protected val globalTransform = Matrix4f()
+    internal val globalTransform = Matrix4f()
+
+    val translation: Vector3f get() = localTransform.getTranslation(Vector3f())
 
     @CallSuper
     open fun applyTransforms() {
@@ -26,15 +28,11 @@ abstract class SpatialNode(name: String) : Node(name) {
         }
     }
 
-    fun translate(x: Float, y: Float, z: Float) { localTransform.setTranslation(x, y, z) }
+    fun setTranslation(x: Float, y: Float, z: Float) { localTransform.setTranslation(x, y, z) }
 
-    fun translate(position: Vector3f) { localTransform.setTranslation(position) }
+    fun setTranslation(position: Vector3f) { localTransform.setTranslation(position) }
 
-    fun scale(scale: Float) { localTransform.scale(scale) }
-
-    fun scale(scaleX: Float, scaleY: Float, scaleZ: Float) { localTransform.scale(scaleX, scaleY, scaleZ) }
-
-    fun rotate(x: Float, y: Float, z: Float) {
+    fun setRotation(x: Float, y: Float, z: Float) {
         localTransform.setRotationXYZ(
             Math.toRadians(x.toDouble()).toFloat(),
             Math.toRadians(y.toDouble()).toFloat(),
@@ -42,9 +40,8 @@ abstract class SpatialNode(name: String) : Node(name) {
         )
     }
 
-    fun position(): Vector3f = localTransform.getTranslation(Vector3f())
+    fun scale(scale: Float) { localTransform.scale(scale) }
 
-    fun position(x: Float, y: Float, z: Float) { localTransform.setTranslation(x, y, z) }
+    fun scale(scaleX: Float, scaleY: Float, scaleZ: Float) { localTransform.scale(scaleX, scaleY, scaleZ) }
 
-    fun position(position: Vector3f) { localTransform.setTranslation(position) }
 }

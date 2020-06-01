@@ -34,7 +34,7 @@ open class TextureShader: Shader(
     ///////////////////////////////////////////////////////////////////////////
 
     override fun loadPointLight(light: PointLightNode, index: Int) {
-        programRef.value.loadVector(lightPosition[index], light.position())
+        programRef.value.loadVector(lightPosition[index], light.translation)
         programRef.value.loadFloat(lightConstant[index], light.constant)
         programRef.value.loadFloat(lightLinear[index], light.linear)
         programRef.value.loadFloat(lightQuadratic[index], light.quadratic)

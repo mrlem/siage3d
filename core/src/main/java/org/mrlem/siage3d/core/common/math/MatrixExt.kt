@@ -10,6 +10,6 @@ fun Matrix4f.fromCamera(camera: CameraNode): Matrix4f = identity()
         Math.toRadians(camera.yaw.toDouble()).toFloat(),
         Math.toRadians(camera.roll.toDouble()).toFloat()
     )
-    .translate(camera.position().negate())
+    .translate(camera.translation.negate())
 
 fun Matrix4f.directionUp(direction: Vector3f = Vector3f()): Vector3f = direction.set(m10(), m11(), m12())

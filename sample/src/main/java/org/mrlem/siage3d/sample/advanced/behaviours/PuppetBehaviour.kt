@@ -33,13 +33,13 @@ class PuppetBehaviour(
         // impact scene graph
         // TODO - generic, not just camera
         spatialNode?.let { node ->
-            position.set(node.position())
+            position.set(node.translation)
                 .apply { x += sin(orientation.toRadians()) * currentLinearVelocity * delta }
                 .apply { z -= cos(orientation.toRadians()) * currentLinearVelocity * delta }
 
             (node as? CameraNode)?.apply {
                 yaw = orientation
-                position(position)
+                setTranslation(position)
             }
         }
     }
