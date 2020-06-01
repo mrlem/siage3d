@@ -1,5 +1,5 @@
 # Siage3D
-![build](https://github.com/mrlem/siage3d/workflows/build/badge.svg) [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+![build](https://github.com/mrlem/siage3d/workflows/build/badge.svg) [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) ![maven-central](https://img.shields.io/maven-central/v/org.mrlem.siage3d/siage3d-core)
 
 **Siage3D** stands for **SI**mple **A**ndroid **G**ame **E**ngine.
 
