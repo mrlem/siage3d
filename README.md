@@ -88,7 +88,7 @@ class RotatingBehaviour : Behaviour() {
 
     override fun update(delta: Float) {
         time += delta
-        spatialNode?.rotate(0f, time * 50f, 0f)
+        spatialNode?.setRotation(0f, time * 50f, 0f)
     }
 
 }
