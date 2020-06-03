@@ -24,22 +24,27 @@ class PuppetBehaviour(
     private var currentLinearVelocity = 0f
 
     override fun update(delta: Float) {
-        // calculate
-        currentAngularVelocity = state.leftRight * angularVelocity
-        currentLinearVelocity = state.upDown * linearVelocity
-
-        orientation += currentAngularVelocity * delta
-
-        // impact scene graph
         // TODO - generic, not just camera
         spatialNode?.let { node ->
-            position.set(node.translation)
-                .apply { x += sin(orientation.toRadians()) * currentLinearVelocity * delta }
-                .apply { z -= cos(orientation.toRadians()) * currentLinearVelocity * delta }
-
             (node as? CameraNode)?.apply {
-                yaw = orientation
-                setTranslation(position)
+                // determine velocities
+                currentAngularVelocity = state.leftRight * angularVelocity
+                currentLinearVelocity = state.upDown * linearVelocity
+
+                // update orientation
+                if (currentAngularVelocity != 0f) {
+                    orientation += currentAngularVelocity * delta
+                    yaw = orientation
+                }
+
+                // update position
+                if (currentLinearVelocity != 0f) {
+                    position.set(node.translation)
+                        .apply { x += sin(orientation.toRadians()) * currentLinearVelocity * delta }
+                        .apply { z -= cos(orientation.toRadians()) * currentLinearVelocity * delta }
+
+                    setTranslation(position)
+                }
             }
         }
     }
