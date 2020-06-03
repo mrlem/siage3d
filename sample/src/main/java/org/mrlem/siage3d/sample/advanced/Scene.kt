@@ -72,6 +72,7 @@ private fun SceneBuilder.createTrees() {
     for (i in 0..200) {
         val x = randomFloat() * 150f - 75f
         val z = randomFloat() * 150f - 75f
+
         objectNode("tree", AssetManager.shape(R.raw.model_tree_lowpoly_mesh)) {
             material("tree")
             position(x, terrain?.heightAt(x, z) ?: 0f, z)
@@ -90,6 +91,7 @@ private fun SceneBuilder.createCrates() {
     for (i in 0..200) {
         val x = randomFloat() * 150f - 75f
         val z = randomFloat() * 150f - 75f
+
         objectNode("crate$i", BoxShape()) {
             material("crate")
             position(x, 0.5f + (terrain?.heightAt(x, z) ?: 0f), z)

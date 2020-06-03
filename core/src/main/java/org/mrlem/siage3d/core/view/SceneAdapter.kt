@@ -22,17 +22,28 @@ abstract class SceneAdapter(protected val scene: Scene) {
     }
 
     internal fun update(delta: Float) {
-        // update states
-        scene.states.forEach { it.update(delta) }
-        scene.root.browse { node ->
-            node.behaviours.forEach { it.update(delta) }
+        // update
+        // .. states
+        for (i in 0 until scene.states.size) {
+            val state = scene.states[i]
+            state.update(delta)
         }
-
+        // .. behaviours
+        scene.root.browse { node ->
+            for (i in 0 until node.behaviours.size) {
+                val behaviour = node.behaviours[i]
+                behaviour.update(delta)
+            }
+        }
+        // .. scene
         onSceneUpdate()
 
         // render nodes
         scene.root.applyTransforms()
-        renderers.forEach { it.render() }
+        for (i in 0 until renderers.size) {
+            val renderer = renderers[i]
+            renderer.render()
+        }
     }
 
     ///////////////////////////////////////////////////////////////////////////

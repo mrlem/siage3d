@@ -16,9 +16,12 @@ open class GroupNode(
 
     override fun applyTransforms() {
         super.applyTransforms()
-        children
-            .filterIsInstance<SpatialNode>()
-            .forEach(SpatialNode::applyTransforms)
+        for (i in 0 until children.size) {
+            val child = children[i]
+            if (child is SpatialNode) {
+                child.applyTransforms()
+            }
+        }
     }
 
     fun add(vararg nodes: Node) {
@@ -41,7 +44,8 @@ open class GroupNode(
     }
 
     fun browse(depthFirst: Boolean = false, callback: (Node) -> Unit) {
-        children.forEach { child ->
+        for (i in 0 until children.size) {
+            val child = children[i]
             if (depthFirst) callback(child)
             if (child is GroupNode) {
                 child.browse(depthFirst, callback)
