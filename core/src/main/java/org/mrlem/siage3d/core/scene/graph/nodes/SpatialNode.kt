@@ -2,6 +2,7 @@ package org.mrlem.siage3d.core.scene.graph.nodes
 
 import androidx.annotation.CallSuper
 import org.joml.Matrix4f
+import org.joml.Quaternionf
 import org.joml.Vector3f
 import org.mrlem.siage3d.core.common.math.toRadians
 
@@ -12,13 +13,27 @@ import org.mrlem.siage3d.core.common.math.toRadians
  */
 abstract class SpatialNode(name: String) : Node(name) {
 
-    internal val localTransform: Matrix4f = Matrix4f()
     internal val globalTransform = Matrix4f()
+    internal val localTransform = Matrix4f()
+    private var localTransformDirty = false
 
-    val translation: Vector3f get() = localTransform.getTranslation(Vector3f())
+    val translation = Vector3f()
+    val scaling = Vector3f(1f)
+    val rotation = Quaternionf()
 
     @CallSuper
     open fun applyTransforms() {
+        // local transform
+        if (localTransformDirty) {
+            localTransform
+                .translation(translation)
+                .scale(scaling.x, scaling.y, scaling.z)
+                .rotate(rotation)
+
+            localTransformDirty = false
+        }
+
+        // global transform
         val parent = parent
         if (parent != null) {
             globalTransform
@@ -29,26 +44,48 @@ abstract class SpatialNode(name: String) : Node(name) {
         }
     }
 
-    fun setTranslation(x: Float, y: Float, z: Float) { localTransform.setTranslation(x, y, z) }
+    fun setTranslation(x: Float, y: Float, z: Float) {
+        translation.set(x, y, z)
+        localTransformDirty = true
+    }
 
-    fun setTranslation(position: Vector3f) { localTransform.setTranslation(position) }
+    fun setTranslation(translation: Vector3f) {
+        this.translation.set(translation)
+        localTransformDirty = true
+    }
 
     fun setRotation(x: Float, y: Float, z: Float) {
-        localTransform.setRotationXYZ(x.toRadians(), y.toRadians(), z.toRadians())
+        rotation.rotationXYZ(x.toRadians(), y.toRadians(), z.toRadians())
+        localTransformDirty = true
     }
 
     fun setRotation(rotation: Vector3f) {
-        localTransform.setRotationXYZ(
+        this.rotation.rotationXYZ(
             rotation.x.toRadians(),
             rotation.y.toRadians(),
             rotation.z.toRadians()
         )
+        localTransformDirty = true
     }
 
-    fun scale(scale: Float) { localTransform.scaling(scale) }
+    fun scale(scale: Float) {
+        scaling.set(scale)
+        localTransformDirty = true
+    }
 
-    fun scale(scaleX: Float, scaleY: Float, scaleZ: Float) { localTransform.scale(scaleX, scaleY, scaleZ) }
+    fun setScaling(scaling: Float) {
+        this.scaling.set(scaling)
+        localTransformDirty = true
+    }
 
-    fun scale(scale: Vector3f) { localTransform.scale(scale.x, scale.y, scale.z) }
+    fun setScaling(scalingX: Float, scalingY: Float, scalingZ: Float) {
+        this.scaling.set(scalingX, scalingY, scalingZ)
+        localTransformDirty = true
+    }
+
+    fun setScaling(scaling: Vector3f) {
+        this.scaling.set(scaling)
+        localTransformDirty = true
+    }
 
 }

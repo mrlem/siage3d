@@ -39,7 +39,7 @@ class PuppetBehaviour(
 
                 // update position
                 if (currentLinearVelocity != 0f) {
-                    position.set(node.translation)
+                    position.set(translation)
                         .apply { x += sin(orientation.toRadians()) * currentLinearVelocity * delta }
                         .apply { z -= cos(orientation.toRadians()) * currentLinearVelocity * delta }
 

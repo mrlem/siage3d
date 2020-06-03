@@ -105,14 +105,10 @@ abstract class SpatialNodeBuilder(name: String) : NodeBuilder(name) {
     }
 
     protected fun applyTransformsTo(node: SpatialNode) {
-        node.localTransform
-            .scale(scale)
-            .rotateXYZ(
-                Math.toRadians(rotation.x.toDouble()).toFloat(),
-                Math.toRadians(rotation.y.toDouble()).toFloat(),
-                Math.toRadians(rotation.z.toDouble()).toFloat()
-            )
-            .setTranslation(position)
+        node.setScaling(scale)
+        node.setTranslation(position)
+        node.setRotation(rotation)
+        node.applyTransforms()
     }
 }
 

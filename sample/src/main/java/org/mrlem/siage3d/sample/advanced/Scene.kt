@@ -36,7 +36,8 @@ val initialScene = scene {
         rotation(180f, 75f, 0f)
     }
 
-    createGround().also { terrain = it }
+    createGround()
+        .also { terrain = it }
     createTrees()
     createCrates()
     createLightCubes()
