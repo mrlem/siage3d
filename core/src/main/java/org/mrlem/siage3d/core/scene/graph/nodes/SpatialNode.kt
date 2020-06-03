@@ -11,7 +11,7 @@ import org.joml.Vector3f
  */
 abstract class SpatialNode(name: String) : Node(name) {
 
-    val localTransform: Matrix4f = Matrix4f()
+    internal val localTransform: Matrix4f = Matrix4f()
     internal val globalTransform = Matrix4f()
 
     val translation: Vector3f get() = localTransform.getTranslation(Vector3f())
