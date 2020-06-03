@@ -43,7 +43,7 @@ class MultiTextureShader : Shader(
     }
 
     override fun loadDirectionLight(light: DirectionLightNode) {
-        programRef.value.loadVector(Uniform.DIRECTIONLIGHT_DIRECTION, light.localTransform.directionUp().negate())
+        programRef.value.loadVector(Uniform.DIRECTIONLIGHT_DIRECTION, light.globalTransform.directionUp().negate())
         programRef.value.loadVector(Uniform.DIRECTIONLIGHT_AMBIENT, light.ambient)
         programRef.value.loadVector(Uniform.DIRECTIONLIGHT_DIFFUSE, light.diffuse)
     }
