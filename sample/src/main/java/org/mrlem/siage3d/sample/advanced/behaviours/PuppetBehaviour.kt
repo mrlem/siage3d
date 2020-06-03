@@ -34,7 +34,7 @@ class PuppetBehaviour(
                 // update orientation
                 if (currentAngularVelocity != 0f) {
                     orientation += currentAngularVelocity * delta
-                    yaw = orientation
+                    setRotation(0f, orientation, 0f)
                 }
 
                 // update position

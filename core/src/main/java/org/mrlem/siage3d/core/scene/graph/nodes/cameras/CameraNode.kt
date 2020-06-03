@@ -6,16 +6,11 @@ import org.mrlem.siage3d.core.common.math.fromCamera
 import org.mrlem.siage3d.core.scene.graph.nodes.SpatialNode
 import org.mrlem.siage3d.core.scene.graph.resources.shaders.Shader
 
-class CameraNode(
-    name: String? = null,
-    // TODO - handle those using node rotation
-    var yaw: Float = 0f,
-    var pitch: Float = 0f,
-    var roll: Float = 0f
-) : SpatialNode(name ?: "camera") {
+class CameraNode(name: String? = null) : SpatialNode(name ?: "camera") {
 
     private var width: Int = 0
     private var height: Int = 0
+
     val near = 0.1f
     val far = 300f
     val fov = 45.0
