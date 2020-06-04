@@ -3,6 +3,7 @@ package org.mrlem.siage3d.core.scene.graph.nodes
 import androidx.annotation.CallSuper
 import org.joml.Matrix4f
 import org.joml.Vector3f
+import org.mrlem.siage3d.core.common.math.toRadians
 
 /**
  * A scene graph node that is spatially positioned.
@@ -33,11 +34,7 @@ abstract class SpatialNode(name: String) : Node(name) {
     fun setTranslation(position: Vector3f) { localTransform.setTranslation(position) }
 
     fun setRotation(x: Float, y: Float, z: Float) {
-        localTransform.setRotationXYZ(
-            Math.toRadians(x.toDouble()).toFloat(),
-            Math.toRadians(y.toDouble()).toFloat(),
-            Math.toRadians(z.toDouble()).toFloat()
-        )
+        localTransform.setRotationXYZ(x.toRadians(), y.toRadians(), z.toRadians())
     }
 
     fun scale(scale: Float) { localTransform.scale(scale) }
