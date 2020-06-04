@@ -73,10 +73,7 @@ open class Program(
     }
 
     fun loadMatrix(uniform: UniformDefinition, matrix: Matrix4f) {
-        matrix.get(matrixBuffer)
-        glUniformMatrix4fv(uniform.location, 1, false,
-            matrixBuffer
-        )
+        glUniformMatrix4fv(uniform.location, 1, false, matrix.get(matrixBuffer))
     }
 
     private fun bindAttributes(attributes: List<AttributeDefinition>) {
