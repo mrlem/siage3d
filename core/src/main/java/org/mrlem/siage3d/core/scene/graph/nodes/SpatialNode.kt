@@ -37,8 +37,18 @@ abstract class SpatialNode(name: String) : Node(name) {
         localTransform.setRotationXYZ(x.toRadians(), y.toRadians(), z.toRadians())
     }
 
-    fun scale(scale: Float) { localTransform.scale(scale) }
+    fun setRotation(rotation: Vector3f) {
+        localTransform.setRotationXYZ(
+            rotation.x.toRadians(),
+            rotation.y.toRadians(),
+            rotation.z.toRadians()
+        )
+    }
+
+    fun scale(scale: Float) { localTransform.scaling(scale) }
 
     fun scale(scaleX: Float, scaleY: Float, scaleZ: Float) { localTransform.scale(scaleX, scaleY, scaleZ) }
+
+    fun scale(scale: Vector3f) { localTransform.scale(scale.x, scale.y, scale.z) }
 
 }
