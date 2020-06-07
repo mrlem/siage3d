@@ -44,6 +44,10 @@ abstract class SpatialNode(name: String) : Node(name) {
         }
     }
 
+    ///////////////////////////////////////////////////////////////////////////
+    // Translation modifiers
+    ///////////////////////////////////////////////////////////////////////////
+
     fun setTranslation(x: Float, y: Float, z: Float) {
         translation.set(x, y, z)
         localTransformDirty = true
@@ -53,6 +57,10 @@ abstract class SpatialNode(name: String) : Node(name) {
         this.translation.set(translation)
         localTransformDirty = true
     }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Rotation modifiers
+    ///////////////////////////////////////////////////////////////////////////
 
     fun setRotation(x: Float, y: Float, z: Float) {
         rotation.rotationXYZ(x.toRadians(), y.toRadians(), z.toRadians())
@@ -67,6 +75,10 @@ abstract class SpatialNode(name: String) : Node(name) {
         )
         localTransformDirty = true
     }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Scaling modifiers
+    ///////////////////////////////////////////////////////////////////////////
 
     fun scale(scale: Float) {
         scaling.set(scale)
