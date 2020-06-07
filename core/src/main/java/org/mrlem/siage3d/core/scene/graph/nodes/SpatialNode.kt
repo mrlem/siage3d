@@ -17,6 +17,8 @@ abstract class SpatialNode(name: String) : Node(name) {
     internal val localTransform = Matrix4f()
     private var localTransformDirty = false
 
+    private val up = Vector3f(0f, 1f, 0f)
+
     val translation = Vector3f()
     val scaling = Vector3f(1f)
     val rotation = Quaternionf()
@@ -73,6 +75,12 @@ abstract class SpatialNode(name: String) : Node(name) {
             rotation.y.toRadians(),
             rotation.z.toRadians()
         )
+        localTransformDirty = true
+    }
+
+    fun lookAt(target: Vector3f) {
+        rotation.set(0f, 0f, 0f, 1f)
+        rotation.lookAlong(target, up)
         localTransformDirty = true
     }
 

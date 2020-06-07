@@ -1,6 +1,6 @@
 package org.mrlem.siage3d.sample.advanced
 
-import org.mrlem.siage3d.core.state.State
+import org.mrlem.siage3d.core.behaviour.State
 
 class GameState : State {
 

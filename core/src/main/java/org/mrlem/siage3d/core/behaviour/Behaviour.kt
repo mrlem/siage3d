@@ -1,4 +1,4 @@
-package org.mrlem.siage3d.core.state
+package org.mrlem.siage3d.core.behaviour
 
 import org.mrlem.siage3d.core.scene.graph.nodes.Node
 

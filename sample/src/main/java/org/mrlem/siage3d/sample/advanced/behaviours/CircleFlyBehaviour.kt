@@ -2,7 +2,7 @@ package org.mrlem.siage3d.sample.advanced.behaviours
 
 import org.joml.Vector3f
 import org.mrlem.siage3d.core.scene.graph.nodes.SpatialNode
-import org.mrlem.siage3d.core.state.Behaviour
+import org.mrlem.siage3d.core.behaviour.Behaviour
 import org.mrlem.siage3d.sample.advanced.GameState
 import kotlin.math.cos
 import kotlin.math.sin

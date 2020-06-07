@@ -7,7 +7,7 @@ import org.mrlem.siage3d.core.scene.graph.nodes.Node
 import org.mrlem.siage3d.core.scene.graph.nodes.lights.LightNode
 import org.mrlem.siage3d.core.scene.graph.nodes.skies.ColorSkyNode
 import org.mrlem.siage3d.core.scene.graph.nodes.skies.SkyNode
-import org.mrlem.siage3d.core.state.State
+import org.mrlem.siage3d.core.behaviour.State
 
 /**
  * The 3D scene to be rendered on screen. It consists in a graph of interconnected nodes describing the objects to draw

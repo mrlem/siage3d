@@ -1,6 +1,6 @@
 package org.mrlem.siage3d.core.scene.graph.nodes
 
-import org.mrlem.siage3d.core.state.Behaviour
+import org.mrlem.siage3d.core.behaviour.Behaviour
 
 /**
  * A scene-graph node.
