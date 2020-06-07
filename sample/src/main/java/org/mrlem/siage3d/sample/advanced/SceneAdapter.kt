@@ -22,15 +22,13 @@ class SceneAdapter(scene: Scene) : SceneAdapter(scene) {
     init {
         scene.add(state)
 
-        CircleFlyBehaviour(state, Vector3f(5f, 25f, 0f), 14f, 1.7f).let { fastCircling ->
-            light0.add(fastCircling)
-            lightCube0.add(fastCircling.copy())
-        }
+        val fastCircling = CircleFlyBehaviour(state, Vector3f(5f, 25f, 0f), 14f, 1.7f)
+        light0.add(fastCircling)
+        lightCube0.add(fastCircling.copy())
 
-        CircleFlyBehaviour(state, Vector3f(5f, 25f, 0f), 10f, 1f).let { slowCircling ->
-            light1.add(slowCircling)
-            lightCube1.add(slowCircling.copy())
-        }
+        val slowCircling = CircleFlyBehaviour(state, Vector3f(5f, 25f, 0f), 10f, 1f)
+        light1.add(slowCircling)
+        lightCube1.add(slowCircling.copy())
 
         scene.camera.add(PuppetBehaviour(state, 40f, 20f))
     }
