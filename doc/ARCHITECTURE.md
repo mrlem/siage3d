@@ -6,7 +6,7 @@ This documents provides a brief overview of the engine's architecture. It aims a
 
 A game using Siage3D is structured as follows:
 
-![Anatomy of a game](doc/archi-game-anatomy.png)
+![Anatomy of a game](archi-game-anatomy.png)
 
 The 3D elements you need to display are all present in the **scene**.
 Your game data can be stored in one or more global **state** instances, which will impact the scene via a mechanism of **behaviour**
@@ -20,7 +20,7 @@ save your all the pain like setting up fullscreen, defining an XML layout & such
 
 Siage3D scenes are a tree of **nodes**:
 
-![Scene-graph](doc/archi-scenegraph.png)
+![Scene-graph](archi-scenegraph.png)
 
 The scene **API** comprises:
 
